@@ -186,6 +186,56 @@ export function HomePage() {
         </div>
       </nav>
 
+      {/* Live App Cards - KBS Prime & Trabzon Live */}
+      <section className="relative z-40 px-6 py-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a
+              href="https://kbsprime.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
+            >
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">KBS</span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-white font-bold text-lg">KBS Prime</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Canlı
+                  </span>
+                </div>
+                <p className="text-gray-400 text-sm mt-0.5 truncate">Kartı canlı kullan</p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.litxtech.mytrabzon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
+            >
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform overflow-hidden">
+                <img src="/assets/mytrabzon/logo.png" alt="Trabzon Live" className="w-10 h-10 object-contain" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-white font-bold text-lg">Trabzon Live</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Canlı
+                  </span>
+                </div>
+                <p className="text-gray-400 text-sm mt-0.5 truncate">Google Play'den indir</p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="relative z-10 pt-20 pb-32">
         <div className="max-w-7xl mx-auto px-6">
