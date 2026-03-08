@@ -6,7 +6,7 @@ import { PackageCard } from '../components/PackageCard'
 import { PACKAGE_CATEGORIES } from '../data/packages'
 import { FloatingCodeElements, AnimatedStats, HeroCodeFlow, BackgroundCodeParticles, BreathingTitle, GlowButton, AIInteraction, MatrixCodeRain } from '../components/AnimatedElements'
 import { LanguageSwitcher, LanguageSwitcherCompact } from '../components/LanguageSwitcher'
-import { useTranslation, useLanguage } from '../contexts/LanguageContext'
+import { useTranslation } from '../contexts/LanguageContext'
 import { supabase, userAuth } from '../lib/supabase'
 
 export function HomePage() {
