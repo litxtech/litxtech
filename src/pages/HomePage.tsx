@@ -14,7 +14,6 @@ export function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState('webSaaS')
   const [user, setUser] = useState<any>(null)
   const t = useTranslation()
-  const { language } = useLanguage()
 
   useEffect(() => {
     const checkUser = async () => {

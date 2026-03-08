@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 
 // Translation types
 export type Language = 'en' | 'tr'
@@ -253,9 +253,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 // Language Provider Component - site is English only
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language] = useState<Language>('en')
-
-  // Site is English only; always use English
+  // Site is English only; no state needed
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('litxtech-language', 'en')
