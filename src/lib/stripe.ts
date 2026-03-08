@@ -81,7 +81,7 @@ export async function createCheckoutSession(priceId: string, packageName: string
           throw new Error('Geçersiz paket seçildi. Lütfen tekrar deneyin.')
         }
         
-        throw new Error(errorData.error || errorData.message || 'API isteği başarısız oldu')
+        throw new Error(errorData.error || errorData.message || 'API request failed')
       }
     } catch (error: any) {
       console.error('❌ Production API failed:', error)

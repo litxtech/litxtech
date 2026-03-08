@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Heart, Sparkles, CheckCircle, Loader2, Users } from 'lucide-react'
 
 const SUPPORT_PACKAGES = [
-  { amount: 89, label: '89 ₺', description: 'Temel Destek Paketi', icon: Heart },
-  { amount: 139, label: '139 ₺', description: 'Standart Destek Paketi', icon: Users },
-  { amount: 339, label: '339 ₺', description: 'Premium Destek Paketi', icon: Sparkles },
+  { amount: 89, label: '89 ₺', description: 'Basic Support Package', icon: Heart },
+  { amount: 139, label: '139 ₺', description: 'Standard Support Package', icon: Users },
+  { amount: 339, label: '339 ₺', description: 'Premium Support Package', icon: Sparkles },
 ]
 
 export function DonationPage() {
@@ -16,7 +16,7 @@ export function DonationPage() {
 
   const handleDonate = async (amount: number) => {
     if (!amount || amount < 1) {
-      setError('Lütfen geçerli bir miktar girin')
+      setError('Please enter a valid amount')
       return
     }
 
@@ -31,7 +31,7 @@ export function DonationPage() {
         },
         body: JSON.stringify({
           amount,
-          donorName: donorName || 'Anonim',
+          donorName: donorName || 'Anonymous',
           type: 'mytrabzon-support',
           currency: 'TRY'
         }),
@@ -39,7 +39,7 @@ export function DonationPage() {
 
       if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(errorData.error || 'Bağış işlemi başlatılamadı')
+        throw new Error(errorData.error || 'Could not start donation')
       }
 
       const data = await response.json()
@@ -48,11 +48,11 @@ export function DonationPage() {
         // Stripe Checkout'a yönlendir
         window.location.href = data.url
       } else {
-        throw new Error('Ödeme sayfası oluşturulamadı')
+        throw new Error('Could not create payment page')
       }
     } catch (err: any) {
       console.error('Donation error:', err)
-      setError(err.message || 'Bağış işlemi sırasında bir hata oluştu')
+      setError(err.message || 'An error occurred during the donation')
     } finally {
       setLoading(false)
     }
@@ -75,11 +75,11 @@ export function DonationPage() {
             <Heart className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-5xl font-bold text-white mb-4">
-            MyTrabzon – Destek & Bağış
+            MyTrabzon – Support & Donation
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            MyTrabzon, üniversite öğrencilerini bir araya getiren; etkinlikler, topluluk organizasyonları, 
-            sosyal buluşmalar ve şehir içi yaşamı kolaylaştıran bir mobil uygulamadır.
+            MyTrabzon is a mobile app that brings university students together: events, community organizations,
+            social gatherings, and city life.
           </p>
         </div>
 
@@ -87,31 +87,31 @@ export function DonationPage() {
         <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl p-6 mb-8">
           <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
             <Sparkles className="w-6 h-6" />
-            Bağışlar Nereye Gidiyor?
+            Where Do Donations Go?
           </h2>
           <div className="space-y-3 text-gray-200">
             <p className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span>Üniversiteliler için kahvaltı etkinlikleri</span>
+              <span>Breakfast events for university students</span>
             </p>
             <p className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span>Sosyal buluşmalar, topluluk aktivite giderleri</span>
+              <span>Social gatherings and community activity expenses</span>
             </p>
             <p className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span>Kültür-gezi ve doğa turları organizasyon desteği</span>
+              <span>Culture, travel and nature tour organization support</span>
             </p>
             <p className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span>MyTrabzon uygulamasının geliştirilmesi, güvenlik ve altyapı masrafları</span>
+              <span>MyTrabzon app development, security and infrastructure</span>
             </p>
           </div>
           <div className="mt-4 p-4 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
             <p className="text-yellow-200 text-sm">
-              <strong>Önemli:</strong> Bağış yapmak zorunlu değildir, herhangi bir uygulama özelliğini açmak için gerekli değildir 
-              ve kullanıcıya özel bir avantaj sağlamaz. Bağışlar tamamen isteğe bağlıdır. 
-              Bu sistem ticari satış, ürün/servis satışı veya üyelik modeli değildir.
+              <strong>Important:</strong> Donations are not mandatory, not required to unlock any app feature,
+              and do not give users any special advantage. Donations are entirely voluntary.
+              This is not a commercial sale, product/service sale, or membership model.
             </p>
           </div>
         </div>
@@ -122,14 +122,14 @@ export function DonationPage() {
             {/* Donor Name (Optional) */}
             <div>
               <label htmlFor="donorName" className="block text-sm font-medium text-gray-300 mb-2">
-                Adınız (Opsiyonel)
+                Your name (optional)
               </label>
               <input
                 id="donorName"
                 type="text"
                 value={donorName}
                 onChange={(e) => setDonorName(e.target.value)}
-                placeholder="İsminiz (anonim kalabilirsiniz)"
+                placeholder="Your name (can stay anonymous)"
                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
@@ -137,7 +137,7 @@ export function DonationPage() {
             {/* Support Packages */}
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-4">
-                Destek Paketi Seçin
+                Choose a support package
               </label>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {SUPPORT_PACKAGES.map((pkg) => {
@@ -181,7 +181,7 @@ export function DonationPage() {
             {/* Custom Amount */}
             <div>
               <label htmlFor="customAmount" className="block text-sm font-medium text-gray-300 mb-2">
-                Veya Özel Miktar Girin (₺)
+                Or enter a custom amount (₺)
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
@@ -219,12 +219,12 @@ export function DonationPage() {
               {loading ? (
                 <>
                   <Loader2 className="w-6 h-6 animate-spin" />
-                  İşleniyor...
+                  Processing...
                 </>
               ) : (
                 <>
                   <Heart className="w-6 h-6" />
-                  Destek Ol
+                  Support
                 </>
               )}
             </button>
@@ -235,23 +235,23 @@ export function DonationPage() {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white/5 rounded-xl p-6 border border-white/10 text-center">
             <Sparkles className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-            <h3 className="text-white font-semibold mb-2">Güvenli Ödeme</h3>
+            <h3 className="text-white font-semibold mb-2">Secure payment</h3>
             <p className="text-gray-400 text-sm">
-              Stripe ile güvenli ödeme altyapısı
+              Secure payment via Stripe
             </p>
           </div>
           <div className="bg-white/5 rounded-xl p-6 border border-white/10 text-center">
             <Heart className="w-8 h-8 text-pink-400 mx-auto mb-3" />
-            <h3 className="text-white font-semibold mb-2">Destekçi Rozeti</h3>
+            <h3 className="text-white font-semibold mb-2">Supporter badge</h3>
             <p className="text-gray-400 text-sm">
-              Bağış yapanlara özel "Destekçi" etiketi
+              Special "Supporter" badge for donors
             </p>
           </div>
           <div className="bg-white/5 rounded-xl p-6 border border-white/10 text-center">
             <Users className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-            <h3 className="text-white font-semibold mb-2">Topluluk Desteği</h3>
+            <h3 className="text-white font-semibold mb-2">Community support</h3>
             <p className="text-gray-400 text-sm">
-              Öğrenci topluluğuna katkıda bulunun
+              Contribute to the student community
             </p>
           </div>
         </div>

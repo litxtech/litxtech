@@ -251,38 +251,23 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-// Language Provider Component
+// Language Provider Component - site is English only
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en')
+  const [language] = useState<Language>('en')
 
-  // Load language from localStorage on mount
+  // Site is English only; always use English
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedLanguage = localStorage.getItem('litxtech-language') as Language
-      if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'tr')) {
-        setLanguageState(savedLanguage)
-      } else {
-        // Detect browser language
-        const browserLang = navigator.language.split('-')[0]
-        if (browserLang === 'tr') {
-          setLanguageState('tr')
-        }
-      }
+      localStorage.setItem('litxtech-language', 'en')
     }
   }, [])
 
-  // Save language to localStorage when changed
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang)
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('litxtech-language', lang)
-    }
-  }
+  const setLanguage = () => {} // no-op; site is English only
 
   const value: LanguageContextType = {
-    language,
+    language: 'en',
     setLanguage,
-    t: translations[language]
+    t: translations.en
   }
 
   return (

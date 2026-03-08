@@ -70,7 +70,7 @@ export function ProfilePage() {
       ))
     } catch (error) {
       console.error('Error toggling badge:', error)
-      alert('Etiket görünürlüğü değiştirilemedi')
+      alert('Could not update badge visibility')
     }
   }
 
@@ -91,19 +91,19 @@ export function ProfilePage() {
       setPasswordMessageType('')
 
       if (!currentPassword || !newPassword || !confirmPassword) {
-        setPasswordMessage('Lütfen tüm alanları doldurun')
+        setPasswordMessage('Please fill in all fields')
         setPasswordMessageType('error')
         return
       }
 
       if (newPassword.length < 6) {
-        setPasswordMessage('Yeni şifre en az 6 karakter olmalıdır')
+        setPasswordMessage('New password must be at least 6 characters')
         setPasswordMessageType('error')
         return
       }
 
       if (newPassword !== confirmPassword) {
-        setPasswordMessage('Yeni şifreler eşleşmiyor')
+        setPasswordMessage('New passwords do not match')
         setPasswordMessageType('error')
         return
       }
@@ -116,7 +116,7 @@ export function ProfilePage() {
         }) || { error: new Error('Supabase not configured') }
 
         if (signInError) {
-          setPasswordMessage('Mevcut şifre yanlış')
+          setPasswordMessage('Current password is incorrect')
           setPasswordMessageType('error')
           return
         }
@@ -124,7 +124,7 @@ export function ProfilePage() {
 
       // Şifreyi güncelle
       await userAuth.updatePassword(newPassword)
-      setPasswordMessage('Şifreniz başarıyla güncellendi!')
+      setPasswordMessage('Your password was updated successfully!')
       setPasswordMessageType('success')
       
       // Formu temizle
@@ -139,7 +139,7 @@ export function ProfilePage() {
       }, 2000)
     } catch (e: any) {
       console.error('Password change error:', e)
-      setPasswordMessage(e.message || 'Şifre güncellenemedi. Lütfen tekrar deneyin.')
+      setPasswordMessage(e.message || 'Could not update password. Please try again.')
       setPasswordMessageType('error')
     } finally {
       setPasswordLoading(false)
@@ -156,7 +156,7 @@ export function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white">Yükleniyor...</div>
+        <div className="text-white">Loading...</div>
       </div>
     )
   }
@@ -189,7 +189,7 @@ export function ProfilePage() {
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-white mb-1">
-                {user.user_metadata?.full_name || user.email?.split('@')[0] || 'Kullanıcı'}
+                {user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'}
               </h2>
               <p className="text-gray-300 flex items-center gap-2">
                 <Mail className="w-4 h-4" />
@@ -234,7 +234,7 @@ export function ProfilePage() {
                       <div>
                         <p className="text-white font-medium">{badge.badge_name}</p>
                         <p className="text-gray-400 text-sm">
-                          {badge.badge_type === 'supporter' ? 'Destekçi etiketi' : 'İlçe etiketi'}
+                          {badge.badge_type === 'supporter' ? 'Supporter badge' : 'District badge'}
                         </p>
                       </div>
                     </div>
@@ -245,7 +245,7 @@ export function ProfilePage() {
                           ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
                           : 'bg-gray-500/20 text-gray-400 hover:bg-gray-500/30'
                       }`}
-                      title={badge.is_visible ? 'Etiketi gizle' : 'Etiketi göster'}
+                      title={badge.is_visible ? 'Hide badge' : 'Show badge'}
                     >
                       {badge.is_visible ? (
                         <Eye className="w-5 h-5" />
@@ -259,11 +259,11 @@ export function ProfilePage() {
             ) : (
               <div className="text-center py-8 text-gray-400">
                 <Heart className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                <p>Henüz etiketiniz yok</p>
+                <p>You don't have any badges yet</p>
                 <p className="text-sm mt-2">
                   <a href="/donation" className="text-purple-400 hover:text-purple-300">
-                    Destek ol
-                  </a> ve "Destekçi" etiketi kazan!
+                    Support
+                  </a> and earn the "Supporter" badge!
                 </p>
               </div>
             )}
@@ -274,7 +274,7 @@ export function ProfilePage() {
             <div className="mb-6 pt-6 border-t border-white/10">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <KeyRound className="w-5 h-5 text-purple-400" />
-                Şifre Ayarları
+                Password settings
               </h3>
               
               {!showChangePassword ? (
@@ -283,13 +283,13 @@ export function ProfilePage() {
                   className="w-full bg-white/5 border border-white/20 text-white py-3 px-4 rounded-lg font-semibold hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-2"
                 >
                   <Lock className="w-5 h-5" />
-                  Şifre Değiştir
+                  Change password
                 </button>
               ) : (
                 <form onSubmit={handleChangePassword} className="space-y-4">
                   <div>
                     <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                      Mevcut Şifre
+                      Current password
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -298,7 +298,7 @@ export function ProfilePage() {
                         type="password"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
-                        placeholder="Mevcut şifrenizi girin"
+                        placeholder="Enter your current password"
                         className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         required
                       />
@@ -307,7 +307,7 @@ export function ProfilePage() {
 
                   <div>
                     <label htmlFor="newPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                      Yeni Şifre
+                      New password
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -316,7 +316,7 @@ export function ProfilePage() {
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="En az 6 karakter"
+                        placeholder="At least 6 characters"
                         className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         required
                       />
@@ -325,7 +325,7 @@ export function ProfilePage() {
 
                   <div>
                     <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                      Yeni Şifreyi Tekrar Girin
+                      Confirm new password
                     </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -334,7 +334,7 @@ export function ProfilePage() {
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Yeni şifreyi tekrar girin"
+                        placeholder="Re-enter new password"
                         className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         required
                       />
@@ -357,7 +357,7 @@ export function ProfilePage() {
                       disabled={passwordLoading}
                       className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      {passwordLoading ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
+                      {passwordLoading ? 'Updating...' : 'Update password'}
                     </button>
                     <button
                       type="button"
@@ -371,7 +371,7 @@ export function ProfilePage() {
                       }}
                       className="px-4 py-3 bg-white/5 border border-white/20 text-white rounded-lg font-semibold hover:bg-white/10 transition-all duration-200"
                     >
-                      İptal
+                      Cancel
                     </button>
                   </div>
                 </form>
@@ -387,7 +387,7 @@ export function ProfilePage() {
                 className="text-sm text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2"
               >
                 <Lock className="w-4 h-4" />
-                Şifremi Unuttum
+                Forgot password
               </Link>
             </div>
           )}
@@ -399,14 +399,14 @@ export function ProfilePage() {
               className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center gap-2"
             >
               <Heart className="w-5 h-5" />
-              Destek Ol
+              Support
             </button>
             <button
               onClick={handleLogout}
               className="w-full bg-red-500/20 border border-red-500/30 text-red-300 py-3 px-4 rounded-lg font-semibold hover:bg-red-500/30 transition-all duration-200 flex items-center justify-center gap-2"
             >
               <LogOut className="w-5 h-5" />
-              Çıkış Yap
+              Sign out
             </button>
           </div>
         </div>

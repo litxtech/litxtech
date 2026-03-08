@@ -204,10 +204,10 @@ export function HomePage() {
                   <span className="text-white font-bold text-lg">KBS Prime</span>
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Canlı
+                    Live
                   </span>
                 </div>
-                <p className="text-gray-400 text-sm mt-0.5 truncate">Kartı canlı kullan</p>
+                <p className="text-gray-400 text-sm mt-0.5 truncate">Use card live</p>
               </div>
               <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
             </a>
@@ -225,7 +225,7 @@ export function HomePage() {
                   <span className="text-white font-bold text-lg">Trabzon Live</span>
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Canlı
+                    Live
                   </span>
                 </div>
                 <p className="text-gray-400 text-sm mt-0.5 truncate">Google Play'den indir</p>
@@ -533,7 +533,7 @@ export function HomePage() {
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-pink-500/20 border border-pink-500/30 rounded-full text-pink-300 text-sm font-medium mb-4">
                   <Heart className="w-4 h-4" />
-                  MyTrabzon {t.donation.support} & Bağış
+                  MyTrabzon Support & Donation
                 </div>
                 
                 <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
@@ -627,9 +627,7 @@ export function HomePage() {
                     </div>
                   </div>
                   <p className="text-gray-300 text-sm">
-                    {language === 'tr' 
-                      ? 'Bağış yaptığınızda profil sayfanızda "Destekçi" etiketi görünür. İsterseniz bu etiketi gizleyebilirsiniz.'
-                      : 'When you make a donation, a "Supporter" badge appears on your profile page. You can hide this badge if you wish.'}
+                    When you make a donation, a "Supporter" badge appears on your profile page. You can hide this badge if you wish.
                   </p>
                 </div>
               </div>
@@ -668,11 +666,12 @@ export function HomePage() {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white">Quick Access</h3>
               <div className="space-y-2">
-                <Link to="/packages" className="block text-gray-300 hover:text-blue-400 transition-colors">Fiyatlarımız</Link>
-                <Link to="/about" className="block text-gray-300 hover:text-blue-400 transition-colors">Hakkımızda</Link>
+                <Link to="/packages" className="block text-gray-300 hover:text-blue-400 transition-colors">Pricing</Link>
+                <Link to="/about" className="block text-gray-300 hover:text-blue-400 transition-colors">About</Link>
                 <Link to="/blog" className="block text-gray-300 hover:text-blue-400 transition-colors">Blog</Link>
-                <Link to="/contact" className="block text-gray-300 hover:text-blue-400 transition-colors">İletişim</Link>
+                <Link to="/contact" className="block text-gray-300 hover:text-blue-400 transition-colors">Contact</Link>
                 <Link to="/support/mytrabzon" className="block text-gray-300 hover:text-blue-400 transition-colors">Support Center</Link>
+                <Link to="/kbs-prime" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime</Link>
               </div>
             </div>
 
@@ -718,9 +717,11 @@ export function HomePage() {
               <span className="text-blue-400 ml-1">Powered by DeepSeek AI • Hosted on Vercel • Database: Supabase</span>
             </p>
             <p className="text-gray-400 text-sm">
-              <Link to="/kbs-prime-privacy" className="text-white font-medium hover:text-blue-400 transition-colors">KBS Prime</Link>
+              <Link to="/kbs-prime" className="text-white font-medium hover:text-blue-400 transition-colors">KBS Prime</Link>
               {' · '}
-              <Link to="/kbs-prime-terms" className="text-white font-medium hover:text-blue-400 transition-colors">KBS Prime Terms</Link>
+              <Link to="/kbs-prime-privacy" className="text-white font-medium hover:text-blue-400 transition-colors">Privacy</Link>
+              {' · '}
+              <Link to="/kbs-prime-terms" className="text-white font-medium hover:text-blue-400 transition-colors">Terms</Link>
             </p>
           </div>
         </div>

@@ -219,7 +219,7 @@ export default function AdminDashboard() {
                 <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                   <CheckCircle className="h-8 w-8 text-yellow-500 mb-4" />
                   <h3 className="font-semibold text-gray-900 mb-2">Refund Policy</h3>
-                  <p className="text-sm text-gray-600 mb-4">İade ve iptal politikaları</p>
+                  <p className="text-sm text-gray-600 mb-4">Refund and cancellation policies</p>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-500">v1.5 - 15 Ağu 2025</span>
                     <button 
@@ -284,7 +284,7 @@ export default function AdminDashboard() {
                     <CheckCircle className="h-6 w-6 text-green-500" />
                     <div>
                       <p className="font-medium text-gray-900">KVKK Uyumlu</p>
-                      <p className="text-sm text-gray-600">Türkiye</p>
+                      <p className="text-sm text-gray-600">Turkey</p>
                     </div>
                   </div>
                 </div>

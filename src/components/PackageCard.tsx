@@ -52,22 +52,20 @@ export function CheckoutModal({ package: pkg, isOpen, onClose }: CheckoutModalPr
       console.log('Checkout result:', result)
 
       if (result.url) {
-        // Checkout'a yönlendir
+        // Redirect to checkout
         window.location.href = result.url
       } else {
-        throw new Error('Checkout URL oluşturulamadı')
+        throw new Error('Could not create checkout URL')
       }
     } catch (err: any) {
       console.error('❌ Checkout error:', err)
-      let errorMessage = err.message || 'Ödeme işlemi başlatılamadı'
-      
-      // Daha kullanıcı dostu hata mesajları
-      if (errorMessage.includes('Stripe yapılandırılmamış')) {
-        errorMessage = 'Ödeme sistemi yapılandırılmamış. Lütfen yöneticiye başvurun.'
-      } else if (errorMessage.includes('kullanılamıyor')) {
-        errorMessage = 'Ödeme sistemi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.'
+      let errorMessage = err.message || 'Could not start payment'
+      if (errorMessage.includes('Stripe') && (errorMessage.includes('yapılandırılmamış') || errorMessage.includes('config'))) {
+        errorMessage = 'Payment system is not configured. Please contact the administrator.'
+      } else if (errorMessage.includes('kullanılamıyor') || errorMessage.includes('unavailable')) {
+        errorMessage = 'Payment system is currently unavailable. Please try again later.'
       } else if (errorMessage.includes('fetch') || errorMessage.includes('network')) {
-        errorMessage = 'İnternet bağlantınızı kontrol edin ve tekrar deneyin.'
+        errorMessage = 'Check your internet connection and try again.'
       }
       
       setError(errorMessage)
@@ -223,7 +221,7 @@ export function PackageCard({ pkg }: { pkg: Package }) {
         {pkg.popular && (
           <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
             <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-semibold">
-              En Popüler
+              Most Popular
             </span>
           </div>
         )}
@@ -232,7 +230,7 @@ export function PackageCard({ pkg }: { pkg: Package }) {
           <h3 className="text-2xl font-bold text-white mb-2">{pkg.name}</h3>
           <p className="text-gray-300 mb-4">{pkg.description}</p>
           <div className={`text-4xl font-bold mb-2 ${pkg.color}`}>${pkg.price}</div>
-          <p className="text-gray-400">Tek seferlik ödeme</p>
+          <p className="text-gray-400">One-time payment</p>
         </div>
         
         <ul className="space-y-4 mb-8">

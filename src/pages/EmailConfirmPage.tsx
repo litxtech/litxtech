@@ -54,7 +54,7 @@ export function EmailConfirmPage() {
             }
           } else {
             setStatus('error')
-            setMessage(sessionError?.message || 'E-posta doğrulama başarısız oldu')
+            setMessage(sessionError?.message || 'Email verification failed')
           }
         } else {
           // Token yok, kullanıcıya bilgi ver

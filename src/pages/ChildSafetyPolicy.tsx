@@ -9,7 +9,7 @@ export function ChildSafetyPolicy() {
           </h1>
           <p className="text-sm text-gray-500">Last Updated: November 17, 2025</p>
           <p>
-            This policy explains how we protect minors who may interact with or attempt to access the MyTrabzon mobile application (“App”). Our approach complies with COPPA (USA), UK GDPR rules for children, EU GDPR digital consent requirements, and Türkiye’s KVKK obligations.
+            This policy explains how we protect minors who may interact with or attempt to access the MyTrabzon mobile application (“App”). Our approach complies with COPPA (USA), UK GDPR rules for children, EU GDPR digital consent requirements, and Turkey’s KVKK obligations.
           </p>
         </header>
 

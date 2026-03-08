@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 export function MyTrabzonCallback() {
   const [showButton, setShowButton] = useState(false)
-  const [message, setMessage] = useState('Uygulamaya yönlendiriliyorsunuz...')
-  const [subMessage, setSubMessage] = useState('Eğer otomatik yönlendirme çalışmazsa, aşağıdaki butona tıklayın.')
+  const [message, setMessage] = useState('Redirecting to the app...')
+  const [subMessage, setSubMessage] = useState('If redirect does not work, click the button below.')
 
   useEffect(() => {
     // URL'den parametreleri al
@@ -18,7 +18,7 @@ export function MyTrabzonCallback() {
     // Hata varsa göster
     if (error) {
       setMessage('Hata: ' + (errorDescription || error))
-      setSubMessage('Lütfen uygulamayı açıp tekrar deneyin.')
+      setSubMessage('Please open the app and try again.')
       setShowButton(true)
       return
     }
@@ -48,7 +48,7 @@ export function MyTrabzonCallback() {
         // Eğer 2 saniye içinde yönlendirme olmazsa, butonu göster
         setTimeout(() => {
           setShowButton(true)
-          setMessage('Uygulamayı açmak için butona tıklayın')
+          setMessage('Click the button to open the app')
         }, 2000)
       }
       // Android için
@@ -70,14 +70,14 @@ export function MyTrabzonCallback() {
         // Eğer hala çalışmazsa butonu göster
         setTimeout(() => {
           setShowButton(true)
-          setMessage('Uygulamayı açmak için butona tıklayın')
+          setMessage('Click the button to open the app')
         }, 2000)
       }
     } else {
       // Desktop'ta direkt butonu göster
       setShowButton(true)
-      setMessage('Mobil cihazınızda uygulamayı açın')
-      setSubMessage('Bu sayfa sadece mobil cihazlarda çalışır.')
+      setMessage('Open the app on your mobile device')
+      setSubMessage('This page works on mobile devices only.')
     }
 
     // Deep link URL'ini global olarak sakla (buton için)
@@ -102,7 +102,7 @@ export function MyTrabzonCallback() {
             onClick={handleButtonClick}
             className="button inline-block mt-6 px-6 py-3 bg-white text-red-600 rounded-lg font-semibold no-underline transition-transform hover:scale-105"
           >
-            Uygulamayı Aç
+            Open app
           </a>
         )}
       </div>

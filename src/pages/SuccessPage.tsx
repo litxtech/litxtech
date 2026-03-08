@@ -36,21 +36,21 @@ export function SuccessPage() {
 
         {/* Success Message */}
         <h1 className="text-4xl font-bold text-white mb-4">
-          {type === 'donation' ? 'Bağışınız İçin Teşekkürler! ❤️' : 'Ödeme Başarılı! 🎉'}
+          {type === 'donation' ? 'Thank You for Your Donation! ❤️' : 'Payment Successful! 🎉'}
         </h1>
         
         <p className="text-xl text-gray-300 mb-6">
           {type === 'donation' ? (
             <>
-              Bağışınız başarıyla tamamlandı. 
+              Your donation was completed successfully.
               <br />
-              Öğrencilere bir kahve ısmarladınız! ☕
+              You bought students a coffee! ☕
             </>
           ) : (
             <>
-              Satın alma işleminiz başarıyla tamamlandı. 
+              Your purchase was completed successfully.
               <br />
-              Projeniz için çalışmalarımız başlayacak.
+              We will start working on your project.
             </>
           )}
         </p>
@@ -59,10 +59,10 @@ export function SuccessPage() {
         {sessionId && (
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-4 mb-6">
             <p className="text-gray-300 text-sm">
-              <strong>İşlem ID:</strong> {sessionId}
+              <strong>Transaction ID:</strong> {sessionId}
             </p>
             <p className="text-gray-400 text-xs mt-2">
-              Bu ID'yi destek taleplerinizde kullanabilirsiniz.
+              You can use this ID in support requests.
             </p>
           </div>
         )}
@@ -70,19 +70,19 @@ export function SuccessPage() {
         {/* Next Steps */}
         {type !== 'donation' && (
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 mb-8">
-            <h3 className="text-lg font-semibold text-white mb-4">Sonraki Adımlar:</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Next steps:</h3>
             <div className="space-y-3 text-left">
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
-                <span className="text-gray-300">E-posta adresinize onay mesajı gönderilecek</span>
+                <span className="text-gray-300">A confirmation message will be sent to your email</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
-                <span className="text-gray-300">Proje detayları için sizinle iletişime geçeceğiz</span>
+                <span className="text-gray-300">We will contact you for project details</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
-                <span className="text-gray-300">Geliştirme süreci başlayacak</span>
+                <span className="text-gray-300">Development will begin</span>
               </div>
             </div>
           </div>
@@ -92,21 +92,21 @@ export function SuccessPage() {
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 mb-8">
             <div className="flex items-center justify-center space-x-3 mb-4">
               <Coffee className="w-8 h-8 text-amber-400" />
-              <h3 className="text-lg font-semibold text-white">Bağışınız Öğrencilere Ulaşacak</h3>
+              <h3 className="text-lg font-semibold text-white">Your Donation Reaches Students</h3>
             </div>
             <p className="text-gray-300 text-center">
-              Toplanan bağışlar doğrudan öğrencilere ulaşır ve onların gününü güzelleştirir.
+              Donations go directly to students and brighten their day.
               <br />
-              Desteğiniz için teşekkür ederiz! 🙏
+              Thank you for your support! 🙏
             </p>
           </div>
         )}
 
         {/* Contact Info */}
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-4 mb-8">
-          <h4 className="text-white font-semibold mb-2">Sorularınız mı var?</h4>
+          <h4 className="text-white font-semibold mb-2">Have questions?</h4>
           <p className="text-gray-300 text-sm mb-3">
-            Destek ekibimiz 7/24 size yardımcı olmaya hazır.
+            Our support team is ready to help 24/7.
           </p>
           <div className="flex items-center justify-center space-x-4">
             <a 
@@ -128,7 +128,7 @@ export function SuccessPage() {
             className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center space-x-2"
           >
             <Home className="w-4 h-4" />
-            <span>Ana Sayfaya Dön</span>
+            <span>Back to Home</span>
           </Link>
           
           <Link
@@ -136,7 +136,7 @@ export function SuccessPage() {
             className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2"
           >
             <ArrowRight className="w-4 h-4" />
-            <span>İletişime Geç</span>
+            <span>Contact Us</span>
           </Link>
         </div>
       </div>

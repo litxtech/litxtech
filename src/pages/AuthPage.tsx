@@ -45,7 +45,7 @@ export function AuthPage() {
       // OAuth redirect olacak, bu yüzden loading state'i burada kalacak
     } catch (e: any) {
       console.error('OAuth error:', e)
-      let errorMessage = e.message || 'Giriş başarısız oldu. Lütfen tekrar deneyin.'
+      let errorMessage = e.message || 'Sign-in failed. Please try again.'
       
       // Daha kullanıcı dostu hata mesajları
       if (errorMessage.includes('Auth not configured')) {
@@ -68,7 +68,7 @@ export function AuthPage() {
       setMessageType('')
       
       if (!email || !password) {
-        setMessage('Lütfen tüm alanları doldurun')
+        setMessage('Please fill in all fields')
         setMessageType('error')
         setLoading(false)
         return
@@ -87,10 +87,10 @@ export function AuthPage() {
       const { data: { user }, error: userError } = await supabase.auth.getUser()
       
       if (userError || !user) {
-        throw new Error('Giriş yapılamadı. Lütfen tekrar deneyin.')
+        throw new Error('Could not sign in. Please try again.')
       }
 
-      setMessage('Giriş başarılı! Yönlendiriliyorsunuz...')
+      setMessage('Sign-in successful! Redirecting...')
       setMessageType('success')
       
       // Onboarding kontrolü ve mobil deep link yönlendirme
@@ -107,7 +107,7 @@ export function AuthPage() {
       }
     } catch (e: any) {
       console.error('Sign in error:', e)
-      setMessage(e.message || 'Giriş başarısız oldu')
+      setMessage(e.message || 'Sign-in failed')
       setMessageType('error')
       setLoading(false)
     }
@@ -121,28 +121,28 @@ export function AuthPage() {
       setMessageType('')
       
       if (!email || !password || !confirmPassword) {
-        setMessage('Lütfen tüm alanları doldurun')
+        setMessage('Please fill in all fields')
         setMessageType('error')
         return
       }
 
       if (password.length < 6) {
-        setMessage('Şifre en az 6 karakter olmalıdır')
+        setMessage('Password must be at least 6 characters')
         setMessageType('error')
         return
       }
 
       if (password !== confirmPassword) {
-        setMessage('Şifreler eşleşmiyor')
+        setMessage('Passwords do not match')
         setMessageType('error')
         return
       }
 
       await userAuth.signUpWithEmail(email, password)
-      setMessage('Kayıt başarılı! E-posta adresinize doğrulama linki gönderildi. Lütfen e-postanızı kontrol edin.')
+      setMessage('Registration successful! A verification link was sent to your email. Please check your inbox.')
       setMessageType('success')
     } catch (e: any) {
-      setMessage(e.message || 'Kayıt başarısız oldu')
+      setMessage(e.message || 'Registration failed')
       setMessageType('error')
     } finally {
       setLoading(false)
@@ -157,16 +157,16 @@ export function AuthPage() {
       setMessageType('')
       
       if (!email) {
-        setMessage('Lütfen e-posta adresinizi girin')
+        setMessage('Please enter your email address')
         setMessageType('error')
         return
       }
 
       await userAuth.signInWithMagicLink(email)
-      setMessage('Magic link e-posta adresinize gönderildi! Lütfen e-postanızı kontrol edin.')
+      setMessage('Magic link sent to your email! Please check your inbox.')
       setMessageType('success')
     } catch (e: any) {
-      setMessage(e.message || 'Magic link gönderilemedi')
+      setMessage(e.message || 'Could not send magic link')
       setMessageType('error')
     } finally {
       setLoading(false)
@@ -181,12 +181,12 @@ export function AuthPage() {
             <Sparkles className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">
-            {mode === 'signin' ? 'Hoş Geldiniz' : 'Hesap Oluştur'}
+            {mode === 'signin' ? 'Welcome' : 'Create Account'}
           </h1>
           <p className="text-gray-300">
             {mode === 'signin' 
-              ? 'Hesabınıza giriş yapın' 
-              : 'Yeni hesap oluşturun ve başlayın'}
+              ? 'Sign in to your account' 
+              : 'Create a new account and get started'}
           </p>
         </div>
 
@@ -204,7 +204,7 @@ export function AuthPage() {
                 : 'text-gray-400 hover:text-white'
             }`}
           >
-            Giriş Yap
+            Sign In
           </button>
           <button
             onClick={() => {
@@ -218,7 +218,7 @@ export function AuthPage() {
                 : 'text-gray-400 hover:text-white'
             }`}
           >
-            Kayıt Ol
+            Sign Up
           </button>
         </div>
 
@@ -235,7 +235,7 @@ export function AuthPage() {
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
-            Google ile {mode === 'signin' ? 'Giriş Yap' : 'Kayıt Ol'}
+            {mode === 'signin' ? 'Sign in' : 'Sign up'} with Google
           </button>
           <button
             disabled={loading}
@@ -245,7 +245,7 @@ export function AuthPage() {
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
             </svg>
-            Apple ile {mode === 'signin' ? 'Giriş Yap' : 'Kayıt Ol'}
+            {mode === 'signin' ? 'Sign in' : 'Sign up'} with Apple
           </button>
         </div>
 
@@ -254,7 +254,7 @@ export function AuthPage() {
             <div className="w-full border-t border-white/20"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-transparent text-gray-400">veya</span>
+            <span className="px-2 bg-transparent text-gray-400">or</span>
           </div>
         </div>
 
@@ -262,7 +262,7 @@ export function AuthPage() {
         <form onSubmit={mode === 'signin' ? handleSignIn : handleSignUp} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-              E-posta Adresi
+              Email address
             </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -271,7 +271,7 @@ export function AuthPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="ornek@email.com"
+                placeholder="you@example.com"
                 className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
               />
@@ -280,7 +280,7 @@ export function AuthPage() {
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-              Şifre
+              Password
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -300,7 +300,7 @@ export function AuthPage() {
             <>
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                  Şifreyi Tekrar Girin
+                  Confirm password
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -318,7 +318,7 @@ export function AuthPage() {
               <div className="flex items-start gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                 <HelpCircle className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
                 <p className="text-xs text-gray-300">
-                  Şifrenizi unutursanız, giriş sayfasındaki <Link to="/auth/reset-password" className="text-purple-400 hover:text-purple-300 underline">"Şifremi Unuttum"</Link> linkini kullanabilirsiniz.
+                  If you forget your password, use the <Link to="/auth/reset-password" className="text-purple-400 hover:text-purple-300 underline">"Forgot password"</Link> link on the sign-in page.
                 </p>
               </div>
             </>
@@ -330,7 +330,7 @@ export function AuthPage() {
                 to="/auth/reset-password"
                 className="text-sm text-purple-400 hover:text-purple-300 transition-colors font-medium underline underline-offset-2"
               >
-                Şifremi Unuttum?
+                Forgot password?
               </Link>
             </div>
           )}
@@ -351,18 +351,18 @@ export function AuthPage() {
             className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
           >
             {loading ? (
-              'İşleniyor...'
+              'Processing...'
             ) : (
               <>
                 {mode === 'signin' ? (
                   <>
                     <LogIn className="w-5 h-5" />
-                    Giriş Yap
+                    Sign In
                   </>
                 ) : (
                   <>
                     <UserPlus className="w-5 h-5" />
-                    Kayıt Ol
+                    Sign Up
                   </>
                 )}
               </>
@@ -378,7 +378,7 @@ export function AuthPage() {
             className="w-full text-gray-300 hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
           >
             <Mail className="w-4 h-4" />
-            Magic Link ile {mode === 'signin' ? 'Giriş Yap' : 'Kayıt Ol'}
+            {mode === 'signin' ? 'Sign in' : 'Sign up'} with Magic Link
           </button>
         </div>
       </div>

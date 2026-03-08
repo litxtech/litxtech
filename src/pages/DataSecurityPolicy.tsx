@@ -71,7 +71,7 @@ export function DataSecurityPolicy() {
 
         <section className="space-y-3">
           <h2 className="text-xl font-semibold">9. Compliance</h2>
-          <p>This policy aligns with UK GDPR, EU GDPR, US privacy regulations, Türkiye KVKK, and App Store/Google Play security requirements.</p>
+          <p>This policy aligns with UK GDPR, EU GDPR, US privacy regulations, Turkey KVKK, and App Store/Google Play security requirements.</p>
             </section>
 
         <section className="space-y-3">
