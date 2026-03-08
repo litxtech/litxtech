@@ -1,0 +1,42 @@
+name: 🚀 Auto Deploy to Vercel
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    types: [ closed ]
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🔨 Build project
+        run: npm run build
+
+      - name: 🚀 Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: fpqaajptUew3gRYE2Ib4X8L6
+          vercel-org-id: litxtechcom
+          vercel-project-id: prj_xygYC85RMpYH4rcxLk8f3j9l6P8H
+          working-directory: ./
+          vercel-args: '--prod'
+
+      - name: ✅ Deployment Success
+        run: echo "🎉 Website successfully deployed to Vercel!"
+
