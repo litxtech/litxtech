@@ -21,6 +21,8 @@ import { Subprocessors } from './pages/Subprocessors'
 import { AccountDeletionPolicy } from './pages/AccountDeletionPolicy'
 import { ChildSafetyPolicy } from './pages/ChildSafetyPolicy'
 import { CommunityPolicy } from './pages/CommunityPolicy'
+import { KbsPrimePrivacyPolicy } from './pages/KbsPrimePrivacyPolicy'
+import { KbsPrimeTerms } from './pages/KbsPrimeTerms'
 import { MyTrabzonLanding } from './pages/MyTrabzonLanding'
 import { MyTrabzonAccountDeletion } from './pages/MyTrabzonAccountDeletion'
 import { BlogManagement } from './pages/BlogManagement'
@@ -68,6 +70,8 @@ function App() {
           <Route path="/account-deletion-policy" element={<AccountDeletionPolicy />} />
           <Route path="/child-safety-policy" element={<ChildSafetyPolicy />} />
           <Route path="/community-policy" element={<CommunityPolicy />} />
+          <Route path="/kbs-prime-privacy" element={<KbsPrimePrivacyPolicy />} />
+          <Route path="/kbs-prime-terms" element={<KbsPrimeTerms />} />
           <Route path="/mytrabzon" element={<MyTrabzonLanding />} />
           <Route path="/mytrabzon/delete-account" element={<MyTrabzonAccountDeletion />} />
           <Route path="/admin/blog" element={<BlogManagement />} />

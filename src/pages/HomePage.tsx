@@ -57,25 +57,25 @@ export function HomePage() {
       {/* Background Code Particles */}
       <BackgroundCodeParticles />
       
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(30)].map((_, i) => (
+      {/* Floating particles - sadeleştirilmiş (performans + okunabilirlik) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-blue-400/30 rounded-full"
+            className="absolute w-1.5 h-1.5 bg-[var(--litx-accent)]/20 rounded-full"
             initial={{ 
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${10 + (i * 7) % 80}%`,
+              top: `${10 + (i * 11) % 80}%`,
               opacity: 0
             }}
             animate={{ 
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0]
+              opacity: [0, 0.6, 0],
+              scale: [0.8, 1, 0.8]
             }}
             transition={{
-              duration: 3 + Math.random() * 4,
+              duration: 4 + (i % 3),
               repeat: Infinity,
-              delay: Math.random() * 5
+              delay: (i * 0.3) % 4
             }}
           />
         ))}
@@ -86,11 +86,11 @@ export function HomePage() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)]">
                 <Zap className="w-7 h-7 text-white" />
               </div>
               <div>
-                <Link to="/" className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                <Link to="/" className="font-display text-3xl font-bold bg-gradient-to-r from-[var(--litx-primary)] to-[var(--litx-accent)] bg-clip-text text-transparent">
                   LitxTech
                 </Link>
                 <p className="text-sm text-gray-300 font-medium">Build. Automate. Scale.</p>
@@ -139,7 +139,7 @@ export function HomePage() {
               ) : (
                 <Link to="/auth" className="text-white hover:text-blue-400 transition-colors font-medium">{t.nav.login}</Link>
               )}
-              <Link to="/contact" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+              <Link to="/contact" className="bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white px-6 py-2 rounded-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg">
                 {t.nav.getQuote}
               </Link>
             </div>
@@ -178,7 +178,7 @@ export function HomePage() {
                   ) : (
                     <Link to="/auth" className="block text-white hover:text-blue-400 transition-colors mb-2">{t.nav.login}</Link>
                   )}
-                  <Link to="/contact" className="block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg text-center">{t.nav.getQuote}</Link>
+                  <Link to="/contact" className="block bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white px-4 py-2 rounded-lg text-center">{t.nav.getQuote}</Link>
                 </div>
               </div>
             </div>
@@ -253,16 +253,16 @@ export function HomePage() {
                   {t.hero.badge}
                 </div>
                 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
                 <BreathingTitle>
-                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[var(--litx-primary)] via-[var(--litx-accent)] to-[var(--litx-secondary)] bg-clip-text text-transparent">
                     {t.hero.title1}
                   </span>
                 </BreathingTitle>
                 <br />
                 <span className="text-white">{t.hero.title2}</span>
                 <br />
-                <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[var(--litx-secondary)] via-[var(--litx-accent)] to-[var(--litx-primary)] bg-clip-text text-transparent">
                   {t.hero.title3}
                 </span>
               </h1>
@@ -489,7 +489,7 @@ export function HomePage() {
                 onClick={() => setSelectedCategory(key)}
                 className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
                   selectedCategory === key
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                    ? 'bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white'
                     : 'bg-white/10 backdrop-blur-md border border-white/20 text-gray-300 hover:bg-white/20'
                 }`}
               >
@@ -509,7 +509,7 @@ export function HomePage() {
           <div className="text-center mt-12">
             <Link
               to="/packages"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-all duration-300"
             >
               <span>View All Packages</span>
               <ArrowRight className="w-5 h-5" />
@@ -687,6 +687,8 @@ export function HomePage() {
                 <Link to="/account-deletion-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Account Deletion Policy</Link>
                 <Link to="/child-safety-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Child Safety Policy</Link>
                 <Link to="/community-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Community Policy</Link>
+                <Link to="/kbs-prime-privacy" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime</Link>
+                <Link to="/kbs-prime-terms" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Terms</Link>
               </div>
             </div>
 
@@ -710,10 +712,15 @@ export function HomePage() {
             </div>
           </div>
 
-          <div className="border-t border-white/20 mt-8 pt-8 text-center">
+          <div className="border-t border-white/20 mt-8 pt-8 text-center space-y-2">
             <p className="text-gray-400 text-sm">
               © 2025 LitxTech LLC. All rights reserved. | 
               <span className="text-blue-400 ml-1">Powered by DeepSeek AI • Hosted on Vercel • Database: Supabase</span>
+            </p>
+            <p className="text-gray-400 text-sm">
+              <Link to="/kbs-prime-privacy" className="text-white font-medium hover:text-blue-400 transition-colors">KBS Prime</Link>
+              {' · '}
+              <Link to="/kbs-prime-terms" className="text-white font-medium hover:text-blue-400 transition-colors">KBS Prime Terms</Link>
             </p>
           </div>
         </div>

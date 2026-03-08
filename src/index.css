@@ -24,6 +24,15 @@
   animation: breathe 2s ease-in-out infinite;
 }
 
+/* LitxTech marka renkleri - tutarlı palet */
+:root {
+  --litx-primary: #60a5fa;   /* blue-400 */
+  --litx-accent: #a78bfa;    /* purple-400 */
+  --litx-secondary: #f472b6;  /* pink-400 */
+  --litx-primary-dark: #2563eb; /* blue-600 */
+  --litx-accent-dark: #7c3aed;   /* purple-600 */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -77,6 +86,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .font-display {
+    font-family: 'Sora', ui-sans-serif, system-ui, sans-serif;
   }
 }
 

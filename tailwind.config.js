@@ -17,7 +17,17 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ["'Sora'", "ui-sans-serif", "system-ui", "sans-serif"],
+      },
       colors: {
+        litx: {
+          primary: "var(--litx-primary)",
+          accent: "var(--litx-accent)",
+          secondary: "var(--litx-secondary)",
+          "primary-dark": "var(--litx-primary-dark)",
+          "accent-dark": "var(--litx-accent-dark)",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
