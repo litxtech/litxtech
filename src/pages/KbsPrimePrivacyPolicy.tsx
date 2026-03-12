@@ -163,9 +163,10 @@ export function KbsPrimePrivacyPolicy() {
           </p>
         </section>
 
-        <div className="pt-6 border-t border-gray-200 flex gap-4">
-          <Link to="/" className="text-blue-600 hover:text-blue-800 font-medium">← Back to Home</Link>
-          <Link to="/kbs-prime-terms" className="text-blue-600 hover:text-blue-800 font-medium">KBS Prime Terms</Link>
+        <div className="pt-6 border-t border-gray-200 flex flex-wrap gap-4">
+          <Link to="/kbs-prime" className="text-blue-600 hover:text-blue-800 font-medium">← KBS Prime</Link>
+          <Link to="/kbs-prime-privacy-tr" className="text-blue-600 hover:text-blue-800 font-medium">Gizlilik Politikası (TR)</Link>
+          <Link to="/kbs-prime-terms" className="text-blue-600 hover:text-blue-800 font-medium">Terms</Link>
         </div>
       </div>
     </div>

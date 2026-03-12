@@ -685,7 +685,8 @@ export function HomePage() {
                 <Link to="/account-deletion-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Account Deletion Policy</Link>
                 <Link to="/child-safety-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Child Safety Policy</Link>
                 <Link to="/community-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Community Policy</Link>
-                <Link to="/kbs-prime-privacy" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime</Link>
+                <Link to="/kbs-prime-privacy" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Privacy (EN)</Link>
+                <Link to="/kbs-prime-privacy-tr" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Gizlilik (TR)</Link>
                 <Link to="/kbs-prime-terms" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Terms</Link>
               </div>
             </div>
@@ -719,6 +720,8 @@ export function HomePage() {
               <Link to="/kbs-prime" className="text-white font-medium hover:text-blue-400 transition-colors">KBS Prime</Link>
               {' · '}
               <Link to="/kbs-prime-privacy" className="text-white font-medium hover:text-blue-400 transition-colors">Privacy</Link>
+              {' · '}
+              <Link to="/kbs-prime-privacy-tr" className="text-white font-medium hover:text-blue-400 transition-colors">Gizlilik (TR)</Link>
               {' · '}
               <Link to="/kbs-prime-terms" className="text-white font-medium hover:text-blue-400 transition-colors">Terms</Link>
             </p>

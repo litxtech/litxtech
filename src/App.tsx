@@ -22,6 +22,7 @@ import { AccountDeletionPolicy } from './pages/AccountDeletionPolicy'
 import { ChildSafetyPolicy } from './pages/ChildSafetyPolicy'
 import { CommunityPolicy } from './pages/CommunityPolicy'
 import { KbsPrimePrivacyPolicy } from './pages/KbsPrimePrivacyPolicy'
+import { KbsPrimePrivacyPolicyTR } from './pages/KbsPrimePrivacyPolicyTR'
 import { KbsPrimeTerms } from './pages/KbsPrimeTerms'
 import { KbsPrimeLanding } from './pages/KbsPrimeLanding'
 import { KbsPrimeAccountDeletion } from './pages/KbsPrimeAccountDeletion'
@@ -74,6 +75,7 @@ function App() {
           <Route path="/child-safety-policy" element={<ChildSafetyPolicy />} />
           <Route path="/community-policy" element={<CommunityPolicy />} />
           <Route path="/kbs-prime-privacy" element={<KbsPrimePrivacyPolicy />} />
+          <Route path="/kbs-prime-privacy-tr" element={<KbsPrimePrivacyPolicyTR />} />
           <Route path="/kbs-prime-terms" element={<KbsPrimeTerms />} />
           <Route path="/kbs-prime" element={<KbsPrimeLanding />} />
           <Route path="/kbs-prime/delete-account" element={<KbsPrimeAccountDeletion />} />
