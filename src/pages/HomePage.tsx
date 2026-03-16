@@ -185,10 +185,10 @@ export function HomePage() {
         </div>
       </nav>
 
-      {/* Live App Cards - KBS Prime & Trabzon Live */}
+      {/* Live App Cards - KBS Prime, Trabzon Live, Valoria App */}
       <section className="relative z-40 px-6 py-4">
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <a
               href="https://kbsprime.com"
               target="_blank"
@@ -210,6 +210,25 @@ export function HomePage() {
               </div>
               <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
             </a>
+            <Link
+              to="/valoria-app"
+              className="group flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
+            >
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-bold text-white">VA</span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-white font-bold text-lg">Valoria App</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Tanıtım
+                  </span>
+                </div>
+                <p className="text-gray-400 text-sm mt-0.5 truncate">Gizlilik · Terms · Destek</p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
+            </Link>
             <a
               href="https://play.google.com/store/apps/details?id=com.litxtech.mytrabzon"
               target="_blank"
@@ -671,6 +690,7 @@ export function HomePage() {
                 <Link to="/contact" className="block text-gray-300 hover:text-blue-400 transition-colors">Contact</Link>
                 <Link to="/support/mytrabzon" className="block text-gray-300 hover:text-blue-400 transition-colors">Support Center</Link>
                 <Link to="/kbs-prime" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime</Link>
+                <Link to="/valoria-app" className="block text-gray-300 hover:text-blue-400 transition-colors">Valoria App Tanıtım</Link>
               </div>
             </div>
 
@@ -688,6 +708,8 @@ export function HomePage() {
                 <Link to="/kbs-prime-privacy" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Privacy (EN)</Link>
                 <Link to="/kbs-prime-privacy-tr" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Gizlilik (TR)</Link>
                 <Link to="/kbs-prime-terms" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Terms</Link>
+                <Link to="/valoria-app-privacy" className="block text-gray-300 hover:text-blue-400 transition-colors">Valoria App Gizlilik</Link>
+                <Link to="/valoria-app-terms" className="block text-gray-300 hover:text-blue-400 transition-colors">Valoria App Kullanım Şartları</Link>
               </div>
             </div>
 
@@ -724,6 +746,12 @@ export function HomePage() {
               <Link to="/kbs-prime-privacy-tr" className="text-white font-medium hover:text-blue-400 transition-colors">Gizlilik (TR)</Link>
               {' · '}
               <Link to="/kbs-prime-terms" className="text-white font-medium hover:text-blue-400 transition-colors">Terms</Link>
+              {' · '}
+              <Link to="/valoria-app" className="text-white font-medium hover:text-blue-400 transition-colors">Valoria App Tanıtım</Link>
+              {' · '}
+              <Link to="/valoria-app-privacy" className="text-white font-medium hover:text-blue-400 transition-colors">Valoria App Gizlilik</Link>
+              {' · '}
+              <Link to="/valoria-app-terms" className="text-white font-medium hover:text-blue-400 transition-colors">Valoria App Terms</Link>
             </p>
           </div>
         </div>

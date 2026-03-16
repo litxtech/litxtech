@@ -29,6 +29,11 @@ import { KbsPrimeAccountDeletion } from './pages/KbsPrimeAccountDeletion'
 import { KbsPrimeSupport } from './pages/KbsPrimeSupport'
 import { MyTrabzonLanding } from './pages/MyTrabzonLanding'
 import { MyTrabzonAccountDeletion } from './pages/MyTrabzonAccountDeletion'
+import { ValoriaAppLanding } from './pages/ValoriaAppLanding'
+import { ValoriaAppPrivacy } from './pages/ValoriaAppPrivacy'
+import { ValoriaAppTerms } from './pages/ValoriaAppTerms'
+import { ValoriaAppAccountDeletion } from './pages/ValoriaAppAccountDeletion'
+import { ValoriaAppSupport } from './pages/ValoriaAppSupport'
 import { BlogManagement } from './pages/BlogManagement'
 import { AdminLogin } from './pages/AdminLogin'
 import { SuccessPage } from './pages/SuccessPage'
@@ -82,6 +87,11 @@ function App() {
           <Route path="/support/kbs-prime" element={<KbsPrimeSupport />} />
           <Route path="/mytrabzon" element={<MyTrabzonLanding />} />
           <Route path="/mytrabzon/delete-account" element={<MyTrabzonAccountDeletion />} />
+          <Route path="/valoria-app" element={<ValoriaAppLanding />} />
+          <Route path="/valoria-app-privacy" element={<ValoriaAppPrivacy />} />
+          <Route path="/valoria-app-terms" element={<ValoriaAppTerms />} />
+          <Route path="/valoria-app/delete-account" element={<ValoriaAppAccountDeletion />} />
+          <Route path="/support/valoria-app" element={<ValoriaAppSupport />} />
           <Route path="/admin/blog" element={<BlogManagement />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />
