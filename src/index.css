@@ -80,6 +80,17 @@
   }
 }
 
+/* Teklif / iletişim formları — koyu alan + Chrome autofill okunabilirliği */
+@layer components {
+  .litx-dark-input:-webkit-autofill,
+  .litx-dark-input:-webkit-autofill:hover,
+  .litx-dark-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #f1f5f9;
+    box-shadow: 0 0 0 1000px #0f172a inset;
+    transition: background-color 99999s ease-out;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
