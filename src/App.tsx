@@ -1,6 +1,11 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { ScrollToTop } from './components/marketing/ScrollToTop'
 import { HomePage } from './pages/HomePage'
+import { SolutionsIndexPage } from './pages/SolutionsIndexPage'
+import { SolutionDetailPage } from './pages/SolutionDetailPage'
+import { ProjectsIndexPage } from './pages/ProjectsIndexPage'
+import { ProjectDetailPage } from './pages/ProjectDetailPage'
 import { AboutPage } from './pages/AboutPage'
 import { ContactPage } from './pages/ContactPage'
 import { BlogPage } from './pages/BlogPage'
@@ -50,8 +55,17 @@ function App() {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-background">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/cozumler" element={<SolutionsIndexPage />} />
+          <Route path="/cozumler/:slug" element={<SolutionDetailPage />} />
+          <Route path="/projeler" element={<ProjectsIndexPage />} />
+          <Route path="/projeler/:slug" element={<ProjectDetailPage />} />
+          <Route path="/solutions/hotels" element={<Navigate to="/cozumler/otel-yonetim-sistemi" replace />} />
+          <Route path="/solutions/restaurants" element={<Navigate to="/cozumler/restoran-yonetim-sistemi" replace />} />
+          <Route path="/solutions/construction" element={<Navigate to="/cozumler/ozel-yazilim" replace />} />
+          <Route path="/solutions/pharma" element={<Navigate to="/cozumler/ozel-yazilim" replace />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />

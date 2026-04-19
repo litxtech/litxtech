@@ -3,6 +3,12 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "framework": "vite",
+  "redirects": [
+    { "source": "/solutions/hotels", "destination": "/cozumler/otel-yonetim-sistemi", "permanent": true },
+    { "source": "/solutions/restaurants", "destination": "/cozumler/restoran-yonetim-sistemi", "permanent": true },
+    { "source": "/solutions/construction", "destination": "/cozumler/ozel-yazilim", "permanent": true },
+    { "source": "/solutions/pharma", "destination": "/cozumler/ozel-yazilim", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

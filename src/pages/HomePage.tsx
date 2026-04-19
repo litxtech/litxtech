@@ -1,762 +1,360 @@
-import { useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Menu, X, Zap, Rocket, Shield, Star, Users, Play, Monitor, ArrowRight, Globe, Phone, Mail, ChevronDown, Code, Cpu, Database, Cloud, Heart, Coffee, User } from 'lucide-react'
-import { PackageCard } from '../components/PackageCard'
-import { PACKAGE_CATEGORIES } from '../data/packages'
-import { FloatingCodeElements, AnimatedStats, HeroCodeFlow, BackgroundCodeParticles, BreathingTitle, GlowButton, AIInteraction, MatrixCodeRain } from '../components/AnimatedElements'
-import { LanguageSwitcher, LanguageSwitcherCompact } from '../components/LanguageSwitcher'
-import { useTranslation } from '../contexts/LanguageContext'
-import { supabase, userAuth } from '../lib/supabase'
+import {
+  ArrowLeft,
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  ChevronRight,
+  MessageCircle,
+  MonitorPlay,
+  Sparkles,
+} from 'lucide-react'
+import { DashboardMockup } from '@/components/marketing/DashboardMockup'
+import { MarketingChrome } from '@/components/marketing/MarketingChrome'
+import { SeoHead } from '@/components/marketing/SeoHead'
+import { SolutionCard } from '@/components/marketing/SolutionCard'
+import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
+import { homeContent } from '@/data/homeContent'
+import { projectsData } from '@/data/projectsData'
+import { solutionsData } from '@/data/solutionsData'
+import { getWhatsAppLink, siteConfig } from '@/data/siteConfig'
 
 export function HomePage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState('webSaaS')
-  const [user, setUser] = useState<any>(null)
-  const t = useTranslation()
+  const featured = useMemo(() => projectsData.slice(0, 4), [])
+  const [slide, setSlide] = useState(0)
 
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const currentUser = await userAuth.getUser()
-        setUser(currentUser)
-      } catch (error) {
-        console.error('Error checking user:', error)
-        setUser(null)
-      }
-    }
+  const next = () => setSlide((s) => (s + 1) % featured.length)
+  const prev = () => setSlide((s) => (s - 1 + featured.length) % featured.length)
 
-    checkUser()
-
-    // Auth state değişikliklerini dinle
-    if (supabase) {
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_IN' && session?.user) {
-          setUser(session.user)
-        } else if (event === 'SIGNED_OUT') {
-          setUser(null)
-        }
-      })
-
-      return () => {
-        subscription.unsubscribe()
-      }
-    }
-  }, [])
+  const active = featured[slide]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden animate-gradient">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10"></div>
-      
-      {/* Floating Code Elements */}
-      <FloatingCodeElements />
-      
-      {/* Background Code Particles */}
-      <BackgroundCodeParticles />
-      
-      {/* Floating particles - sadeleştirilmiş (performans + okunabilirlik) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1.5 h-1.5 bg-[var(--litx-accent)]/20 rounded-full"
-            initial={{ 
-              left: `${10 + (i * 7) % 80}%`,
-              top: `${10 + (i * 11) % 80}%`,
-              opacity: 0
-            }}
-            animate={{ 
-              opacity: [0, 0.6, 0],
-              scale: [0.8, 1, 0.8]
-            }}
-            transition={{
-              duration: 4 + (i % 3),
-              repeat: Infinity,
-              delay: (i * 0.3) % 4
-            }}
-          />
-        ))}
-      </div>
+    <MarketingChrome>
+      <SeoHead
+        title="LitxTech | İşletmeler için modern yazılım çözümleri"
+        description={siteConfig.tagline}
+        path="/"
+      />
 
-      {/* Navigation */}
-      <nav className="relative z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)]">
-                <Zap className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <Link to="/" className="font-display text-3xl font-bold bg-gradient-to-r from-[var(--litx-primary)] to-[var(--litx-accent)] bg-clip-text text-transparent">
-                  LitxTech
-                </Link>
-                <p className="text-sm text-gray-300 font-medium">Build. Automate. Scale.</p>
-              </div>
-            </div>
-            
-            {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center space-x-8">
-              <Link to="/" className="text-white hover:text-blue-400 transition-colors font-medium">{t.nav.home}</Link>
-              <Link to="/about" className="text-white hover:text-blue-400 transition-colors font-medium">{t.nav.about}</Link>
-              <div className="relative group">
-                <button className="text-white hover:text-blue-400 transition-colors font-medium flex items-center space-x-1">
-                  <span>{t.nav.solutions}</span>
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-4">
-                  <div className="space-y-2">
-                    <Link to="/solutions/hotels" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors">🏨 Hotel Solutions</Link>
-                    <Link to="/solutions/restaurants" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors">🍽️ Restaurant & Cafes</Link>
-                    <Link to="/solutions/construction" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors">🏗️ Construction & Real Estate</Link>
-                    <Link to="/solutions/pharma" className="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors">💊 Pharmacy & Clinics</Link>
-                  </div>
-                </div>
-              </div>
-              <Link to="/packages" className="text-white hover:text-blue-400 transition-colors font-medium">{t.nav.pricing}</Link>
-              <Link to="/blog" className="text-white hover:text-blue-400 transition-colors font-medium">{t.nav.blog}</Link>
-              <Link to="/donation" className="text-white hover:text-pink-400 transition-colors font-medium flex items-center gap-1">
-                <Heart className="w-4 h-4" />
-                {t.donation.support}
-              </Link>
-              <Link to="/contact" className="text-white hover:text-blue-400 transition-colors font-medium">{t.nav.contact}</Link>
-            </div>
-
-            {/* Right Side */}
-            <div className="hidden lg:flex items-center space-x-4">
-              <LanguageSwitcher />
-              <Link to="/donation" className="text-white hover:text-pink-400 transition-colors font-medium flex items-center gap-1">
-                <Heart className="w-4 h-4" />
-                {t.donation.support}
-              </Link>
-              {user ? (
-                <Link to="/profile" className="text-white hover:text-blue-400 transition-colors font-medium flex items-center gap-1">
-                  <User className="w-4 h-4" />
-                  {user.user_metadata?.full_name || user.email?.split('@')[0] || 'Profil'}
-                </Link>
-              ) : (
-                <Link to="/auth" className="text-white hover:text-blue-400 transition-colors font-medium">{t.nav.login}</Link>
-              )}
-              <Link to="/contact" className="bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white px-6 py-2 rounded-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                {t.nav.getQuote}
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden text-white p-2"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <div className="lg:hidden mt-4 pb-4 border-t border-white/20 pt-4">
-              <div className="space-y-4">
-                <Link to="/" className="block text-white hover:text-blue-400 transition-colors">{t.nav.home}</Link>
-                <Link to="/about" className="block text-white hover:text-blue-400 transition-colors">{t.nav.about}</Link>
-                <Link to="/packages" className="block text-white hover:text-blue-400 transition-colors">{t.nav.pricing}</Link>
-                <Link to="/blog" className="block text-white hover:text-blue-400 transition-colors">{t.nav.blog}</Link>
-                <Link to="/donation" className="block text-white hover:text-pink-400 transition-colors flex items-center gap-1">
-                  <Heart className="w-4 h-4" />
-                  {t.donation.support}
-                </Link>
-                <Link to="/contact" className="block text-white hover:text-blue-400 transition-colors">{t.nav.contact}</Link>
-                <div className="pt-4 border-t border-white/20">
-                  <div className="flex justify-center mb-4">
-                    <LanguageSwitcherCompact />
-                  </div>
-                  {user ? (
-                    <Link to="/profile" className="block text-white hover:text-blue-400 transition-colors mb-2 flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      {user.user_metadata?.full_name || user.email?.split('@')[0] || 'Profil'}
-                    </Link>
-                  ) : (
-                    <Link to="/auth" className="block text-white hover:text-blue-400 transition-colors mb-2">{t.nav.login}</Link>
-                  )}
-                  <Link to="/contact" className="block bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white px-4 py-2 rounded-lg text-center">{t.nav.getQuote}</Link>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
-
-      {/* Live App Cards - KBS Prime, Trabzon Live, Valoria App */}
-      <section className="relative z-40 px-6 py-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <a
-              href="https://kbsprime.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
-            >
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">KBS</span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-white font-bold text-lg">KBS Prime</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Live
-                  </span>
-                </div>
-                <p className="text-gray-400 text-sm mt-0.5 truncate">Use card live</p>
-              </div>
-              <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
-            </a>
-            <Link
-              to="/valoria-app"
-              className="group flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
-            >
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform">
-                <span className="text-2xl font-bold text-white">VA</span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-white font-bold text-lg">Valoria App</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Tanıtım
-                  </span>
-                </div>
-                <p className="text-gray-400 text-sm mt-0.5 truncate">Gizlilik · Terms · Destek</p>
-              </div>
-              <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
-            </Link>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.litxtech.mytrabzon"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
-            >
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform overflow-hidden">
-                <img src="/assets/mytrabzon/logo.png" alt="Trabzon Live" className="w-10 h-10 object-contain" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-white font-bold text-lg">Trabzon Live</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Live
-                  </span>
-                </div>
-                <p className="text-gray-400 text-sm mt-0.5 truncate">Google Play'den indir</p>
-              </div>
-              <ArrowRight className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all flex-shrink-0" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Hero Section */}
-      <section className="relative z-10 pt-20 pb-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Side - Text Content */}
-            <div className="space-y-8">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="space-y-6"
-              >
-                <div className="inline-flex items-center px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-full text-blue-300 text-sm font-medium">
-                  <Code className="w-4 h-4 mr-2" />
-                  {t.hero.badge}
-                </div>
-                
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
-                <BreathingTitle>
-                  <span className="bg-gradient-to-r from-[var(--litx-primary)] via-[var(--litx-accent)] to-[var(--litx-secondary)] bg-clip-text text-transparent">
-                    {t.hero.title1}
-                  </span>
-                </BreathingTitle>
-                <br />
-                <span className="text-white">{t.hero.title2}</span>
-                <br />
-                <span className="bg-gradient-to-r from-[var(--litx-secondary)] via-[var(--litx-accent)] to-[var(--litx-primary)] bg-clip-text text-transparent">
-                  {t.hero.title3}
-                </span>
-              </h1>
-                
-                <p className="text-xl text-gray-300 leading-relaxed">
-                  {t.hero.description}
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                className="flex flex-col sm:flex-row gap-4"
-              >
-              <GlowButton
-                as={Link}
-                to="/packages"
-                className="flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
-              >
-                <Rocket className="w-5 h-5" />
-                <span>{t.hero.viewPackages}</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </GlowButton>
-                
-                <button
-                  onClick={() => window.open('https://www.litxtech.com/demo', '_blank')}
-                  className="group bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2"
-                >
-                  <Play className="w-5 h-5" />
-                  <span>{t.hero.watchDemo}</span>
-                </button>
-              </motion.div>
-
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="pt-8"
-              >
-                <AnimatedStats />
-              </motion.div>
-            </div>
-
-            {/* Right Side - Code Animation */}
+      {/* Hero */}
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.22),transparent_55%),radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.18),transparent_55%)]" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 md:px-6 md:py-24 lg:grid-cols-2 lg:gap-16">
+          <div>
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="relative"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-200"
             >
-              <div className="relative">
-                {/* Floating Tech Icons */}
-                <motion.div
-                  className="absolute -top-4 -left-4 w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-blue-500/30"
-                  animate={{ 
-                    y: [0, -10, 0],
-                    rotate: [0, 5, 0]
-                  }}
-                  transition={{ 
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <Cpu className="w-8 h-8 text-blue-400" />
-                </motion.div>
-                
-                <motion.div
-                  className="absolute -top-8 -right-8 w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-purple-500/30"
-                  animate={{ 
-                    y: [0, 10, 0],
-                    rotate: [0, -5, 0]
-                  }}
-                  transition={{ 
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1
-                  }}
-                >
-                  <Database className="w-6 h-6 text-purple-400" />
-                </motion.div>
-                
-                <motion.div
-                  className="absolute -bottom-4 -right-4 w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-pink-500/30"
-                  animate={{ 
-                    y: [0, -8, 0],
-                    rotate: [0, 3, 0]
-                  }}
-                  transition={{ 
-                    duration: 3.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 2
-                  }}
-                >
-                  <Cloud className="w-7 h-7 text-pink-400" />
-                </motion.div>
-
-                <HeroCodeFlow />
-              </div>
+              <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+              Kurumsal yazılım · Web & mobil
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="relative z-10 py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Why Choose <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">LitxTech</span>?
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              We don't just sell software, we scale your business with cutting-edge technology and AI-powered solutions.
+            <motion.h1
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.05 }}
+              className="mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl"
+            >
+              {homeContent.hero.title}
+            </motion.h1>
+            <p className="mt-4 text-lg font-medium text-slate-200 md:text-xl">{homeContent.hero.subtitle}</p>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
+              {homeContent.hero.description}
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <motion.div 
-              className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group"
-              whileHover={{ scale: 1.03, boxShadow: "0 20px 40px rgba(0,0,0,0.3)" }}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <motion.div 
-                className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
-                whileHover={{ rotate: 8 }}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                to="/projeler"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/30 transition hover:opacity-95"
               >
-                <Rocket className="w-8 h-8 text-white" />
-              </motion.div>
-              <h3 className="text-2xl font-bold text-white mb-4">Lightning Fast</h3>
-              <p className="text-gray-300 leading-relaxed">
-                Deploy your applications in minutes, not months. Our optimized infrastructure ensures maximum performance.
-              </p>
-            </motion.div>
-
-            {/* Feature 2 - AI Interaction */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <AIInteraction />
-            </motion.div>
-
-            {/* Feature 3 */}
-            <motion.div 
-              className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group"
-              whileHover={{ scale: 1.03, boxShadow: "0 20px 40px rgba(0,0,0,0.3)" }}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <motion.div 
-                className="w-16 h-16 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
-                whileHover={{ rotate: 8 }}
+                {homeContent.hero.primaryCta}
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3.5 text-sm font-semibold text-white hover:border-white/25"
               >
-                <Shield className="w-8 h-8 text-white" />
-              </motion.div>
-              <h3 className="text-2xl font-bold text-white mb-4">Enterprise Security</h3>
-              <p className="text-gray-300 leading-relaxed">
-                Bank-level security with GDPR, CCPA, and KVKK compliance. Your data is always protected.
-              </p>
-            </motion.div>
-
-            {/* Feature 4 */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Expert Team</h3>
-              <p className="text-gray-300 leading-relaxed">
-                Work with experienced developers and designers who understand your business needs.
-              </p>
+                {homeContent.hero.secondaryCta}
+              </Link>
+              <a
+                href={getWhatsAppLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-6 py-3.5 text-sm font-semibold text-emerald-100 hover:bg-emerald-500/15"
+              >
+                <MessageCircle className="mr-2 h-4 w-4" />
+                {homeContent.hero.tertiaryCta}
+              </a>
             </div>
-
-            {/* Feature 5 */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Monitor className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Scalable Solutions</h3>
-              <p className="text-gray-300 leading-relaxed">
-                From startup to enterprise, our solutions grow with your business needs and requirements.
-              </p>
-            </div>
-
-            {/* Feature 6 */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 group">
-              <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Star className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Premium Support</h3>
-              <p className="text-gray-300 leading-relaxed">
-                24/7 dedicated support team ready to help you succeed with your digital transformation.
-              </p>
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {homeContent.stats.map((s) => (
+                <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                  <div className="text-2xl font-bold text-white">{s.value}</div>
+                  <div className="mt-1 text-xs text-slate-400">{s.label}</div>
+                </div>
+              ))}
             </div>
           </div>
+          <DashboardMockup />
         </div>
       </section>
 
-      {/* Packages Section */}
-      <section className="relative z-10 py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Choose Your <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Solution</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Professional packages designed for every business need and budget.
-            </p>
-          </div>
-
-          {/* Category Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {Object.entries(PACKAGE_CATEGORIES).map(([key, category]) => (
-              <button
-                key={key}
-                onClick={() => setSelectedCategory(key)}
-                className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
-                  selectedCategory === key
-                    ? 'bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white'
-                    : 'bg-white/10 backdrop-blur-md border border-white/20 text-gray-300 hover:bg-white/20'
-                }`}
-              >
-                {category.title}
-              </button>
-            ))}
-          </div>
-
-          {/* Selected Category Packages */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {PACKAGE_CATEGORIES[selectedCategory as keyof typeof PACKAGE_CATEGORIES].packages.map((pkg) => (
-              <PackageCard key={pkg.id} pkg={pkg} />
-            ))}
-          </div>
-
-          {/* View All Packages Button */}
-          <div className="text-center mt-12">
-            <Link
-              to="/packages"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-[var(--litx-primary-dark)] to-[var(--litx-accent-dark)] text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-all duration-300"
-            >
-              <span>View All Packages</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
+      {/* Solutions */}
+      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20" id="cozumler">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-wide text-blue-300/90">
+            {homeContent.sections.solutions}
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-bold text-white md:text-4xl">
+            İşinizi büyüten çözüm kategorileri
+          </h2>
+          <p className="mt-4 text-lg text-slate-400">{homeContent.sections.solutionsLead}</p>
         </div>
-      </section>
-
-      {/* Donation/Support Section */}
-      <section className="relative z-10 py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 backdrop-blur-lg rounded-3xl p-12 border border-white/20 shadow-2xl"
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {solutionsData.map((s, i) => (
+            <SolutionCard key={s.slug} solution={s} index={i} />
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link
+            to="/cozumler"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-300 hover:text-blue-200"
           >
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Side - Content */}
-              <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-pink-500/20 border border-pink-500/30 rounded-full text-pink-300 text-sm font-medium mb-4">
-                  <Heart className="w-4 h-4" />
-                  MyTrabzon Support & Donation
-                </div>
-                
-                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-                  {t.donation.title}
-                  <br />
-                  <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-                    {t.donation.subtitle}
-                  </span>
-                </h2>
-                
-                <p className="text-xl text-gray-300 leading-relaxed">
-                  {t.donation.description}
-                </p>
-
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <Coffee className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-white font-medium">{t.donation.breakfast}</p>
-                      <p className="text-gray-400 text-sm">{t.donation.breakfastDesc}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Users className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-white font-medium">{t.donation.tours}</p>
-                      <p className="text-gray-400 text-sm">{t.donation.toursDesc}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Code className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-white font-medium">{t.donation.development}</p>
-                      <p className="text-gray-400 text-sm">{t.donation.developmentDesc}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Link
-                    to="/donation"
-                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-pink-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  >
-                    <Heart className="w-5 h-5" />
-                    <span>{t.donation.supportButton}</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
-                  <Link
-                    to="/donation"
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300"
-                  >
-                    <span>{t.donation.packagesFrom}</span>
-                  </Link>
-                </div>
-
-                <p className="text-sm text-gray-400 pt-2">
-                  {t.donation.optional}
-                </p>
-              </div>
-
-              {/* Right Side - Visual */}
-              <div className="relative">
-                <div className="grid grid-cols-3 gap-4">
-                  {[
-                    { amount: 89, label: t.donation.basic || 'Temel' },
-                    { amount: 139, label: t.donation.standard || 'Standart' },
-                    { amount: 339, label: t.donation.premium || 'Premium' }
-                  ].map((pkg, index) => (
-                    <motion.div
-                      key={pkg.amount}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1, duration: 0.5 }}
-                      className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center hover:bg-white/15 transition-all cursor-pointer"
-                    >
-                      <div className="text-3xl font-bold text-white mb-2">{pkg.amount} ₺</div>
-                      <div className="text-sm text-gray-300">{pkg.label}</div>
-                      <Heart className="w-6 h-6 text-pink-400 mx-auto mt-3" />
-                    </motion.div>
-                  ))}
-                </div>
-                <div className="mt-6 bg-white/5 rounded-xl p-6 border border-white/10">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 bg-pink-500/20 rounded-full flex items-center justify-center">
-                      <Heart className="w-5 h-5 text-pink-400" />
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold">{t.donation.badgeTitle}</p>
-                      <p className="text-gray-400 text-sm">{t.donation.badgeDesc}</p>
-                    </div>
-                  </div>
-                  <p className="text-gray-300 text-sm">
-                    When you make a donation, a "Supporter" badge appears on your profile page. You can hide this badge if you wish.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            Tüm çözümleri görüntüle
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 bg-white/5 backdrop-blur-md border-t border-white/20 mt-20">
-        {/* Matrix Code Rain */}
-        <MatrixCodeRain />
-        
-        <div className="relative z-10">
-          <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Company Info */}
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <div className="text-xl font-bold text-white">LitxTech</div>
-                  <div className="text-sm text-gray-400">Build. Automate. Scale.</div>
-                </div>
-              </div>
-              <p className="text-gray-300 text-sm leading-relaxed">
-                LitxTech LLC - Wyoming, United States
-                <br />
-                D-U-N-S®: 144849529
+      {/* Featured projects */}
+      <section
+        className="border-y border-white/10 bg-gradient-to-b from-[#05070f] to-[#070a12] py-16 md:py-20"
+        id="projeler"
+      >
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-wide text-blue-300/90">
+                {homeContent.sections.projects}
               </p>
+              <h2 className="mt-3 font-display text-3xl font-bold text-white md:text-4xl">Referanslarımızdan seçkiler</h2>
+              <p className="mt-3 text-lg text-slate-400">{homeContent.sections.projectsLead}</p>
             </div>
+            <Link
+              to="/projeler"
+              className="inline-flex items-center justify-center rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-white hover:border-white/25"
+            >
+              Tüm projeler
+            </Link>
+          </div>
 
-            {/* Quick Links */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Quick Access</h3>
-              <div className="space-y-2">
-                <Link to="/packages" className="block text-gray-300 hover:text-blue-400 transition-colors">Pricing</Link>
-                <Link to="/about" className="block text-gray-300 hover:text-blue-400 transition-colors">About</Link>
-                <Link to="/blog" className="block text-gray-300 hover:text-blue-400 transition-colors">Blog</Link>
-                <Link to="/contact" className="block text-gray-300 hover:text-blue-400 transition-colors">Contact</Link>
-                <Link to="/support/mytrabzon" className="block text-gray-300 hover:text-blue-400 transition-colors">Support Center</Link>
-                <Link to="/kbs-prime" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime</Link>
-                <Link to="/valoria-app" className="block text-gray-300 hover:text-blue-400 transition-colors">Valoria App Tanıtım</Link>
+          <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-7">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/30 shadow-2xl">
+                <img
+                  src={active.image}
+                  alt={active.imageAlt}
+                  className="aspect-[16/10] w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070a12] via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
+                  <div>
+                    <div className="text-sm text-slate-300">Şu an</div>
+                    <div className="font-display text-lg font-bold text-white">{active.title}</div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={prev}
+                      className="rounded-lg border border-white/15 bg-black/40 p-2 text-white backdrop-blur hover:bg-black/55"
+                      aria-label="Önceki proje"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={next}
+                      className="rounded-lg border border-white/15 bg-black/40 p-2 text-white backdrop-blur hover:bg-black/55"
+                      aria-label="Sonraki proje"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 flex justify-center gap-2">
+                {featured.map((p, i) => (
+                  <button
+                    key={p.slug}
+                    type="button"
+                    onClick={() => setSlide(i)}
+                    className={`h-2 w-2 rounded-full ${i === slide ? 'bg-blue-400' : 'bg-white/20'}`}
+                    aria-label={`Slayt ${i + 1}`}
+                  />
+                ))}
               </div>
             </div>
 
-            {/* Legal */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Legal</h3>
-              <div className="space-y-2">
-                <Link to="/privacy-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Privacy Policy</Link>
-                <Link to="/terms-of-service" className="block text-gray-300 hover:text-blue-400 transition-colors">Terms of Service</Link>
-                <Link to="/commercial-agreement" className="block text-gray-300 hover:text-blue-400 transition-colors">Commercial Agreement</Link>
-                <Link to="/subprocessors" className="block text-gray-300 hover:text-blue-400 transition-colors">Subprocessors</Link>
-                <Link to="/account-deletion-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Account Deletion Policy</Link>
-                <Link to="/child-safety-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Child Safety Policy</Link>
-                <Link to="/community-policy" className="block text-gray-300 hover:text-blue-400 transition-colors">Community Policy</Link>
-                <Link to="/kbs-prime-privacy" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Privacy (EN)</Link>
-                <Link to="/kbs-prime-privacy-tr" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Gizlilik (TR)</Link>
-                <Link to="/kbs-prime-terms" className="block text-gray-300 hover:text-blue-400 transition-colors">KBS Prime Terms</Link>
-                <Link to="/valoria-app-privacy" className="block text-gray-300 hover:text-blue-400 transition-colors">Valoria App Gizlilik</Link>
-                <Link to="/valoria-app-terms" className="block text-gray-300 hover:text-blue-400 transition-colors">Valoria App Kullanım Şartları</Link>
-              </div>
-            </div>
-
-            {/* Contact */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-white">Contact</h3>
+            <div className="lg:col-span-5">
               <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Phone className="w-4 h-4 text-blue-400" />
-                  <a href="tel:+13072715151" className="text-gray-300 hover:text-blue-400 transition-colors">+1 307 271 5151</a>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-4 h-4 text-blue-400" />
-                  <a href="mailto:support@litxtech.com" className="text-gray-300 hover:text-blue-400 transition-colors">support@litxtech.com</a>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Globe className="w-4 h-4 text-blue-400" />
-                  <a href="https://www.litxtech.com" className="text-gray-300 hover:text-blue-400 transition-colors">www.litxtech.com</a>
-                </div>
+                {featured.map((p) => (
+                  <Link
+                    key={p.slug}
+                    to={`/projeler/${p.slug}`}
+                    onMouseEnter={() => setSlide(featured.findIndex((x) => x.slug === p.slug))}
+                    className={`block rounded-xl border px-4 py-4 transition ${
+                      active.slug === p.slug
+                        ? 'border-blue-400/40 bg-white/[0.06]'
+                        : 'border-white/10 bg-white/[0.02] hover:border-white/20'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <div className="font-semibold text-white">{p.title}</div>
+                        <div className="mt-1 text-sm text-slate-400">{p.summary}</div>
+                      </div>
+                      <BarChart3 className="h-5 w-5 text-blue-300/80" />
+                    </div>
+                    <div className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-blue-300">
+                      İncele
+                      <ChevronRight className="h-4 w-4" />
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="border-t border-white/20 mt-8 pt-8 text-center space-y-2">
-            <p className="text-gray-400 text-sm">
-              © 2025 LitxTech LLC. All rights reserved. | 
-              <span className="text-blue-400 ml-1">Powered by DeepSeek AI • Hosted on Vercel • Database: Supabase</span>
-            </p>
-            <p className="text-gray-400 text-sm">
-              <Link to="/kbs-prime" className="text-white font-medium hover:text-blue-400 transition-colors">KBS Prime</Link>
-              {' · '}
-              <Link to="/kbs-prime-privacy" className="text-white font-medium hover:text-blue-400 transition-colors">Privacy</Link>
-              {' · '}
-              <Link to="/kbs-prime-privacy-tr" className="text-white font-medium hover:text-blue-400 transition-colors">Gizlilik (TR)</Link>
-              {' · '}
-              <Link to="/kbs-prime-terms" className="text-white font-medium hover:text-blue-400 transition-colors">Terms</Link>
-              {' · '}
-              <Link to="/valoria-app" className="text-white font-medium hover:text-blue-400 transition-colors">Valoria App Tanıtım</Link>
-              {' · '}
-              <Link to="/valoria-app-privacy" className="text-white font-medium hover:text-blue-400 transition-colors">Valoria App Gizlilik</Link>
-              {' · '}
-              <Link to="/valoria-app-terms" className="text-white font-medium hover:text-blue-400 transition-colors">Valoria App Terms</Link>
-            </p>
+      {/* Capabilities */}
+      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.capabilities.title}</h2>
+          <p className="mt-4 text-lg text-slate-400">{homeContent.capabilities.subtitle}</p>
+        </div>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {homeContent.capabilities.items.map((item) => (
+            <div
+              key={item}
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-slate-200 transition hover:border-white/20"
+            >
+              <div className="flex gap-3">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-400/90" />
+                <span className="leading-relaxed">{item}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Process */}
+      <section className="border-y border-white/10 bg-[#05070f] py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.process.title}</h2>
+            <p className="mt-4 text-lg text-slate-400">{homeContent.process.subtitle}</p>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+            {homeContent.process.steps.map((step, idx) => (
+              <div key={step.title} className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <div className="text-sm font-semibold text-blue-300">0{idx + 1}</div>
+                <h3 className="mt-3 font-display text-lg font-bold text-white">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">{step.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
+      </section>
+
+      {/* Why */}
+      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.why.title}</h2>
+            <p className="mt-4 text-lg text-slate-400">
+              Amatör görünüm değil; ürün odaklı mühendislik, net iletişim ve ölçülebilir teslimat.
+            </p>
+          </div>
+          <ul className="space-y-3">
+            {homeContent.why.items.map((w) => (
+              <li
+                key={w}
+                className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-200"
+              >
+                <span className="mt-1 h-2 w-2 rounded-full bg-gradient-to-r from-blue-400 to-violet-400" />
+                <span>{w}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-      </footer>
-    </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="border-t border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f] py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <h2 className="text-center font-display text-3xl font-bold text-white md:text-4xl">
+            {homeContent.faq.title}
+          </h2>
+          <div className="mx-auto mt-10 max-w-3xl space-y-3">
+            {homeContent.faq.items.map((item) => (
+              <details
+                key={item.q}
+                className="group rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 open:bg-white/[0.05]"
+              >
+                <summary className="cursor-pointer list-none text-left font-medium text-white [&::-webkit-details-marker]:hidden">
+                  <span className="flex items-center justify-between gap-3">
+                    {item.q}
+                    <span className="text-slate-500 transition group-open:rotate-45">+</span>
+                  </span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-slate-400">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="border-t border-white/10 bg-gradient-to-r from-blue-600/20 via-violet-600/15 to-fuchsia-600/15">
+        <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.finalCta.title}</h2>
+            <p className="mt-4 text-lg text-slate-200">{homeContent.finalCta.subtitle}</p>
+            <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-slate-900"
+              >
+                {homeContent.finalCta.quote}
+              </Link>
+              <a
+                href={getWhatsAppLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-emerald-500/10 px-6 py-3.5 text-sm font-semibold text-emerald-50 hover:bg-emerald-500/15"
+              >
+                <MessageCircle className="mr-2 h-4 w-4" />
+                {homeContent.finalCta.whatsapp}
+              </a>
+              <a
+                href={siteConfig.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl border border-white/20 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/5"
+              >
+                <MonitorPlay className="mr-2 h-4 w-4" />
+                {homeContent.finalCta.demo}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <WhatsAppFloat />
+    </MarketingChrome>
   )
 }
