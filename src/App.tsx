@@ -39,6 +39,11 @@ import { ValoriaAppPrivacy } from './pages/ValoriaAppPrivacy'
 import { ValoriaAppTerms } from './pages/ValoriaAppTerms'
 import { ValoriaAppAccountDeletion } from './pages/ValoriaAppAccountDeletion'
 import { ValoriaAppSupport } from './pages/ValoriaAppSupport'
+import { NoctaAppLanding } from './pages/NoctaAppLanding'
+import { NoctaAppPrivacy } from './pages/NoctaAppPrivacy'
+import { NoctaAppTerms } from './pages/NoctaAppTerms'
+import { NoctaAppSupport } from './pages/NoctaAppSupport'
+import { NoctaAppAccountDeletion } from './pages/NoctaAppAccountDeletion'
 import { BlogManagement } from './pages/BlogManagement'
 import { AdminLogin } from './pages/AdminLogin'
 import { SuccessPage } from './pages/SuccessPage'
@@ -106,6 +111,12 @@ function App() {
           <Route path="/valoria-app-terms" element={<ValoriaAppTerms />} />
           <Route path="/valoria-app/delete-account" element={<ValoriaAppAccountDeletion />} />
           <Route path="/support/valoria-app" element={<ValoriaAppSupport />} />
+          <Route path="/nocta" element={<NoctaAppLanding />} />
+          <Route path="/nocta/gizlilik" element={<NoctaAppPrivacy />} />
+          <Route path="/nocta/kullanim-sartlari" element={<NoctaAppTerms />} />
+          <Route path="/nocta/sozlesme" element={<Navigate to="/nocta/kullanim-sartlari" replace />} />
+          <Route path="/nocta/destek" element={<NoctaAppSupport />} />
+          <Route path="/nocta/hesap-silme" element={<NoctaAppAccountDeletion />} />
           <Route path="/admin/blog" element={<BlogManagement />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />
