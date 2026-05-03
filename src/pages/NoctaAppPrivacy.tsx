@@ -164,6 +164,9 @@ export function NoctaAppPrivacy() {
           <Link to="/nocta/hesap-silme" className="font-medium hover:underline" style={{ color: accent }}>
             Hesap silme
           </Link>
+          <Link to="/nocta/child-safety" className="font-medium hover:underline" style={{ color: accent }}>
+            Child safety (EN)
+          </Link>
         </nav>
       </div>
     </div>

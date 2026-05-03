@@ -11,7 +11,8 @@ import {
   MessageCircle,
   ClipboardList,
   ChevronDown,
-  Sparkles
+  Sparkles,
+  ShieldAlert
 } from 'lucide-react'
 import { SeoHead } from '../components/marketing/SeoHead'
 
@@ -69,7 +70,7 @@ const faqs = [
   {
     question: 'Gizlilik, şartlar ve desteğe nereden ulaşırım?',
     answer:
-      'Bu sayfadaki bağlantılar litxtech.com/nocta/gizlilik (Gizlilik Politikası), litxtech.com/nocta/kullanim-sartlari (Kullanım Şartları) ve litxtech.com/nocta/destek (Destek) adreslerine gider.'
+      'litxtech.com/nocta/gizlilik (Gizlilik Politikası), litxtech.com/nocta/kullanim-sartlari (Kullanım Şartları), litxtech.com/nocta/destek (Destek), litxtech.com/nocta/hesap-silme ve litxtech.com/nocta/child-safety (Child Safety Standards, İngilizce) adreslerine gider.'
   }
 ]
 
@@ -80,7 +81,7 @@ export function NoctaAppLanding() {
     <div className="bg-[#0b1020] text-white">
       <SeoHead
         title="Nocta | LitxTech"
-        description="Nocta — güvenli arkadaş bulma ve sosyal keşif uygulaması. Gizlilik politikası, kullanım şartları ve destek."
+        description="Nocta — güvenli arkadaş bulma ve sosyal keşif uygulaması. Gizlilik, kullanım şartları, çocuk güvenliği politikası ve destek."
         path="/nocta"
       />
       <section className="relative isolate overflow-hidden px-6 pt-16 pb-24 lg:px-12 lg:pt-24">
@@ -226,8 +227,8 @@ export function NoctaAppLanding() {
                   <h2 className="text-2xl font-bold">Yasal metinler ve destek</h2>
                 </div>
                 <p className="text-indigo-100/85">
-                  App Store ve Google Play listeleri için aşağıdaki kalıcı URL’leri kullanabilirsiniz. Metinler Türkçedir ve uygulama içindeki
-                  sürümlerle uyumludur.
+                  App Store ve Google Play listeleri için aşağıdaki kalıcı URL’leri kullanabilirsiniz. Gizlilik ve kullanım şartları Türkçedir;
+                  çocuk güvenliği standartları İngilizcedir (mağaza gereksinimleriyle uyumludur).
                 </p>
                 <ul className="space-y-2 text-sm text-indigo-100/90">
                   <li>
@@ -235,6 +236,10 @@ export function NoctaAppLanding() {
                   </li>
                   <li>
                     <span className="font-mono text-indigo-200">https://www.litxtech.com/nocta/kullanim-sartlari</span> — Kullanım Şartları
+                  </li>
+                  <li>
+                    <span className="font-mono text-indigo-200">https://www.litxtech.com/nocta/child-safety</span> — Child Safety Standards Policy
+                    (EN)
                   </li>
                   <li>
                     <span className="font-mono text-indigo-200">https://www.litxtech.com/nocta/destek</span> — Destek
@@ -268,6 +273,12 @@ export function NoctaAppLanding() {
                   >
                     <Smartphone className="h-4 w-4" /> Hesap silme
                   </Link>
+                  <Link
+                    to="/nocta/child-safety"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                  >
+                    <ShieldAlert className="h-4 w-4" /> Child safety (EN)
+                  </Link>
                 </div>
               </div>
               <div className="flex-1 rounded-2xl bg-white/5 p-6">
@@ -280,6 +291,7 @@ export function NoctaAppLanding() {
                   <li>• Kullanıcı üretimi içerik ve iletişim kuralları Kullanım Şartları’nda özetlenir.</li>
                   <li>• Ödeme ve cüzdan özellikleri varsa ilgili ekranlarda ayrıca bilgilendirme yapılır.</li>
                   <li>• Hesap silme yolu uygulama içinden veya destek e-postası ile mümkündür.</li>
+                  <li>• Çocuk güvenliği ve sıfır tolerans politikası için /nocta/child-safety sayfasına bakın.</li>
                 </ul>
               </div>
             </div>
@@ -343,6 +355,9 @@ export function NoctaAppLanding() {
             </Link>
             <Link to="/nocta/hesap-silme" className="font-medium hover:underline" style={{ color: accent }}>
               Hesap silme
+            </Link>
+            <Link to="/nocta/child-safety" className="font-medium hover:underline" style={{ color: accent }}>
+              Child safety
             </Link>
             <Link to="/" className="font-medium hover:underline" style={{ color: accent }}>
               LitxTech ana sayfa

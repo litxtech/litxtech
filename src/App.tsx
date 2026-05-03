@@ -44,6 +44,7 @@ import { NoctaAppPrivacy } from './pages/NoctaAppPrivacy'
 import { NoctaAppTerms } from './pages/NoctaAppTerms'
 import { NoctaAppSupport } from './pages/NoctaAppSupport'
 import { NoctaAppAccountDeletion } from './pages/NoctaAppAccountDeletion'
+import { NoctaAppChildSafety } from './pages/NoctaAppChildSafety'
 import { BlogManagement } from './pages/BlogManagement'
 import { AdminLogin } from './pages/AdminLogin'
 import { SuccessPage } from './pages/SuccessPage'
@@ -117,6 +118,7 @@ function App() {
           <Route path="/nocta/sozlesme" element={<Navigate to="/nocta/kullanim-sartlari" replace />} />
           <Route path="/nocta/destek" element={<NoctaAppSupport />} />
           <Route path="/nocta/hesap-silme" element={<NoctaAppAccountDeletion />} />
+          <Route path="/nocta/child-safety" element={<NoctaAppChildSafety />} />
           <Route path="/admin/blog" element={<BlogManagement />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />

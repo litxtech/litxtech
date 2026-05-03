@@ -104,6 +104,9 @@ export function NoctaAppAccountDeletion() {
           <Link to="/nocta/kullanim-sartlari" className="font-medium hover:underline" style={{ color: accent }}>
             Kullanım Şartları
           </Link>
+          <Link to="/nocta/child-safety" className="font-medium hover:underline" style={{ color: accent }}>
+            Child safety (EN)
+          </Link>
         </nav>
       </div>
     </div>
