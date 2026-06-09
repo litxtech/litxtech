@@ -45,6 +45,12 @@ import { NoctaAppTerms } from './pages/NoctaAppTerms'
 import { NoctaAppSupport } from './pages/NoctaAppSupport'
 import { NoctaAppAccountDeletion } from './pages/NoctaAppAccountDeletion'
 import { NoctaAppChildSafety } from './pages/NoctaAppChildSafety'
+import { VoraAppLanding } from './pages/VoraAppLanding'
+import { VoraAppPrivacy } from './pages/VoraAppPrivacy'
+import { VoraAppTerms } from './pages/VoraAppTerms'
+import { VoraAppSupport } from './pages/VoraAppSupport'
+import { VoraAppAccountDeletion } from './pages/VoraAppAccountDeletion'
+import { VoraAppChildSafety } from './pages/VoraAppChildSafety'
 import { BlogManagement } from './pages/BlogManagement'
 import { AdminLogin } from './pages/AdminLogin'
 import { SuccessPage } from './pages/SuccessPage'
@@ -119,6 +125,12 @@ function App() {
           <Route path="/nocta/destek" element={<NoctaAppSupport />} />
           <Route path="/nocta/hesap-silme" element={<NoctaAppAccountDeletion />} />
           <Route path="/nocta/child-safety" element={<NoctaAppChildSafety />} />
+          <Route path="/vora" element={<VoraAppLanding />} />
+          <Route path="/vora/gizlilik" element={<VoraAppPrivacy />} />
+          <Route path="/vora/kullanim-sartlari" element={<VoraAppTerms />} />
+          <Route path="/vora/destek" element={<VoraAppSupport />} />
+          <Route path="/vora/hesap-silme" element={<VoraAppAccountDeletion />} />
+          <Route path="/vora/child-safety" element={<VoraAppChildSafety />} />
           <Route path="/admin/blog" element={<BlogManagement />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />

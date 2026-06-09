@@ -52,6 +52,19 @@ export const projectsData: ProjectEntry[] = [
     ctaLabel: 'Teklif al',
   },
   {
+    slug: 'vora',
+    title: 'Vora',
+    summary: 'Karadeniz şehirleri için anlık haberleşme ve topluluk platformu.',
+    description:
+      'Trabzon\'dan Samsun\'a Karadeniz illeri için tasarlanmış anlık mesajlaşma, yerel içerik ve topluluk deneyimi. Şehir kanalları, bildirimler ve moderasyon araçlarıyla güvenli bir platform.',
+    internalPath: '/vora',
+    image:
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Karadeniz kıyısı ve şehir manzarası',
+    tags: ['Topluluk', 'Karadeniz', 'Anlık haberleşme'],
+    ctaLabel: 'Tanıtım sayfası',
+  },
+  {
     slug: 'sehir-uygulamasi',
     title: 'Trabzon Live (MyTrabzon)',
     summary: 'Şehir rehberi, yerel içerik ve topluluk için mobil uygulama.',
