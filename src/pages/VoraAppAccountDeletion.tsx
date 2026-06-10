@@ -107,6 +107,9 @@ export function VoraAppAccountDeletion() {
           <Link to="/vora/child-safety" className="font-medium hover:underline" style={{ color: accent }}>
             Çocuk koruma
           </Link>
+          <Link to="/vora/abonelik" className="font-medium hover:underline" style={{ color: accent }}>
+            Abonelik
+          </Link>
         </nav>
       </div>
     </div>

@@ -51,6 +51,7 @@ import { VoraAppTerms } from './pages/VoraAppTerms'
 import { VoraAppSupport } from './pages/VoraAppSupport'
 import { VoraAppAccountDeletion } from './pages/VoraAppAccountDeletion'
 import { VoraAppChildSafety } from './pages/VoraAppChildSafety'
+import { VoraAppSubscription } from './pages/VoraAppSubscription'
 import { BlogManagement } from './pages/BlogManagement'
 import { AdminLogin } from './pages/AdminLogin'
 import { SuccessPage } from './pages/SuccessPage'
@@ -131,6 +132,7 @@ function App() {
           <Route path="/vora/destek" element={<VoraAppSupport />} />
           <Route path="/vora/hesap-silme" element={<VoraAppAccountDeletion />} />
           <Route path="/vora/child-safety" element={<VoraAppChildSafety />} />
+          <Route path="/vora/abonelik" element={<VoraAppSubscription />} />
           <Route path="/admin/blog" element={<BlogManagement />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />

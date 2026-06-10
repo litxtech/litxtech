@@ -136,6 +136,9 @@ export function VoraAppChildSafety() {
           <Link to="/vora/destek" className="font-medium hover:underline" style={{ color: accent }}>
             Destek
           </Link>
+          <Link to="/vora/abonelik" className="font-medium hover:underline" style={{ color: accent }}>
+            Abonelik
+          </Link>
         </nav>
       </div>
     </div>

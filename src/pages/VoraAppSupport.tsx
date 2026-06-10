@@ -48,6 +48,17 @@ const categories: SupportCategory[] = [
     contactHint: 'Kayıtlı e-posta adresinizi yazın; güvenlik için şifrenizi paylaşmayın.'
   },
   {
+    id: 'payment',
+    title: 'Abonelik, ödeme ve iptal',
+    description: 'Vora Yıllık (249,99 TL) ve Premium Abonelik (1.999,99 TL) planları, yenileme, iade ve 24 saat iptal talepleri.',
+    checklist: [
+      'Abonelik ücreti beklenmedik şekilde tahsil edildi mi?',
+      'Satın almadan sonraki 24 saat içinde iptal/iade mi istiyorsunuz?',
+      'App Store veya Google Play aboneliğini iptal etmek mi istiyorsunuz?'
+    ],
+    contactHint: 'İşlem tarihi, plan adı, tutar ve Apple/Google işlem referansını ekleyin. Konu: Vora Abonelik.'
+  },
+  {
     id: 'moderation',
     title: 'Moderasyon ve raporlama',
     description: 'Uygunsuz içerik bildirimi, hesap kısıtlaması veya topluluk kuralları ihlalleri.',
@@ -240,6 +251,9 @@ export function VoraAppSupport() {
           </Link>
           <Link to="/vora/child-safety" className="font-semibold hover:underline" style={{ color: accent }}>
             Çocuk koruma
+          </Link>
+          <Link to="/vora/abonelik" className="font-semibold hover:underline" style={{ color: accent }}>
+            Abonelik
           </Link>
         </div>
       </div>

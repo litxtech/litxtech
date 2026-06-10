@@ -14,9 +14,12 @@ import {
   Sparkles,
   ShieldAlert,
   Radio,
-  Bell
+  Bell,
+  CreditCard,
+  Check
 } from 'lucide-react'
 import { SeoHead } from '../components/marketing/SeoHead'
+import { voraSubscriptionLegalNotes, voraSubscriptionPlans } from '../data/voraSubscriptionData'
 
 const accent = '#14b8a6'
 
@@ -72,9 +75,19 @@ const faqs = [
       'Uygulama yürürlükteki yerel yasalara göre reşit olan kullanıcılar içindir. Topluluk kurallarına uymanız ve doğru bilgi vermeniz beklenir.'
   },
   {
+    question: 'Abonelik planları ve fiyatlar nedir?',
+    answer:
+      'Vora Yıllık 249,99 TL ve Vora Premium Abonelik 1.999,99 TL seçenekleri sunulur. Detaylar, otomatik yenileme ve 24 saat iptal hakkı için litxtech.com/vora/abonelik adresine bakın.'
+  },
+  {
+    question: 'Aboneliği nasıl iptal ederim?',
+    answer:
+      'iOS: Ayarlar → Apple ID → Abonelikler. Android: Google Play → Abonelikler. Satın almadan sonraki 24 saat içinde destek@litxtech.com veya /vora/destek üzerinden de iptal talebi iletebilirsiniz.'
+  },
+  {
     question: 'Gizlilik, şartlar ve desteğe nereden ulaşırım?',
     answer:
-      'litxtech.com/vora/gizlilik (Gizlilik Politikası), litxtech.com/vora/kullanim-sartlari (Kullanım Şartları), litxtech.com/vora/destek (Destek), litxtech.com/vora/hesap-silme ve litxtech.com/vora/child-safety (Child Safety Standards) adreslerine gider.'
+      'litxtech.com/vora/gizlilik, litxtech.com/vora/kullanim-sartlari, litxtech.com/vora/abonelik, litxtech.com/vora/destek, litxtech.com/vora/hesap-silme ve litxtech.com/vora/child-safety adreslerine gider.'
   }
 ]
 
@@ -232,6 +245,53 @@ export function VoraAppLanding() {
         </div>
       </section>
 
+      <section className="bg-slate-100 px-6 py-20 text-slate-900 lg:px-12">
+        <div className="mx-auto max-w-5xl space-y-10">
+          <div className="space-y-3 text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-teal-600">Abonelik</p>
+            <h2 className="text-3xl font-bold">Premium planlar</h2>
+            <p className="mx-auto max-w-2xl text-slate-600">
+              Temel topluluk özellikleri ücretsiz sunulabilir. Aşağıdaki planlar isteğe bağlı premium hizmetler içindir. Satın almadan önce
+              uygulama içinde güncel fiyat gösterilir.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {voraSubscriptionPlans.map((plan) => (
+              <div
+                key={plan.id}
+                className={`rounded-2xl border bg-white p-6 shadow-sm ${
+                  plan.highlighted ? 'border-teal-400 ring-2 ring-teal-200' : 'border-slate-200'
+                }`}
+              >
+                <h3 className="text-xl font-bold">{plan.name}</h3>
+                <p className="mt-2 text-3xl font-bold text-teal-700">{plan.price}</p>
+                <p className="text-sm text-slate-500">{plan.priceNote}</p>
+                <ul className="mt-4 space-y-2">
+                  {plan.features.slice(0, 3).map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-teal-600" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-950">
+            <strong>24 saat iptal hakkı:</strong> {voraSubscriptionLegalNotes.cancellation24h}
+          </div>
+          <div className="text-center">
+            <Link
+              to="/vora/abonelik"
+              className="inline-flex items-center gap-2 rounded-full bg-teal-600 px-6 py-3 font-semibold text-white transition hover:bg-teal-700"
+            >
+              <CreditCard className="h-4 w-4" />
+              Tüm abonelik koşulları ve iptal bilgisi
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-[#071018] px-6 py-20 text-white lg:px-12">
         <div className="mx-auto max-w-5xl">
           <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-8 shadow-xl backdrop-blur lg:p-10">
@@ -260,6 +320,9 @@ export function VoraAppLanding() {
                   </li>
                   <li>
                     <span className="font-mono text-teal-200">https://www.litxtech.com/vora/hesap-silme</span> — Hesap silme bilgisi
+                  </li>
+                  <li>
+                    <span className="font-mono text-teal-200">https://www.litxtech.com/vora/abonelik</span> — Abonelik ve fiyatlandırma
                   </li>
                 </ul>
                 <div className="flex flex-wrap gap-3">
@@ -292,6 +355,12 @@ export function VoraAppLanding() {
                     className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
                   >
                     <ShieldAlert className="h-4 w-4" /> Çocuk koruma
+                  </Link>
+                  <Link
+                    to="/vora/abonelik"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                  >
+                    <CreditCard className="h-4 w-4" /> Abonelik
                   </Link>
                 </div>
               </div>
@@ -372,6 +441,9 @@ export function VoraAppLanding() {
             </Link>
             <Link to="/vora/child-safety" className="font-medium hover:underline" style={{ color: accent }}>
               Çocuk koruma
+            </Link>
+            <Link to="/vora/abonelik" className="font-medium hover:underline" style={{ color: accent }}>
+              Abonelik
             </Link>
             <Link to="/" className="font-medium hover:underline" style={{ color: accent }}>
               LitxTech ana sayfa

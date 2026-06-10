@@ -116,6 +116,34 @@ export function VoraAppTerms() {
         </section>
 
         <section className="space-y-3">
+          <h2 className="text-xl font-semibold text-gray-900">Abonelik, Ödeme ve Faturalama</h2>
+          <p className="text-gray-700">
+            Vora isteğe bağlı premium abonelik planları sunabilir. Güncel planlar ve fiyatlar{' '}
+            <Link to="/vora/abonelik" className="font-medium text-teal-600 underline">
+              Abonelik ve Fiyatlandırma
+            </Link>{' '}
+            sayfasında açıklanmıştır:
+          </p>
+          <ul className="list-disc space-y-2 pl-6 text-gray-700">
+            <li>
+              <strong>Vora Yıllık:</strong> 249,99 TL / yıl
+            </li>
+            <li>
+              <strong>Vora Premium Abonelik:</strong> 1.999,99 TL (faturalama dönemi satın alma ekranında belirtilir)
+            </li>
+          </ul>
+          <p className="text-gray-700">
+            Abonelikler, iptal edilmediği sürece otomatik olarak yenilenir. Ödemeler Apple App Store veya Google Play üzerinden işlenir.
+            Satın almadan sonraki <strong>24 saat</strong> içinde, dijital hizmetten henüz yararlanmamış olmanız kaydıyla iptal talebinde
+            bulunabilirsiniz; detaylar abonelik sayfasında yer alır.
+          </p>
+          <p className="text-gray-700">
+            Aboneliğinizi cihazınızın mağaza ayarlarından (Apple ID Abonelikler / Google Play Abonelikler) istediğiniz zaman iptal
+            edebilirsiniz. İptal sonrası mevcut dönem sonuna kadar erişim devam eder.
+          </p>
+        </section>
+
+        <section className="space-y-3">
           <h2 className="text-xl font-semibold text-gray-900">Hesap Silme ve Veri Kontrolü</h2>
           <p className="text-gray-700">
             Kullanıcılar, uygulama içinden hesaplarını kalıcı olarak silebilir. Hesap silme işlemi, kullanıcı verilerinin geri döndürülemez
@@ -161,6 +189,9 @@ export function VoraAppTerms() {
           </Link>
           <Link to="/vora/child-safety" className="font-medium hover:underline" style={{ color: accent }}>
             Çocuk koruma
+          </Link>
+          <Link to="/vora/abonelik" className="font-medium hover:underline" style={{ color: accent }}>
+            Abonelik
           </Link>
         </nav>
       </div>
