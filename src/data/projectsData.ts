@@ -65,6 +65,19 @@ export const projectsData: ProjectEntry[] = [
     ctaLabel: 'Tanıtım sayfası',
   },
   {
+    slug: 'tamuso',
+    title: 'Tamuso',
+    summary: 'Canlı sesli odalar ve modern sesli sohbet platformu.',
+    description:
+      'Konuşmacı veya dinleyici olarak canlı odalara katılın. Moderasyon, gizlilik ve çocuk koruma politikalarıyla App Store / Google Play uyumlu tanıtım ve yasal sayfalar.',
+    internalPath: '/tamuso',
+    image:
+      'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Ses stüdyosu ve mikrofon',
+    tags: ['Sesli oda', 'Canlı sohbet', 'Topluluk'],
+    ctaLabel: 'Tanıtım sayfası',
+  },
+  {
     slug: 'sehir-uygulamasi',
     title: 'Trabzon Live (MyTrabzon)',
     summary: 'Şehir rehberi, yerel içerik ve topluluk için mobil uygulama.',

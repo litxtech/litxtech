@@ -52,6 +52,12 @@ import { VoraAppSupport } from './pages/VoraAppSupport'
 import { VoraAppAccountDeletion } from './pages/VoraAppAccountDeletion'
 import { VoraAppChildSafety } from './pages/VoraAppChildSafety'
 import { VoraAppSubscription } from './pages/VoraAppSubscription'
+import { TamusoAppLanding } from './pages/TamusoAppLanding'
+import { TamusoAppPrivacy } from './pages/TamusoAppPrivacy'
+import { TamusoAppTerms } from './pages/TamusoAppTerms'
+import { TamusoAppSupport } from './pages/TamusoAppSupport'
+import { TamusoAppAccountDeletion } from './pages/TamusoAppAccountDeletion'
+import { TamusoAppChildSafety } from './pages/TamusoAppChildSafety'
 import { BlogManagement } from './pages/BlogManagement'
 import { AdminLogin } from './pages/AdminLogin'
 import { SuccessPage } from './pages/SuccessPage'
@@ -133,6 +139,13 @@ function App() {
           <Route path="/vora/hesap-silme" element={<VoraAppAccountDeletion />} />
           <Route path="/vora/child-safety" element={<VoraAppChildSafety />} />
           <Route path="/vora/abonelik" element={<VoraAppSubscription />} />
+          <Route path="/tamuso" element={<TamusoAppLanding />} />
+          <Route path="/tamuso/gizlilik" element={<TamusoAppPrivacy />} />
+          <Route path="/tamuso/kullanim-sartlari" element={<TamusoAppTerms />} />
+          <Route path="/tamuso/sozlesme" element={<Navigate to="/tamuso/kullanim-sartlari" replace />} />
+          <Route path="/tamuso/destek" element={<TamusoAppSupport />} />
+          <Route path="/tamuso/hesap-silme" element={<TamusoAppAccountDeletion />} />
+          <Route path="/tamuso/child-safety" element={<TamusoAppChildSafety />} />
           <Route path="/admin/blog" element={<BlogManagement />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />
