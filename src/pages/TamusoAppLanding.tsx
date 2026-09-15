@@ -268,15 +268,15 @@ export function TamusoAppLanding() {
                   <h2 className="text-2xl font-bold">Yasal metinler ve destek</h2>
                 </div>
                 <p className="text-zinc-400">
-                  App Store ve Google Play için aşağıdaki kalıcı URL’leri kullanabilirsiniz. Metinler Türkçedir; çocuk güvenliği sayfası mağaza
-                  uyumu için İngilizce başlıkla da sunulur.
+                  App Store Connect ve Google Play Console’a yapıştırabileceğiniz kalıcı URL’ler. Child Safety sayfası İngilizce standart metin
+                  içerir (Apple Child Safety Standards alanı).
                 </p>
                 <ul className="space-y-2 font-mono text-sm text-amber-100/80">
-                  <li>https://www.litxtech.com/tamuso/gizlilik — Gizlilik</li>
-                  <li>https://www.litxtech.com/tamuso/kullanim-sartlari — Kullanım Şartları</li>
-                  <li>https://www.litxtech.com/tamuso/child-safety — Çocuk Koruma</li>
-                  <li>https://www.litxtech.com/tamuso/destek — Destek</li>
-                  <li>https://www.litxtech.com/tamuso/hesap-silme — Hesap silme</li>
+                  <li>https://www.litxtech.com/tamuso/gizlilik — Privacy Policy</li>
+                  <li>https://www.litxtech.com/tamuso/kullanim-sartlari — Terms of Use</li>
+                  <li>https://www.litxtech.com/tamuso/child-safety — Child Safety Standards</li>
+                  <li>https://www.litxtech.com/tamuso/hesap-silme — Account Deletion</li>
+                  <li>https://www.litxtech.com/tamuso/destek — Support</li>
                 </ul>
                 <div className="flex flex-wrap gap-3">
                   <Link
@@ -317,11 +317,11 @@ export function TamusoAppLanding() {
                   Mağaza incelemesi için not
                 </h3>
                 <ul className="mt-4 space-y-2 text-sm text-zinc-400">
-                  <li>• Uygulama 18+ kullanıcılar içindir; çocuklara yönelik değildir.</li>
-                  <li>• Sesli odalar kullanıcı üretimi içeriktir; kurallar Kullanım Şartları’nda özetlenir.</li>
-                  <li>• Bildirim ve engelleme araçları uygulama içinde sunulur.</li>
-                  <li>• Hesap silme uygulama içinden veya e-posta ile mümkündür.</li>
-                  <li>• Çocuk koruma ve sıfır tolerans: /tamuso/child-safety</li>
+                  <li>• 18+ only — not directed at children (COPPA / age rating uyumu).</li>
+                  <li>• UGC sesli odalar: Report + Block + moderasyon (App Store 1.2).</li>
+                  <li>• Child Safety Standards (EN): /tamuso/child-safety — CSAE sıfır tolerans, 24s inceleme hedefi.</li>
+                  <li>• Account deletion web URL: /tamuso/hesap-silme — silinen veri + 30 gün hedefi.</li>
+                  <li>• Privacy: veri satılmaz; Data Safety / Privacy Labels ile uyumlu kategori listesi.</li>
                 </ul>
               </div>
             </div>
