@@ -1,0 +1,914 @@
+TAMUSO GİZLİLİK POLİTİKASI
+
+Son Güncelleme: 19 Eylül 2026
+Yürürlük Tarihi: 19 Eylül 2026
+
+1. Giriş
+
+Bu Gizlilik Politikası, Tamuso mobil uygulamasını, Tamuso ile bağlantılı internet sitelerini, çevrimiçi hizmetleri, özellikleri ve ilgili hizmetleri kullanan kişilerin kişisel bilgilerinin nasıl toplandığını, kullanıldığını, saklandığını, paylaşıldığını ve korunduğunu açıklamaktadır.
+
+Tamuso’nun işletilmesinden sorumlu şirket Litxtech LLC’dir.
+
+Şirket: Litxtech LLC
+Uygulama: Tamuso
+İletişim: support@litxtech.com
+Adres: 15442 Ventura Blvd, Ste 201-1834, Sherman Oaks, CA, USA
+
+Bu politika kapsamında “Tamuso”, “Platform”, “Uygulama”, “Hizmet”, “biz”, “bize” veya “bizim” ifadeleri, bağlama göre Tamuso hizmetlerini ve Litxtech LLC’yi ifade eder.
+
+Tamuso’yu kullanmadan önce bu Gizlilik Politikasını dikkatlice okumanızı öneririz.
+
+⸻
+
+2. Politikanın Kapsamı
+
+Bu Gizlilik Politikası Tamuso aracılığıyla gerçekleştirilen kişisel veri işleme faaliyetlerini kapsar.
+
+Bunlara özellikle aşağıdakiler dahildir:
+
+* Hesap oluşturulması,
+* Misafir olarak uygulamanın kullanılması,
+* Kullanıcı profillerinin oluşturulması,
+* Canlı yayınların kullanılması,
+* Sesli odalara katılım,
+* Kullanıcılar arasında mesajlaşma,
+* Kullanıcıların birbirlerini takip etmesi,
+* Yorum ve diğer kullanıcı içeriklerinin paylaşılması,
+* Sanal hediyelerin gönderilmesi veya alınması,
+* Dijital Coin veya benzeri uygulama içi ürünlerin kullanılması,
+* Creator/Host özelliklerinin kullanılması,
+* Ajans sistemlerinin kullanılması,
+* Şehir veya topluluk özelliklerinin kullanılması,
+* Etkinliklere ve sıralamalara katılım,
+* Bildirimlerin alınması,
+* Güvenlik ve moderasyon işlemleri,
+* Kullanıcı raporlarının incelenmesi,
+* Destek taleplerinin işlenmesi,
+* Uygulamanın güvenliğinin sağlanması.
+
+Üçüncü tarafların kendi internet sitelerinde veya hizmetlerinde gerçekleştirdikleri bağımsız veri işleme faaliyetleri, ilgili üçüncü tarafların kendi gizlilik politikalarına tabi olabilir.
+
+⸻
+
+3. Toplayabileceğimiz Bilgiler
+
+Tamuso’yu nasıl kullandığınıza bağlı olarak farklı kategorilerde bilgiler işleyebiliriz.
+
+Her kullanıcıdan aşağıdaki bilgilerin tamamını toplamak zorunda değiliz.
+
+Toplanan bilgiler, kullandığınız özelliklere ve verdiğiniz izinlere göre değişebilir.
+
+3.1. Hesap ve Kimlik Bilgileri
+
+Hesap oluşturduğunuzda veya hesabınızı tamamladığınızda aşağıdaki bilgileri işleyebiliriz:
+
+* Ad,
+* Soyad,
+* Kullanıcı adı,
+* Tamuso kullanıcı kimliği/Public ID,
+* E-posta adresi,
+* Telefon numarası,
+* Profil fotoğrafı,
+* Kapak fotoğrafı,
+* Biyografi,
+* Ülke,
+* Şehir veya bölge,
+* Dil,
+* Hesap oluşturma tarihi,
+* Hesap durumu,
+* Hesap doğrulama bilgileri,
+* Kullanıcı rolleri,
+* Creator/Host durumu,
+* Ajans üyeliği,
+* VIP veya kullanıcı seviyesi,
+* İlgili profil tercihleri.
+
+Belirli özellikler için ek doğrulama bilgileri talep edilebilir.
+
+⸻
+
+4. Misafir Kullanıcılar
+
+Tamuso, belirli özelliklerin hesap oluşturmadan veya misafir kimliğiyle görüntülenmesine izin verebilir.
+
+Misafir kullanıcılar için de aşağıdaki teknik bilgiler işlenebilir:
+
+* Geçici veya kalıcı dahili kullanıcı kimliği,
+* Cihaz kimliği veya uygulama kurulum kimliği,
+* Uygulama tercihleri,
+* Dil,
+* Politika/onay kayıtları,
+* Güvenlik kayıtları,
+* Uygulama sürümü,
+* İşletim sistemi,
+* IP adresi,
+* Oturum ve kullanım bilgileri.
+
+Bir misafir hesabı daha sonra kayıtlı hesaba dönüştürülürse, teknik olarak mümkün ve uygun olduğu ölçüde önceki misafir hesabına ait belirli kayıtlar yeni hesaba bağlanabilir.
+
+⸻
+
+5. Profil Bilgileri
+
+Tamuso sosyal bir platform olduğundan profilinizde paylaştığınız bazı bilgiler diğer kullanıcılara gösterilebilir.
+
+Bunlar ayarlarınıza ve kullandığınız özelliklere bağlı olarak şunları içerebilir:
+
+* Profil fotoğrafı,
+* Kapak fotoğrafı,
+* Görünen ad,
+* Kullanıcı adı,
+* Public ID,
+* Biyografi,
+* Ülke veya şehir,
+* Takipçi sayısı,
+* Takip edilen hesap sayısı,
+* Creator/Host durumu,
+* Ajans bilgisi,
+* Seviye,
+* VIP seviyesi,
+* Rozetler,
+* Başarılar,
+* Hediye veya destek istatistikleri,
+* Yayın veya oda geçmişinin belirli bölümleri.
+
+Profilinizde herkese açık olarak paylaşmayı seçtiğiniz bilgilerin diğer kullanıcılar tarafından görülebileceğini dikkate almalısınız.
+
+⸻
+
+6. Kullanıcı Tarafından Oluşturulan İçerikler
+
+Tamuso kullanıcıların içerik oluşturmasına veya diğer kullanıcılarla etkileşime geçmesine izin verebilir.
+
+Bu kapsamda aşağıdaki içerikleri işleyebiliriz:
+
+* Metinler,
+* Yorumlar,
+* Mesajlar,
+* Profil içerikleri,
+* Fotoğraflar,
+* Videolar,
+* Ses kayıtları,
+* Canlı yayınlarla ilişkili bilgiler,
+* Sesli oda etkileşimleri,
+* Tepkiler,
+* Raporlar,
+* Kullanıcı şikâyetleri,
+* Moderasyon kayıtları,
+* Paylaşılan diğer kullanıcı içerikleri.
+
+İçeriğin herkese açık bir alanda paylaşılması durumunda diğer kullanıcılar tarafından görülebileceğini unutmayın.
+
+⸻
+
+7. Mesajlaşma Bilgileri
+
+Tamuso kullanıcılar arasında özel mesajlaşma özellikleri sunabilir.
+
+Mesajlaşma sistemi aşağıdakileri içerebilir:
+
+* Metin mesajları,
+* Fotoğraflar,
+* Videolar,
+* Sesli mesajlar,
+* Emoji ve reaksiyonlar,
+* Yanıtlar,
+* Gönderim zamanı,
+* Teslim durumu,
+* Mesajlaşan hesapların kimlik bilgileri.
+
+Mesajların güvenlik, kötüye kullanımın önlenmesi, raporların incelenmesi, yasal yükümlülüklerin yerine getirilmesi veya hizmetin sunulması amacıyla sistemlerimizde işlenmesi gerekebilir.
+
+Bir kullanıcı bir mesajı rapor ettiğinde, rapor edilen içeriğin ilgili bölümü moderasyon amacıyla incelenebilir.
+
+⸻
+
+8. Canlı Yayın ve Sesli Oda Bilgileri
+
+Tamuso canlı yayın ve sesli oda özellikleri sunabilir.
+
+Bu özellikleri kullandığınızda aşağıdaki bilgiler işlenebilir:
+
+* Yayına veya odaya katılım bilgisi,
+* Yayıncı veya katılımcı kimliği,
+* Oda kimliği,
+* Yayın kimliği,
+* Katılım zamanı,
+* Yayından ayrılma zamanı,
+* Yayın süresi,
+* Mikrofon veya konuşmacı durumu,
+* Etkileşim bilgileri,
+* Yorumlar,
+* Gönderilen veya alınan hediyeler,
+* Moderasyon işlemleri,
+* Teknik bağlantı verileri.
+
+Ses ve video aktarımının gerçekleştirilmesi için üçüncü taraf gerçek zamanlı iletişim altyapısı sağlayıcılarından yararlanabiliriz.
+
+⸻
+
+9. Kamera ve Mikrofon
+
+Tamuso’nun belirli özellikleri cihazınızın kamera veya mikrofonuna erişim gerektirebilir.
+
+Örneğin:
+
+* Canlı yayın başlatmak,
+* Görüntülü iletişim özelliklerini kullanmak,
+* Sesli odada konuşmak,
+* Sesli mesaj göndermek,
+* Fotoğraf veya video oluşturmak.
+
+Kamera ve mikrofon erişimi yalnızca işletim sistemi izinleri doğrultusunda kullanılacaktır.
+
+Bu izinleri cihazınızın ayarlarından değiştirebilir veya kaldırabilirsiniz.
+
+İznin kaldırılması ilgili özelliklerin çalışmamasına neden olabilir.
+
+⸻
+
+10. Fotoğraflar ve Medya
+
+Profil fotoğrafı seçmek, fotoğraf/video paylaşmak veya medya içeriği göndermek için cihazınızdaki fotoğraf veya medya seçicisine erişmeniz gerekebilir.
+
+Mümkün olduğunda işletim sistemlerinin sağladığı sınırlı medya seçicileri kullanılabilir.
+
+Tamuso’nun erişimi, verdiğiniz cihaz izinlerine bağlıdır.
+
+⸻
+
+11. Konum Bilgileri
+
+Tamuso’nun bazı özellikleri ülke, bölge veya şehir seviyesinde konum bilgilerini kullanabilir.
+
+Konum bilgileri aşağıdaki amaçlarla kullanılabilir:
+
+* Yerel içerik göstermek,
+* Şehir topluluklarını belirlemek,
+* Dil veya bölgesel deneyimi uyarlamak,
+* Güvenlik amacıyla yaklaşık bölge tespiti yapmak,
+* Bölgesel özellikleri kullanıma sunmak.
+
+Tamuso hassas GPS konumuna ihtiyaç duyduğu bir özellik sunarsa, ilgili işletim sistemi izni ayrıca istenir.
+
+Konum izni vermediğiniz durumlarda bazı konum tabanlı özellikler kullanılamayabilir.
+
+⸻
+
+12. Cihaz ve Teknik Bilgiler
+
+Uygulamayı kullandığınızda aşağıdaki teknik bilgilerin bir kısmını otomatik olarak işleyebiliriz:
+
+* Cihaz türü,
+* Cihaz modeli,
+* İşletim sistemi,
+* İşletim sistemi sürümü,
+* Uygulama sürümü,
+* Dil,
+* Saat dilimi,
+* IP adresi,
+* Ağ bağlantısı hakkında bilgiler,
+* Oturum bilgileri,
+* Push token,
+* Uygulama kurulum kimliği,
+* Hata ve crash kayıtları,
+* Performans bilgileri,
+* Güvenlik olayları,
+* API kullanım kayıtları.
+
+Bu bilgiler hizmetin güvenli, kararlı ve hızlı şekilde çalıştırılması amacıyla kullanılabilir.
+
+⸻
+
+13. Güvenlik Verileri
+
+Tamuso’nun ve kullanıcılarımızın güvenliğini korumak amacıyla güvenlikle ilgili teknik sinyaller işleyebiliriz.
+
+Bunlar aşağıdakileri içerebilir:
+
+* IP adresi,
+* Oturum bilgileri,
+* Başarısız giriş girişimleri,
+* Cihaz bilgileri,
+* Şüpheli hesap hareketleri,
+* Rate-limit olayları,
+* Yetkisiz erişim girişimleri,
+* Şüpheli API davranışları,
+* Hesap ele geçirme sinyalleri,
+* Spam veya otomasyon sinyalleri,
+* Sahte hesap sinyalleri,
+* Finansal kötüye kullanım sinyalleri,
+* Güvenlik risk puanları.
+
+Bu bilgiler dolandırıcılık, kötüye kullanım, spam, bot faaliyetleri ve yetkisiz erişimin önlenmesi amacıyla kullanılabilir.
+
+⸻
+
+14. Satın Alma ve Uygulama İçi İşlem Bilgileri
+
+Tamuso dijital ürünler, Coin veya benzeri uygulama içi öğeler sunabilir.
+
+Apple App Store veya Google Play üzerinden satın alma yaptığınızda ödeme işleminizin belirli bölümleri Apple veya Google tarafından gerçekleştirilebilir.
+
+Tamuso aşağıdaki bilgileri işleyebilir:
+
+* Satın alınan ürün,
+* Ürün kimliği,
+* Coin miktarı,
+* İşlem kimliği,
+* Satın alma zamanı,
+* İşlem durumu,
+* Platform,
+* Doğrulama sonucu,
+* İade veya iptal durumu,
+* Uygulama içi bakiye hareketleri.
+
+Tam ödeme kartı bilgileriniz Apple veya Google tarafından işlendiğinde Tamuso bu kart bilgilerine doğrudan erişmeyebilir.
+
+⸻
+
+15. Coin, Hediyeler ve Dijital Ekonomi
+
+Tamuso kullanıcıların dijital Coin satın almasına ve bunları platform içerisindeki uygun özelliklerde kullanmasına izin verebilir.
+
+Aşağıdaki kayıtları tutabiliriz:
+
+* Coin satın alımları,
+* Coin bakiyesi,
+* Coin harcamaları,
+* Gönderilen hediyeler,
+* Alınan hediyeler,
+* İşlem zamanı,
+* Gönderen ve alıcı,
+* İşlem kimliği,
+* Bonuslar,
+* İadeler,
+* Düzeltme/reversal kayıtları,
+* Creator/Host kazanç kayıtları.
+
+Finansal ve dijital ekonomi kayıtları güvenlik, muhasebe, dolandırıcılığın önlenmesi ve uyuşmazlıkların çözülmesi için daha uzun süre saklanabilir.
+
+⸻
+
+16. Creator, Host ve Ajans Bilgileri
+
+Creator, Host veya Ajans özelliklerini kullanmanız halinde aşağıdaki ek bilgileri işleyebiliriz:
+
+* Başvuru bilgileri,
+* Ajans ilişkileri,
+* Host statüsü,
+* Yayın süreleri,
+* Hediye performansı,
+* Kazanç bilgileri,
+* Komisyon bilgileri,
+* Hedefler,
+* Performans ölçümleri,
+* İhlal kayıtları,
+* Para çekme talepleri,
+* Ödeme durumu,
+* Gerektiğinde kimlik veya uygunluk doğrulama bilgileri.
+
+Bu bilgilerin kapsamı kullanılan programa ve yasal gerekliliklere bağlıdır.
+
+⸻
+
+17. Bildirimler
+
+İzin verdiğinizde cihazınıza push bildirimleri gönderebiliriz.
+
+Bildirimler şunlarla ilgili olabilir:
+
+* Yeni takipçiler,
+* Mesajlar,
+* Canlı yayınlar,
+* Sesli odalar,
+* Hediyeler,
+* Ajans işlemleri,
+* Şehir etkinlikleri,
+* Seçimler,
+* Güvenlik uyarıları,
+* Hesap işlemleri,
+* Platform duyuruları,
+* Etkinlikler.
+
+Bildirim tercihlerinizi uygulama veya cihaz ayarlarından değiştirebilirsiniz.
+
+Güvenlik veya hesap bütünlüğü açısından gerekli bazı hizmet bildirimleri pazarlama bildirimlerinden ayrı değerlendirilebilir.
+
+⸻
+
+18. Bilgileri Hangi Amaçlarla Kullanıyoruz?
+
+Topladığımız bilgileri aşağıdaki amaçlarla kullanabiliriz:
+
+* Tamuso hizmetlerini sunmak,
+* Kullanıcı hesabı oluşturmak ve yönetmek,
+* Kullanıcı kimliğini doğrulamak,
+* Canlı yayınları sağlamak,
+* Sesli odaları çalıştırmak,
+* Mesajlaşmayı sağlamak,
+* Takip sistemini çalıştırmak,
+* Coin ve hediye işlemlerini gerçekleştirmek,
+* Satın almaları doğrulamak,
+* Kullanıcı tercihlerini kaydetmek,
+* İçerikleri kişiselleştirmek,
+* Uygulama performansını geliştirmek,
+* Hataları tespit etmek,
+* Dolandırıcılığı önlemek,
+* Spam ve botları tespit etmek,
+* Topluluk kurallarını uygulamak,
+* Kullanıcı raporlarını incelemek,
+* Çocukların güvenliğini desteklemek,
+* Hesap güvenliğini sağlamak,
+* Kullanıcı desteği sunmak,
+* Yasal yükümlülüklere uymak,
+* Haklarımızı ve kullanıcılarımızın haklarını korumak.
+
+⸻
+
+19. Otomatik Sistemler ve Moderasyon
+
+Tamuso, platform güvenliği ve moderasyon amacıyla otomatik sistemlerden yararlanabilir.
+
+Bu sistemler aşağıdaki davranışları veya içerikleri tespit etmeye yardımcı olabilir:
+
+* Spam,
+* Sahte hesaplar,
+* Bot davranışları,
+* Dolandırıcılık,
+* Taciz,
+* Tehdit,
+* Uygunsuz içerik,
+* Çocuk güvenliği riskleri,
+* Finansal kötüye kullanım,
+* Şüpheli giriş faaliyetleri,
+* Platform manipülasyonu.
+
+Otomatik sistemlerin sonuçları uygun durumlarda insan moderasyonu veya ek incelemeyle desteklenebilir.
+
+⸻
+
+20. Bilgilerin Paylaşılması
+
+Kişisel bilgileri yalnızca hizmetlerin sunulması, güvenliğin sağlanması, yasal yükümlülüklerin yerine getirilmesi ve bu politikada açıklanan diğer meşru amaçlar doğrultusunda paylaşabiliriz.
+
+Bilgiler aşağıdaki kategorilerdeki taraflarla paylaşılabilir:
+
+* Bulut altyapısı sağlayıcıları,
+* Veritabanı ve depolama sağlayıcıları,
+* Gerçek zamanlı ses/video altyapısı sağlayıcıları,
+* Push bildirim hizmetleri,
+* Analitik ve hata izleme hizmetleri,
+* Güvenlik hizmetleri,
+* Ödeme ve uygulama mağazası sağlayıcıları,
+* Destek hizmetleri,
+* Hukuki ve profesyonel danışmanlar,
+* Yetkili kamu makamları.
+
+Hizmet sağlayıcılara yalnızca ilgili hizmeti yerine getirmeleri için gerekli olabilecek bilgiler aktarılır.
+
+⸻
+
+21. Apple ve Google
+
+Tamuso’nun iOS sürümü Apple App Store üzerinden ve Android sürümü Google Play üzerinden sunulabilir.
+
+Apple veya Google üzerinden gerçekleştirilen:
+
+* Satın almalar,
+* Abonelikler,
+* Uygulama indirmeleri,
+* Mağaza işlemleri,
+* Belirli cihaz hizmetleri
+
+Apple veya Google’ın kendi gizlilik koşullarına da tabi olabilir.
+
+⸻
+
+22. Hizmet Sağlayıcıları
+
+Tamuso’nun teknik altyapısında üçüncü taraf hizmet sağlayıcılarından yararlanabiliriz.
+
+Örneğin uygulamanın işlevlerine bağlı olarak:
+
+* Veritabanı,
+* Authentication,
+* Dosya depolama,
+* Gerçek zamanlı iletişim,
+* Push bildirim,
+* Hosting,
+* CDN,
+* Analitik,
+* Crash reporting,
+* Güvenlik,
+* Ödeme doğrulama
+
+hizmetlerinden yararlanılabilir.
+
+Kullandığımız sağlayıcılar zaman içerisinde değişebilir.
+
+⸻
+
+23. Kişisel Bilgilerin Satışı
+
+Tamuso’nun temel iş modeli kullanıcıların kişisel bilgilerini veri komisyoncularına satmak üzerine kurulmamıştır.
+
+Geçerli mevzuatın belirli reklam veya veri paylaşımı faaliyetlerini “satış”, “paylaşım” veya benzeri özel bir hukuki kategori olarak değerlendirdiği durumlarda, gerekli kullanıcı hakları ve tercih mekanizmaları ilgili mevzuata göre sağlanacaktır.
+
+⸻
+
+24. Reklam ve Pazarlama
+
+Tamuso gelecekte reklam veya kişiselleştirilmiş pazarlama özellikleri kullanabilir.
+
+Bu tür özelliklerin kullanılması halinde gerekli olduğu ölçüde:
+
+* Kullanıcı tercihleri,
+* İzin mekanizmaları,
+* Platform izinleri,
+* Opt-out seçenekleri
+
+sunulacaktır.
+
+Gerekli izin alınmadan hassas kişisel bilgiler hedefli reklam amacıyla kullanılmamalıdır.
+
+⸻
+
+25. Yasal Nedenlerle Bilgi Paylaşımı
+
+Aşağıdaki durumlarda bilgileri yetkili taraflarla paylaşmamız gerekebilir:
+
+* Geçerli bir mahkeme kararı,
+* Yasal talep,
+* Düzenleyici yükümlülük,
+* Hukuki süreç,
+* Kullanıcıların güvenliğinin korunması,
+* Dolandırıcılığın önlenmesi,
+* Ciddi güvenlik tehdidinin araştırılması,
+* Haklarımızın korunması.
+
+Her talep, uygulanabilir hukuk çerçevesinde değerlendirilir.
+
+⸻
+
+26. Şirket Birleşmesi veya Devri
+
+Litxtech LLC’nin birleşme, satın alma, yeniden yapılandırma, finansman, varlık satışı veya benzeri bir kurumsal işlem gerçekleştirmesi durumunda ilgili kullanıcı bilgileri işlemin bir parçası olarak devredilebilir.
+
+Böyle bir durumda kişisel bilgilerin korunmasına ilişkin uygulanabilir yükümlülükler devam eder.
+
+⸻
+
+27. Uluslararası Veri Aktarımları
+
+Tamuso global olarak kullanılabilecek bir hizmettir.
+
+Bu nedenle bilgileriniz bulunduğunuz ülke dışındaki sunucularda veya hizmet sağlayıcıların bulunduğu ülkelerde işlenebilir.
+
+Bu ülkelerdeki veri koruma kuralları yaşadığınız ülkedeki kurallardan farklı olabilir.
+
+Uygulanabilir hukuk gerektiriyorsa uluslararası veri aktarımları için uygun hukuki mekanizmalar ve koruma önlemleri kullanılacaktır.
+
+⸻
+
+28. Bilgileri Ne Kadar Süre Saklıyoruz?
+
+Kişisel bilgileri yalnızca ilgili işleme amacı için gerekli olduğu veya yasal olarak saklanması gerektiği süre boyunca saklamaya çalışırız.
+
+Saklama süresinin belirlenmesinde aşağıdakiler dikkate alınabilir:
+
+* Hesabın aktif olup olmadığı,
+* Bilginin türü,
+* Kullanıcının talebi,
+* Yasal yükümlülükler,
+* Muhasebe yükümlülükleri,
+* Dolandırıcılığın önlenmesi,
+* Güvenlik gereksinimleri,
+* Uyuşmazlıklar,
+* Hukuki talepler,
+* Topluluk güvenliği.
+
+Hesap silindikten sonra bazı bilgiler yedeklerde, güvenlik kayıtlarında veya yasal olarak saklanması gereken kayıtlarda sınırlı süre tutulabilir.
+
+⸻
+
+29. Hesap Silme
+
+Kullanıcılar Tamuso hesaplarının silinmesini talep edebilir.
+
+Hesap silme özelliği uygulama içerisinden veya destek kanalları üzerinden sunulabilir.
+
+Hesap silindiğinde, yasal veya güvenlik amacıyla tutulması gerekmeyen kişisel bilgiler silinir, anonimleştirilir veya erişilemez hale getirilir.
+
+Ancak aşağıdaki kayıtların belirli bölümlerinin saklanması gerekebilir:
+
+* Finansal işlem kayıtları,
+* Dolandırıcılık kayıtları,
+* Güvenlik olayları,
+* Hukuki uyuşmazlık kayıtları,
+* Yasal saklama yükümlülüğüne tabi kayıtlar,
+* Moderasyon veya ciddi güvenlik kayıtları.
+
+⸻
+
+30. Kullanıcı Hakları
+
+Bulunduğunuz ülkeye ve uygulanabilir mevzuata bağlı olarak aşağıdaki haklardan bazılarına sahip olabilirsiniz:
+
+* Kişisel bilgilerinize erişme,
+* Bilgilerin bir kopyasını talep etme,
+* Yanlış bilgilerin düzeltilmesini isteme,
+* Belirli bilgilerin silinmesini isteme,
+* İşlemenin sınırlandırılmasını isteme,
+* Belirli işlemelere itiraz etme,
+* Veri taşınabilirliği talep etme,
+* Verdiğiniz izni geri çekme,
+* Belirli reklam/paylaşım uygulamalarından çıkma,
+* Yetkili veri koruma makamına başvurma.
+
+Bu haklar mutlak değildir ve geçerli hukuka göre istisnalara tabi olabilir.
+
+⸻
+
+31. Gizlilik Talepleri
+
+Gizlilikle ilgili taleplerinizi aşağıdaki adrese gönderebilirsiniz:
+
+support@litxtech.com
+
+Talebinizi yerine getirmeden önce hesabınızı veya kimliğinizi doğrulamamız gerekebilir.
+
+Bu doğrulama kullanıcı bilgilerinin yetkisiz kişilere verilmesini önlemek amacıyla yapılır.
+
+⸻
+
+32. California Kullanıcıları
+
+California’da yaşayan kullanıcılar, uygulanabilir California gizlilik mevzuatı kapsamında kişisel bilgilerinin toplanması, kullanılması, açıklanması, silinmesi veya düzeltilmesiyle ilgili belirli haklara sahip olabilir.
+
+Uygulanabilir olduğu ölçüde kullanıcılar:
+
+* Toplanan kişisel bilgi kategorilerini öğrenme,
+* Belirli kişisel bilgilere erişme,
+* Düzeltme talep etme,
+* Silme talep etme,
+* Belirli satış veya paylaşım faaliyetlerinden çıkma,
+* Gizlilik haklarını kullandıkları için ayrımcılığa uğramama
+
+haklarına sahip olabilir.
+
+Bu hakların uygulanabilirliği Litxtech LLC’nin ve ilgili veri işleme faaliyetinin yasal kapsama girip girmediğine bağlıdır.
+
+⸻
+
+33. Avrupa Ekonomik Alanı, Birleşik Krallık ve Benzeri Bölgeler
+
+Uygulanabilir olduğu durumlarda kişisel bilgiler aşağıdaki hukuki dayanaklardan biri veya birkaçı kapsamında işlenebilir:
+
+* Sözleşmenin ifası,
+* Yasal yükümlülük,
+* Meşru menfaat,
+* Kullanıcının rızası,
+* Hayati menfaatlerin korunması,
+* Uygulanabilir diğer hukuki dayanaklar.
+
+Meşru menfaat kullanıldığında kullanıcıların temel hak ve özgürlükleri dikkate alınır.
+
+Rızaya dayalı bir işleme söz konusuysa, kullanıcı uygun durumlarda rızasını geri çekebilir.
+
+⸻
+
+34. Türkiye’deki Kullanıcılar
+
+Türkiye’deki kullanıcıların kişisel verileri bakımından uygulanabilir olduğu ölçüde 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) ve ilgili düzenlemeler dikkate alınacaktır.
+
+Kullanıcılar, uygulanabilir şartlar kapsamında kişisel verilerinin:
+
+* İşlenip işlenmediğini öğrenme,
+* İşlenmişse bilgi talep etme,
+* İşlenme amacını öğrenme,
+* Amacına uygun kullanılıp kullanılmadığını öğrenme,
+* Aktarılan üçüncü kişilere ilişkin bilgi talep etme,
+* Eksik veya yanlış verilerin düzeltilmesini isteme,
+* Uygulanabilir şartlarda silinmesini veya yok edilmesini isteme
+
+gibi haklara sahip olabilir.
+
+KVKK kapsamında gerekli ayrı aydınlatma metinleri veya mekanizmalar gerektiğinde ayrıca sunulabilir.
+
+⸻
+
+35. Çocukların Gizliliği
+
+Tamuso çocukların güvenliğini ve gizliliğini ciddi şekilde ele alır.
+
+Tamuso’nun minimum kullanım yaşı, hizmetin sunulduğu ülkenin yasalarına ve ilgili platform kurallarına göre belirlenebilir.
+
+Yaş gerekliliklerini karşılamayan çocukların hesap oluşturmasına izin verilmez.
+
+Yaş gerekliliklerini karşılamayan bir çocuğun kişisel bilgilerinin uygunsuz şekilde işlendiğini öğrenmemiz durumunda gerekli incelemeyi yapabilir ve uygulanabilir hukuka uygun şekilde ilgili bilgileri silmek veya hesabı kısıtlamak için işlem gerçekleştirebiliriz.
+
+Çocuk güvenliğiyle ilgili bildirimler:
+
+support@litxtech.com
+
+adresine gönderilebilir.
+
+Çocukların korunmasına ilişkin daha ayrıntılı kurallar ayrıca Tamuso Çocuk Güvenliği ve Koruma Politikası içerisinde açıklanacaktır.
+
+⸻
+
+36. Kullanıcı Güvenliği ve Raporlama
+
+Kullanıcılar uygun olmayan içerikleri veya davranışları Tamuso içerisindeki raporlama araçlarıyla bildirebilir.
+
+Raporlar aşağıdaki konuları içerebilir:
+
+* Taciz,
+* Tehdit,
+* Nefret içerikleri,
+* Cinsel içerik,
+* Spam,
+* Dolandırıcılık,
+* Sahte hesap,
+* Çocuk güvenliği,
+* Reşit olmayanların istismarı,
+* Uygunsuz yetişkin-reşit olmayan etkileşimi,
+* Diğer topluluk kuralı ihlalleri.
+
+Rapor edilen içerik veya hesaplar insan moderatörler veya otomatik güvenlik sistemleri tarafından incelenebilir.
+
+⸻
+
+37. Engelleme
+
+Tamuso kullanıcıların diğer kullanıcıları engellemesine izin verebilir.
+
+Engelleme sonrasında ilgili kullanıcıların birbirleriyle olan görünürlük ve iletişim seçenekleri sınırlandırılabilir.
+
+Güvenlik ve moderasyon amacıyla engelleme olayının teknik kaydı tutulabilir.
+
+⸻
+
+38. Veri Güvenliği
+
+Kişisel bilgileri yetkisiz erişim, değiştirme, ifşa veya kayba karşı korumak amacıyla makul teknik ve organizasyonel güvenlik önlemleri uygulamayı hedefleriz.
+
+Bunlar uygun olduğu ölçüde:
+
+* Erişim kontrolü,
+* Yetkilendirme,
+* Şifreli iletişim,
+* Güvenli kimlik doğrulama,
+* Row Level Security,
+* Rate limiting,
+* Audit logs,
+* Güvenlik olaylarının izlenmesi,
+* Şüpheli davranış analizi,
+* Sunucu taraflı işlem doğrulaması,
+* Finansal işlemlerde idempotency,
+* Güvenli secret yönetimi,
+* Yedekleme ve kurtarma
+
+gibi önlemleri içerebilir.
+
+Bununla birlikte hiçbir internet veya elektronik depolama sistemi mutlak güvenlik garantisi veremez.
+
+⸻
+
+39. Şifre Güvenliği
+
+Kullanıcı şifreleri açık metin olarak saklanmamalıdır.
+
+Kullanıcılar hesaplarının güvenliği için güçlü ve benzersiz şifre kullanmalı ve giriş bilgilerini başkalarıyla paylaşmamalıdır.
+
+Hesabınızın yetkisiz kullanıldığını düşünüyorsanız derhal:
+
+support@litxtech.com
+
+adresinden bizimle iletişime geçin.
+
+⸻
+
+40. Veri İhlalleri
+
+Kişisel verileri etkileyen bir güvenlik olayı meydana gelmesi durumunda olay araştırılır ve uygulanabilir mevzuatın gerektirdiği bildirimler gerçekleştirilir.
+
+Gerekli durumlarda etkilenen kullanıcılar bilgilendirilebilir.
+
+⸻
+
+41. Üçüncü Taraf Bağlantıları
+
+Tamuso zaman zaman üçüncü taraf internet sitelerine veya hizmetlerine bağlantı verebilir.
+
+Bu hizmetlerin gizlilik uygulamalarından Litxtech LLC sorumlu değildir.
+
+Üçüncü taraf bir hizmeti kullanmadan önce ilgili tarafın gizlilik politikasını incelemenizi öneririz.
+
+⸻
+
+42. Kullanıcıların Paylaştığı Herkese Açık Bilgiler
+
+Canlı yayınlarda, sesli odalarda, profilinizde, yorumlarda veya diğer herkese açık alanlarda paylaştığınız bilgiler diğer kullanıcılar tarafından görülebilir.
+
+Bu nedenle:
+
+* Telefon numarası,
+* Ev adresi,
+* Finansal bilgiler,
+* Şifre,
+* Kimlik belgesi,
+* Diğer hassas kişisel bilgiler
+
+gibi bilgileri herkese açık alanlarda paylaşmamanızı öneririz.
+
+⸻
+
+43. Analitik ve Performans
+
+Tamuso uygulamanın nasıl kullanıldığını anlamak ve performansı geliştirmek amacıyla analitik bilgiler işleyebilir.
+
+Örneğin:
+
+* Ekran görüntülemeleri,
+* Özellik kullanımı,
+* Oturum süresi,
+* Teknik hatalar,
+* Crash bilgileri,
+* Performans ölçümleri.
+
+Mümkün olduğunda bu bilgiler toplulaştırılmış veya sınırlı kimlik bilgileriyle kullanılabilir.
+
+⸻
+
+44. Profil ve İçerik Önerileri
+
+Tamuso kullanıcılara ilgili olabilecek Creator, canlı yayın, sesli oda, şehir, etkinlik veya içerikleri önermek için kullanım sinyallerini değerlendirebilir.
+
+Bu sinyaller örneğin:
+
+* Takip edilen hesaplar,
+* İzlenen içerikler,
+* Katılınan odalar,
+* Dil,
+* Ülke veya bölge,
+* İlgi alanları,
+* Kullanıcı etkileşimleri
+
+olabilir.
+
+⸻
+
+45. Politika Değişiklikleri
+
+Bu Gizlilik Politikasını zaman zaman değiştirebiliriz.
+
+Önemli değişiklikler yapılması halinde uygun olduğu ölçüde:
+
+* Uygulama içi bildirim,
+* Duyuru,
+* E-posta,
+* Push bildirimi
+
+gibi yöntemlerden biri kullanılabilir.
+
+Politikanın üst kısmındaki “Son Güncelleme” tarihi en son değişiklik tarihini gösterir.
+
+Yasal olarak yeniden onay alınması gereken değişikliklerde kullanıcıdan yeniden onay istenebilir.
+
+⸻
+
+46. Dil
+
+Bu Gizlilik Politikası farklı dillere çevrilebilir.
+
+Çeviriler kullanıcıların politikayı daha kolay anlayabilmesi amacıyla sağlanabilir.
+
+Farklı dil sürümleri arasında hukuken önemli bir uyuşmazlık olması durumunda hangi sürümün geçerli olacağı, yayımlanan hizmet şartları ve uygulanabilir hukuk çerçevesinde belirtilecektir.
+
+⸻
+
+47. İletişim
+
+Bu Gizlilik Politikası, kişisel bilgileriniz, hesap silme talepleri, veri erişim talepleri veya gizlilik haklarınız hakkında bizimle iletişime geçebilirsiniz.
+
+Litxtech LLC
+
+Tamuso Privacy Team
+
+E-posta: support@litxtech.com
+
+Posta Adresi:
+15442 Ventura Blvd
+Ste 201-1834
+Sherman Oaks, CA
+USA
+
+⸻
+
+48. Son Hüküm
+
+Tamuso, kullanıcıların kişisel bilgilerinin korunmasını platform güvenliğinin temel unsurlarından biri olarak değerlendirir.
+
+Amacımız yalnızca yasal gereklilikleri karşılayan bir gizlilik yapısı oluşturmak değil; aynı zamanda kullanıcıların hangi bilgilerin neden işlendiğini anlayabildiği, hesapları üzerinde uygun kontrol mekanizmalarına sahip olduğu ve güvenli şekilde iletişim kurabildiği bir platform sağlamaktır.

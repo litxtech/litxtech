@@ -1,0 +1,680 @@
+TAMUSO ÇOCUK GÜVENLİĞİ VE KORUMA POLİTİKASI
+
+Child Safety & Protection Policy
+
+Yürürlük Tarihi: 19 Eylül 2026
+Son Güncelleme: 19 Eylül 2026
+
+Uygulama: Tamuso
+İşletmeci: Litxtech LLC
+E-posta: support@litxtech.com
+Adres: 15442 Ventura Blvd, Ste 201-1834, Sherman Oaks, California, USA
+
+Bu politika, Tamuso’nun çocukların ve reşit olmayan kişilerin güvenliğinin korunmasına ilişkin standartlarını açıklar.
+
+Tamuso; canlı yayın, sesli odalar, mesajlaşma ve kullanıcı tarafından oluşturulan içerikler içeren sosyal bir platform olduğundan çocuk güvenliği konusunda özel önlemler uygular.
+
+Google Play, sosyal uygulamalardan kamuya açık CSAE standartları, uygulama içi raporlama mekanizması, CSAM hakkında işlem süreci, ilgili çocuk güvenliği yasalarına uyum ve belirlenmiş bir çocuk güvenliği iletişim noktası talep etmektedir. Bu şartlar, uygulama yalnızca yetişkinlere yönelik olsa bile sosyal kategori kapsamındaki uygulamalar için geçerlidir.
+
+Apple ise kullanıcı içeriği barındıran sosyal uygulamalarda uygunsuz içerik filtreleme, raporlama, kötüye kullanan kullanıcıları engelleme ve ulaşılabilir iletişim bilgileri bulunmasını şart koşmaktadır.
+
+⸻
+
+1. Politikamızın Amacı
+
+Tamuso, çocukların cinsel istismarı, cinsel sömürüsü, grooming, cinsel şantaj, insan ticareti, çocukların cinselleştirilmesi ve çocukları tehlikeye atan diğer davranışlara karşı sıfır tolerans yaklaşımı benimser.
+
+Hiçbir kullanıcı Tamuso’yu bir çocuğu istismar etmek, sömürmek, cinsel amaçlarla iletişim kurmak, manipüle etmek veya tehlikeye atmak amacıyla kullanamaz.
+
+Bu yasak;
+
+* Profilleri,
+* Mesajları,
+* Fotoğrafları,
+* Videoları,
+* Ses kayıtlarını,
+* Canlı yayınları,
+* Sesli odaları,
+* Yorumları,
+* Kullanıcı adlarını,
+* Biyografileri,
+* Hediyeleri,
+* Creator/Host faaliyetlerini,
+* Ajans faaliyetlerini,
+* Toplulukları,
+* Tamuso üzerinden gerçekleştirilen diğer iletişimleri
+
+kapsar.
+
+⸻
+
+2. CSAE’ye Karşı Sıfır Tolerans
+
+Tamuso, Child Sexual Abuse and Exploitation (CSAE), yani çocukların cinsel istismarı ve sömürülmesini kesinlikle yasaklar.
+
+Bu kapsamda aşağıdakiler yasaktır:
+
+* Bir çocuğun cinsel istismarı,
+* Çocuğun cinsel sömürüsü,
+* Çocuğu cinsel amaçlarla manipüle etmek,
+* Grooming,
+* Çocuktan cinsel içerik istemek,
+* Çocuğa cinsel içerik göndermek,
+* Çocuğu cinsel davranışa teşvik etmek,
+* Çocuğu cinsel amaçlarla başka bir kullanıcıyla buluşturmaya çalışmak,
+* Çocuğa para, Coin, hediye veya başka avantaj karşılığında cinsel talepte bulunmak,
+* Çocuğun cinsel görüntülerini istemek,
+* Çocuğa yönelik cinsel şantaj,
+* Çocuğun cinsel ticarete konu edilmesi,
+* Çocuk istismarının kolaylaştırılması.
+
+Bu davranışlar Tamuso üzerinde hiçbir koşulda kabul edilmez.
+
+⸻
+
+3. CSAM Kesinlikle Yasaktır
+
+Child Sexual Abuse Material (CSAM), çocukların cinsel istismarını gösteren veya temsil eden materyalleri ifade eder.
+
+Tamuso üzerinde CSAM:
+
+* Oluşturulamaz,
+* Yüklenemez,
+* Yayınlanamaz,
+* Gönderilemez,
+* Paylaşılamaz,
+* Dağıtılamaz,
+* Talep edilemez,
+* Satılamaz,
+* Takas edilemez,
+* Başka kullanıcıya yönlendirilemez.
+
+Bu yasak özel mesajlar dahil platformun tamamında geçerlidir.
+
+Google Play’in güncel politikasında CSAM kapsamına fotoğraf ve videoların yanında bilgisayar tarafından oluşturulan görsel tasvirlerin de girebileceği açıkça belirtilmektedir.
+
+⸻
+
+4. Yapay Zekâ ile Üretilen İçerikler
+
+Bir içeriğin yapay zekâ tarafından oluşturulmuş, değiştirilmiş veya sentetik olması çocuk güvenliği kurallarını ortadan kaldırmaz.
+
+Bir çocuğu veya reşit olmayan kişiyi cinsel şekilde tasvir eden yasaklı sentetik içerikler Tamuso’da kullanılamaz.
+
+“Gerçek kişi değil”, “AI ile üretildi” veya benzeri açıklamalar, yasaklı içeriği otomatik olarak kabul edilebilir hale getirmez.
+
+⸻
+
+5. Grooming Kesinlikle Yasaktır
+
+Bir yetişkinin bir çocukla gelecekte cinsel temas, cinsel içerik paylaşımı veya başka bir cinsel sömürü amacıyla güven ilişkisi kurmaya çalışması yasaktır.
+
+Grooming davranışları şunları içerebilir:
+
+* Çocuğa sistematik şekilde yaklaşmak,
+* Cinsel konuşmaya yönlendirmek,
+* Özel görüntü istemek,
+* İletişimi gizli tutmasını istemek,
+* Ebeveynlerinden saklamasını istemek,
+* Başka platforma geçmeye zorlamak,
+* Para veya hediye teklif etmek,
+* Buluşma talebinde bulunmak,
+* Çocuğu cinsel davranışlara hazırlamak.
+
+Bu tür davranışlar ciddi güvenlik ihlali olarak değerlendirilir.
+
+⸻
+
+6. Cinsel Şantaj / Sextortion
+
+Çocuklara yönelik cinsel şantaj kesinlikle yasaktır.
+
+Hiçbir kullanıcı bir çocuğun fotoğrafını, videosunu, mesajını veya başka kişisel bilgisini kullanarak çocuğu:
+
+* Yeni görüntüler göndermeye,
+* Para göndermeye,
+* Coin göndermeye,
+* Hediye göndermeye,
+* Cinsel davranış gerçekleştirmeye,
+* Görüşmeye veya buluşmaya
+
+zorlayamaz veya tehdit edemez.
+
+Şantaj teşebbüsü dahi ciddi ihlal olarak değerlendirilebilir.
+
+⸻
+
+7. Çocukların Cinselleştirilmesi
+
+Çocukların cinsel nesne olarak gösterilmesi veya cinselleştirilmesi yasaktır.
+
+Bu yasak yalnızca açık çıplaklık içeren içeriklerle sınırlı değildir.
+
+Bağlam, açıklama, yorum, davranış ve içeriğin kullanım amacı birlikte değerlendirilebilir.
+
+⸻
+
+8. Cinsel İçerik Talep Etmek
+
+Bir çocuktan aşağıdakileri istemek yasaktır:
+
+* Çıplak fotoğraf,
+* Cinsel fotoğraf,
+* Cinsel video,
+* Cinsel ses kaydı,
+* Cinsel canlı yayın,
+* Cinsel görüntülü görüşme,
+* Cinsel davranış.
+
+Bunun karşılığında para, Coin, hediye, VIP, takip, Creator avantajı veya başka bir menfaat teklif edilmesi ihlali daha az ciddi hale getirmez.
+
+⸻
+
+9. Çocuklara Cinsel İçerik Gönderilmesi
+
+Bir çocuğa cinsel veya pornografik materyal göndermek ya da göstermeye çalışmak yasaktır.
+
+Bu kural:
+
+* Mesajları,
+* Fotoğrafları,
+* Videoları,
+* Bağlantıları,
+* Canlı yayınları,
+* Sesli odaları
+
+kapsar.
+
+⸻
+
+10. Çocuk Ticareti ve Cinsel Sömürü
+
+Tamuso çocukların cinsel amaçlarla ticaretini, aracılığını veya sömürülmesini kolaylaştıran faaliyetlere izin vermez.
+
+Çocukları cinsel amaçlarla:
+
+* Teklif etmek,
+* Aramak,
+* Pazarlamak,
+* Satın almaya çalışmak,
+* Aracılık yapmak,
+* Taşımayı organize etmek,
+* Buluşma düzenlemek
+
+yasaktır.
+
+⸻
+
+11. Platform Dışına Yönlendirme
+
+Tamuso’nun çocuk güvenliği kurallarını aşmak amacıyla iletişimi başka bir uygulamaya taşımaya çalışmak kabul edilmez.
+
+Özellikle bir çocuğu cinsel veya sömürücü amaçlarla:
+
+* WhatsApp,
+* Telegram,
+* Instagram,
+* Snapchat,
+* Telefon/SMS,
+* Başka internet siteleri
+
+gibi platformlara yönlendirmek yasaktır.
+
+Platform dışına geçilmiş olması Tamuso üzerindeki önceki davranışların incelenmesini engellemez.
+
+⸻
+
+12. Yaş Gereksinimleri
+
+Tamuso, hizmetin kullanımı için minimum yaş şartı belirler.
+
+Tamuso’nun hangi ülkelerde hangi yaş sınırlarıyla kullanılabileceği uygulanabilir mevzuat ve hizmet özelliklerine göre belirlenebilir.
+
+Kullanıcıların kayıt sırasında doğru yaş bilgisi vermesi gerekir.
+
+Yaş hakkında yanlış bilgi verilmesi hesap kısıtlamasına veya hesabın kapatılmasına neden olabilir.
+
+⸻
+
+13. Yaş Şüphesi
+
+Bir kullanıcının izin verilen minimum yaşın altında olduğundan şüphelenilmesi halinde Tamuso hesabı inceleyebilir.
+
+Gerekli görüldüğünde:
+
+* Hesap geçici olarak sınırlandırılabilir,
+* Belirli sosyal özellikler kapatılabilir,
+* Yaş doğrulaması istenebilir,
+* Hesap askıya alınabilir,
+* Hesap kapatılabilir.
+
+Çocuk güvenliğinin korunması amacıyla gerekli tedbirler öncelikli uygulanabilir.
+
+⸻
+
+14. Yanlış Yaş Beyanı
+
+Kullanıcılar yaşları konusunda kasıtlı olarak yanlış bilgi vermemelidir.
+
+Özellikle minimum yaş kısıtlamasını aşmak amacıyla yanlış doğum tarihi kullanılması yasaktır.
+
+Aynı şekilde bir yetişkinin kendisini çocuk olarak veya başka bir kişiyi taklit ederek çocuklara ulaşmaya çalışması da güvenlik ihlali olarak değerlendirilebilir.
+
+⸻
+
+15. Canlı Yayınlarda Çocuk Güvenliği
+
+Tamuso’nun canlı yayın özellikleri çocuk güvenliği kurallarına tabidir.
+
+Canlı yayın sırasında:
+
+* Çocukların cinsel sömürüsü,
+* Çocukların cinselleştirilmesi,
+* Cinsel talepler,
+* Grooming,
+* CSAM,
+* Çocukların tehlikeli faaliyetlere zorlanması
+
+yasaktır.
+
+Tamuso ciddi güvenlik ihlali şüphesinde canlı yayını sonlandırabilir ve ilgili hesabı incelemeye alabilir.
+
+⸻
+
+16. Sesli Odalarda Çocuk Güvenliği
+
+Çocuk güvenliği kuralları sesli odalar için de geçerlidir.
+
+Sesli olması, bir iletişimi çocuk güvenliği kurallarının dışında bırakmaz.
+
+Çocuğa yönelik cinsel talepler, grooming veya sömürücü davranışlar sesli iletişimde de yasaktır.
+
+⸻
+
+17. Özel Mesajlar
+
+Özel mesajların niteliği çocuk güvenliği kurallarının uygulanmasını ortadan kaldırmaz.
+
+Kullanıcılar özel mesajlarda da:
+
+* Grooming,
+* Cinsel şantaj,
+* CSAM paylaşımı,
+* Çocuktan cinsel içerik isteme,
+* Çocuğa cinsel içerik gönderme
+
+faaliyetlerinde bulunamaz.
+
+Bir mesajın rapor edilmesi veya ciddi güvenlik sorunu tespit edilmesi halinde, uygulanabilir hukuk ve politikalarımız doğrultusunda ilgili içerik incelenebilir.
+
+⸻
+
+18. Sanal Hediyeler ve Coin
+
+Tamuso’nun Coin veya sanal hediye sistemi çocukları sömürmek için kullanılamaz.
+
+Bir çocuğa:
+
+* Cinsel içerik,
+* Cinsel davranış,
+* Özel fotoğraf,
+* Video,
+* Görüntülü görüşme,
+* Platform dışı görüşme
+
+karşılığında Coin veya hediye teklif etmek kesinlikle yasaktır.
+
+⸻
+
+19. Creator, Host ve Ajansların Sorumluluğu
+
+Creator’lar, Host’lar ve Ajans kullanıcıları da bu politikaya tam olarak uymak zorundadır.
+
+Creator/Host statüsü hiçbir kullanıcıya çocuk güvenliği kurallarından istisna sağlamaz.
+
+Ajansların veya yöneticilerin çocuk güvenliği ihlallerini teşvik etmesi, gizlemesi veya görmezden gelmesi kabul edilmez.
+
+⸻
+
+20. Uygulama İçi Raporlama
+
+Tamuso, kullanıcıların güvenlik sorunlarını uygulama içerisinden rapor edebilmesine yönelik mekanizmalar sağlamayı amaçlar.
+
+Google Play, kapsamındaki sosyal uygulamalarda kullanıcıların endişe veya raporlarını uygulamadan ayrılmadan iletebileceği bir mekanizma bulunmasını şart koşmaktadır.
+
+Tamuso içerisinde uygun alanlarda Rapor Et seçeneği bulunmalıdır.
+
+Kullanıcılar örneğin:
+
+* Profili,
+* Mesajı,
+* Canlı yayını,
+* Sesli odayı,
+* Yorumu,
+* İçeriği
+
+raporlayabilmelidir.
+
+⸻
+
+21. Çocuk Güvenliği Rapor Kategorileri
+
+Tamuso’nun raporlama sistemi çocuk güvenliği için özel kategoriler sağlayabilir.
+
+Bunlar arasında:
+
+Çocuk Güvenliği
+
+Çocuğun Cinsel İstismarı / Sömürüsü
+
+Reşit Olmayan Kişiye Yönelik Uygunsuz Davranış
+
+Grooming Şüphesi
+
+Çocuğa Yönelik Cinsel Şantaj
+
+CSAM Şüphesi
+
+Çocuğun Tehlikede Olması
+
+gibi seçenekler bulunabilir.
+
+⸻
+
+22. Acil Durumlar
+
+Bir çocuğun yakın veya acil fiziksel tehlike altında olduğuna inanıyorsanız yalnızca Tamuso’ya rapor göndermekle yetinmeyin.
+
+Bulunduğunuz bölgedeki polis, acil yardım veya uygun çocuk koruma kurumuyla derhal iletişime geçin.
+
+Tamuso acil durum hizmeti veya kolluk kuvveti değildir.
+
+⸻
+
+23. Raporların İncelenmesi
+
+Çocuk güvenliği raporları diğer olağan kullanıcı şikâyetlerinden farklı öncelikte değerlendirilebilir.
+
+Tamuso raporları:
+
+1. Güvenlik sistemleriyle sınıflandırabilir,
+2. Önceliklendirebilir,
+3. Yetkili moderasyon/güvenlik personeline yönlendirebilir,
+4. İlgili hesabı veya içeriği inceleyebilir,
+5. Gerekli koruyucu tedbirleri uygulayabilir.
+
+Ciddi çocuk güvenliği raporları yüksek öncelikli olarak işlenebilir.
+
+⸻
+
+24. CSAM Tespit Edildiğinde
+
+Tamuso’nun CSAM hakkında fiilen bilgi sahibi olması durumunda uygulanabilir hukuk ve politikalarımız doğrultusunda uygun işlemler gerçekleştirilir.
+
+Bunlar durumun niteliğine göre:
+
+* İçeriğe erişimin engellenmesi,
+* İçeriğin platformdan kaldırılması,
+* Hesabın kısıtlanması,
+* Hesabın askıya alınması,
+* Hesabın kapatılması,
+* İlgili kayıtların hukuken gerekli şekilde korunması,
+* Gerekli bildirimlerin yapılması
+
+gibi tedbirleri içerebilir.
+
+Google Play de kapsamındaki uygulamalardan, CSAM hakkında fiilen bilgi sahibi olduktan sonra içeriğin kaldırılması dahil uygun işlemlerin gerçekleştirilmesini beklemektedir.
+
+⸻
+
+25. Yetkili Kurumlara Bildirim
+
+Litxtech LLC, uygulanabilir çocuk güvenliği yasalarına uymayı amaçlar.
+
+Doğrulanmış veya bildirim yükümlülüğü doğuran CSAM/CSAE vakalarında, uygulanabilir hukukun gerektirdiği şekilde ilgili yetkili kurumlara bildirim yapılabilir.
+
+Google Play’in güncel standardı, kapsamındaki uygulamaların doğrulanmış CSAM’yi National Center for Missing & Exploited Children (NCMEC) veya ilgili bölgesel yetkili kuruma bildirmeye yönelik bir sürece sahip olmasını istemektedir.
+
+Bu nedenle Tamuso’nun operasyonel moderasyon prosedürlerinde de yalnızca bu metnin yayımlanmasıyla yetinilmemeli; gerçek bir inceleme → doğrulama → koruma → yasal bildirim/escalation süreci bulunmalıdır.
+
+⸻
+
+26. Delillerin Korunması
+
+Çocuk güvenliği olayıyla bağlantılı belirli kayıtlar, uygulanabilir hukuk gerektirdiğinde veya izin verdiğinde:
+
+* Yetkili kurumlara bildirim,
+* Güvenlik soruşturması,
+* Yasal yükümlülük,
+* Kullanıcıların korunması
+
+amacıyla gerekli süre boyunca korunabilir.
+
+Bu işlem Tamuso Gizlilik Politikası ve uygulanabilir mevzuat çerçevesinde gerçekleştirilir.
+
+⸻
+
+27. Hesap Yaptırımları
+
+Çocuk güvenliği ihlallerinde Tamuso:
+
+* İçeriği kaldırabilir,
+* Kullanıcı özelliklerini kısıtlayabilir,
+* Mesajlaşmayı durdurabilir,
+* Canlı yayın yetkisini kaldırabilir,
+* Sesli oda erişimini kaldırabilir,
+* Creator/Host statüsünü kaldırabilir,
+* Ajans yetkilerini askıya alabilir,
+* Hesabı askıya alabilir,
+* Hesabı kalıcı olarak kapatabilir.
+
+Ciddi CSAE/CSAM vakalarında önceden uyarı verilmesi gerekmeyebilir.
+
+⸻
+
+28. Yeni Hesap Açarak Yaptırımı Aşmak
+
+Çocuk güvenliği ihlali nedeniyle kapatılmış bir hesabın sahibi, yeni hesap oluşturarak yaptırımı aşmaya çalışmamalıdır.
+
+Tamuso, uygulanabilir hukuk ve Gizlilik Politikası çerçevesinde bu tür yaptırım kaçınma girişimlerini tespit etmek amacıyla güvenlik sinyalleri kullanabilir.
+
+⸻
+
+29. Engelleme Araçları
+
+Tamuso kullanıcıların istenmeyen veya kötüye kullanan hesapları engelleyebilmesine olanak sağlayabilir.
+
+Engellenen kullanıcıların:
+
+* Mesaj göndermesi,
+* Profil etkileşimleri,
+* Belirli sosyal etkileşimleri
+
+sınırlandırılabilir.
+
+Bu özellik, Apple’ın kullanıcı tarafından oluşturulan içerik barındıran uygulamalar için öngördüğü kötüye kullanan kullanıcıları engelleme gerekliliğiyle de uyumludur.
+
+⸻
+
+30. Moderasyon Sistemleri
+
+Tamuso çocuk güvenliğini desteklemek amacıyla, uygulanabilir hukuk çerçevesinde:
+
+* Kullanıcı raporları,
+* İnsan moderasyonu,
+* Otomatik risk tespiti,
+* Spam tespiti,
+* Hesap davranış analizi,
+* Güvenlik sinyalleri
+
+kullanabilir.
+
+Otomatik sistem tarafından işaretlenen bir hesap her durumda otomatik olarak suçlu kabul edilmez.
+
+Uygun durumlarda insan incelemesi yapılabilir.
+
+⸻
+
+31. Gizlilik
+
+Çocuk güvenliği incelemeleri sırasında kişisel bilgiler Tamuso Gizlilik Politikası ve uygulanabilir hukuk doğrultusunda işlenir.
+
+Güvenlik amacı, kullanıcıların kişisel bilgilerinin gereksiz şekilde kamuya açıklanması anlamına gelmez.
+
+⸻
+
+32. Kötü Niyetli Raporlar
+
+Çocuk güvenliği raporlama sisteminin başka bir kullanıcıyı taciz etmek, susturmak veya itibarsızlaştırmak için bilerek kötüye kullanılması yasaktır.
+
+Ancak iyi niyetle yapılan ve daha sonra doğrulanamayan bir rapor yalnızca doğrulanamadığı için otomatik olarak kötü niyetli kabul edilmez.
+
+Kullanıcıların gerçek güvenlik endişelerini bildirmekten çekinmemesi önemlidir.
+
+⸻
+
+33. Platformun Çocuk Güvenliği Taahhüdü
+
+Tamuso çocuk güvenliğini yalnızca bir mağaza gereksinimi olarak değerlendirmez.
+
+Çocuk güvenliği;
+
+* Ürün tasarımının,
+* Moderasyonun,
+* Kullanıcı raporlamasının,
+* Güvenlik sistemlerinin,
+* Creator/Host yönetiminin,
+* Ajans yönetiminin,
+* Canlı yayın sisteminin
+
+bir parçası olarak ele alınır.
+
+⸻
+
+34. Politikanın Tüm Kullanıcılara Uygulanması
+
+Bu politika:
+
+* Normal kullanıcılara,
+* VIP kullanıcılara,
+* Creator’lara,
+* Host’lara,
+* Ajanslara,
+* Ajans yöneticilerine,
+* Moderatörlere,
+* Şehir/topluluk yöneticilerine
+
+uygulanır.
+
+Statü, seviye, satın alma miktarı, hediye hacmi veya platformdaki popülerlik hiçbir kullanıcıya çocuk güvenliği kurallarından muafiyet sağlamaz.
+
+⸻
+
+35. Politika Güncellemeleri
+
+Bu politika; mevzuat, mağaza politikaları, güvenlik standartları veya Tamuso özellikleri değiştikçe güncellenebilir.
+
+Önemli değişiklikler uygun durumlarda:
+
+* Uygulama içi duyuru,
+* Politika bildirimi,
+* E-posta,
+* Push bildirimi
+
+yoluyla kullanıcılara bildirilebilir.
+
+Gerekli durumlarda yeni politika sürümü için yeniden kullanıcı onayı alınabilir.
+
+⸻
+
+36. Çocuk Güvenliği İletişim Noktası
+
+Tamuso’daki potansiyel çocuk güvenliği, CSAE veya CSAM konularıyla ilgili bildirimler için:
+
+Tamuso Child Safety / Trust & Safety
+
+Litxtech LLC
+
+E-posta: support@litxtech.com
+
+Adres:
+15442 Ventura Blvd
+Ste 201-1834
+Sherman Oaks, California
+United States
+
+Google Play, çocuk güvenliği bildirimlerini alabilecek ve inceleme/yaptırım prosedürleri hakkında işlem yapabilecek belirlenmiş bir çocuk güvenliği iletişim noktası istemektedir.
+
+⸻
+
+37. Kullanıcıların Çocuk Güvenliği Bildirimleri
+
+Tamuso kullanıcıları çocuk güvenliği konusunda endişe duyduklarında öncelikle uygulamadaki Rapor Et özelliğini kullanabilir.
+
+Ek olarak:
+
+support@litxtech.com
+
+adresine bildirim gönderilebilir.
+
+Bildirimin mümkünse:
+
+* İlgili kullanıcı Public ID’sini,
+* İlgili içeriği,
+* Olay tarihini,
+* Olayın açıklamasını
+
+içermesi incelemeye yardımcı olabilir.
+
+Kullanıcıların CSAM olduğundan şüphelendikleri materyalleri gereksiz yere indirmemeleri, yeniden paylaşmamaları veya başka kişilere göndermemeleri gerekir.
+
+⸻
+
+38. Google Play İçin Yayınlanmış CSAE Standardı
+
+Tamuso, çocukların cinsel istismarı ve sömürülmesini (CSAE) kesinlikle yasaklar.
+
+Tamuso üzerinde CSAM oluşturmak, yüklemek, paylaşmak, dağıtmak veya talep etmek yasaktır.
+
+Grooming, çocuklara yönelik cinsel şantaj, çocukların cinsel amaçlarla ticareti, çocuklardan cinsel içerik talep edilmesi ve çocukları cinsel amaçlarla sömüren diğer davranışlara izin verilmez.
+
+İhlaller içerik kaldırma, hesap kısıtlama veya kalıcı hesap kapatma dahil yaptırımlarla sonuçlanabilir.
+
+Tamuso, CSAM hakkında fiilen bilgi sahibi olduğunda yayımlanmış standartları ve uygulanabilir hukuk doğrultusunda uygun işlemleri gerçekleştirir.
+
+Uygulanabilir hukukun gerektirdiği durumlarda doğrulanmış vakaların NCMEC veya ilgili bölgesel yetkili makamlara bildirilmesine yönelik süreç uygulanır.
+
+Çocuk Güvenliği İletişim Noktası: support@litxtech.com
+
+Bu bölüm özellikle herkese açık Tamuso web sitesinde erişilebilir tutulmalıdır. Google Play, yayınlanmış CSAE standardının çalışan, herkese açık bir web kaynağı olmasını ve uygulama veya geliştiricinin adını açıkça belirtmesini istiyor; bu sayfanın bağlantısı Play Console’a girilmelidir.
+
+⸻
+
+39. İlgili Tamuso Politikaları
+
+Bu Çocuk Güvenliği ve Koruma Politikası aşağıdakilerle birlikte değerlendirilmelidir:
+
+Tamuso Kullanım Koşulları
+
+Tamuso Gizlilik Politikası
+
+Tamuso Topluluk Kuralları
+
+ve uygulama içerisinde yayımlanan diğer güvenlik kuralları.
+
+⸻
+
+40. Son Hüküm
+
+Çocukların cinsel istismarı ve sömürülmesi Tamuso’da kabul edilmez.
+
+Litxtech LLC, çocuk güvenliğiyle ilgili raporları ciddiyetle ele almayı; uygun durumlarda içeriği kaldırmayı, hesaplara yaptırım uygulamayı ve uygulanabilir yasal bildirim yükümlülüklerini yerine getirmeyi amaçlar.
+
+Litxtech LLC
+15442 Ventura Blvd, Ste 201-1834
+Sherman Oaks, California, USA
+
+Tamuso Child Safety / Trust & Safety
+support@litxtech.com
+
+Son Güncelleme: 19 Eylül 2026
