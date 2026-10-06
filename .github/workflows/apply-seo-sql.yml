@@ -1,0 +1,21 @@
+name: Apply SEO SQL
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pull production env and apply migration
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npm install pg --no-save
+          npx --yes vercel@latest env pull .env.production.local --environment production --yes --token "$VERCEL_TOKEN"
+          node scripts/apply-seo-migration.mjs .env.production.local
