@@ -43,6 +43,7 @@ export default async function handler(req, res) {
     if (resource === 'health') return health(res, supabase)
     if (resource === 'errors') return listTable(res, supabase, 'system_errors', 'items')
     if (resource === 'pages') return pages(req, res, supabase, admin)
+    if (resource === 'projects') return crud(req, res, supabase, admin, 'cms_projects', id)
     if (resource === 'navigation') return navigation(req, res, supabase, admin)
     if (resource === 'email') return email(req, res, supabase, admin)
     if (resource === 'search') return search(req, res, supabase)

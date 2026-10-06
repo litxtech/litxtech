@@ -26,19 +26,32 @@ const routes = {
   'auth/session': session,
 }
 
+function fromQuery(value) {
+  const decode = (part) => {
+    try {
+      return decodeURIComponent(String(part))
+    } catch {
+      return String(part)
+    }
+  }
+  if (Array.isArray(value)) return value.map(decode).join('/')
+  if (typeof value !== 'string' || !value) return ''
+  return decode(value)
+}
+
 function resolveSlug(req) {
-  const q = req.query?.slug
-  if (Array.isArray(q)) return q.join('/')
-  if (typeof q === 'string' && q) return q
   const url = new URL(req.url || '/', 'http://localhost')
-  const parts = url.pathname.replace(/^\/api\/admin\/?/, '').split('/').filter(Boolean)
-  return parts.join('/')
+  const fromPath = url.pathname.replace(/^\/api\/admin\/?/, '').split('/').filter(Boolean).join('/')
+  const fromSlug = fromQuery(req.query?.slug)
+  if (fromPath.split('/').filter(Boolean).length > fromSlug.split('/').filter(Boolean).length) return fromPath
+  return fromSlug || fromPath
 }
 
 export default async function handler(req, res) {
   const key = resolveSlug(req)
   if (key === 'platform' || key.startsWith('platform/')) {
-    req.platformPath = key.replace(/^platform\/?/, '')
+    const segment = fromQuery(req.query?.segment)
+    req.platformPath = segment || key.replace(/^platform\/?/, '')
     return platform(req, res)
   }
   const match = resolveHandler(routes, key)
