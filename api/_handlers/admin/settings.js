@@ -5,7 +5,7 @@ import {
   readBody,
   requireAdmin,
   writeAudit,
-} from '../_lib/supabaseAdmin.js'
+} from '../../_lib/supabaseAdmin.js'
 
 export default async function handler(req, res) {
   cors(req, res)

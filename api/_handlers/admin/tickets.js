@@ -1,4 +1,4 @@
-import { cors, getServiceClient, json, readBody, requireAdmin, writeAudit } from '../_lib/supabaseAdmin.js'
+import { cors, getServiceClient, json, readBody, requireAdmin, writeAudit } from '../../_lib/supabaseAdmin.js'
 
 function ticketRef() {
   return `TCK-${Date.now().toString().slice(-6)}`

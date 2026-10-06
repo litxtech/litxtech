@@ -1,4 +1,4 @@
-import { cors, getServiceClient, json, readBody } from '../_lib/supabaseAdmin.js'
+import { cors, getServiceClient, json, readBody } from '../../_lib/supabaseAdmin.js'
 
 const ALLOWED = new Set([
   'page_view',

@@ -1,4 +1,4 @@
-import { cors, getServiceClient, json, readBody } from '../_lib/supabaseAdmin.js'
+import { cors, getServiceClient, json, readBody } from '../../_lib/supabaseAdmin.js'
 
 function refCode() {
   return `LTX-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`

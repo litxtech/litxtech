@@ -7,7 +7,7 @@ import {
   requireAdmin,
   setAdminCookie,
   writeAudit,
-} from '../../_lib/supabaseAdmin.js'
+} from '../../../_lib/supabaseAdmin.js'
 
 const SUPER_ADMIN_UUID = '26d4e301-9ae7-465d-805c-611ff302c04f'
 
