@@ -54,4 +54,23 @@ export const adminApi = {
       method: 'PUT',
       body: JSON.stringify(body),
     }),
+  homepage: () => request<{ homepage: any }>('/api/admin/homepage'),
+  updateHomepage: (body: Record<string, unknown>) =>
+    request<{ homepage: any }>('/api/admin/homepage', { method: 'PUT', body: JSON.stringify(body) }),
+  faqs: () => request<{ faqs: any[] }>('/api/admin/faqs'),
+  createFaq: (body: Record<string, unknown>) =>
+    request<{ faq: any }>('/api/admin/faqs', { method: 'POST', body: JSON.stringify(body) }),
+  updateFaq: (body: Record<string, unknown>) =>
+    request<{ faq: any }>('/api/admin/faqs', { method: 'PUT', body: JSON.stringify(body) }),
+  deleteFaq: (id: string) =>
+    request<{ ok: boolean }>('/api/admin/faqs', { method: 'DELETE', body: JSON.stringify({ id }) }),
+  messages: () => request<{ messages: any[] }>('/api/admin/messages'),
+  updateMessage: (body: Record<string, unknown>) =>
+    request<{ message: any }>('/api/admin/messages', { method: 'PATCH', body: JSON.stringify(body) }),
+  tickets: () => request<{ tickets: any[] }>('/api/admin/tickets'),
+  updateTicket: (body: Record<string, unknown>) =>
+    request<{ ticket: any }>('/api/admin/tickets', { method: 'PATCH', body: JSON.stringify(body) }),
+  createTicket: (body: Record<string, unknown>) =>
+    request<{ ticket: any }>('/api/admin/tickets', { method: 'POST', body: JSON.stringify(body) }),
+  audit: () => request<{ logs: any[] }>('/api/admin/audit'),
 }

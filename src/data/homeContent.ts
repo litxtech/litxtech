@@ -1,12 +1,12 @@
 /** Türkçe ana sayfa metinleri ve listeler (veri odaklı düzen). */
 export const homeContent = {
   hero: {
-    title: 'İşinizi dijitale taşıyan güçlü yazılım çözümleri',
-    subtitle: 'Otel, restoran, sosyal platform ve özel yazılım projeleri geliştiriyoruz',
+    title: 'Fikrinizi çalışan bir dijital ürüne dönüştürelim.',
+    subtitle: 'Mobil uygulamalardan sosyal platformlara, işletme yazılımlarından yapay zeka destekli ürünlere.',
     description:
-      'LitxTech olarak işletmelere ve girişimlere özel web ve mobil yazılım çözümleri geliştiriyoruz. Otel yönetiminden restoran otomasyonuna, sosyal medya platformlarından şehir uygulamalarına kadar ölçeklenebilir sistemler üretiyoruz.',
+      'LitxTech; mobil uygulamalar, sosyal platformlar, SaaS, otel/restoran sistemleri ve özel yazılımı fikir aşamasından yayına kadar planlar, tasarlar, geliştirir ve destekler.',
     primaryCta: 'Projeleri İncele',
-    secondaryCta: 'Teklif Al',
+    secondaryCta: 'Projemi Anlat',
     tertiaryCta: 'İletişime Geç',
   },
   stats: [
@@ -75,11 +75,11 @@ export const homeContent = {
     ],
   },
   finalCta: {
-    title: 'Projenizi birlikte planlayalım.',
-    subtitle: 'İhtiyacınızı dinleyelim, doğru mimariyi ve yol haritasını birlikte oluşturalım.',
-    quote: 'Teklif Al',
+    title: 'Bir fikriniz var. Onu gerçeğe dönüştürelim.',
+    subtitle: 'Projenizi birkaç dakika içinde anlatın. Ekibimiz ihtiyaçlarınızı inceleyerek size uygun geliştirme yaklaşımını belirlesin.',
+    quote: 'Projemi Anlat',
     whatsapp: 'WhatsApp ile İletişim',
-    demo: 'Demo Talep Et',
+    demo: 'Destek Merkezi',
   },
   sections: {
     solutions: 'Çözüm alanlarımız',

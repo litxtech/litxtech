@@ -1,260 +1,254 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Mail, Phone, MapPin, Send, Calendar, MessageCircle } from 'lucide-react'
+import { MarketingChrome } from '@/components/marketing/MarketingChrome'
+import { SeoHead } from '@/components/marketing/SeoHead'
+import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
 
 export function ContactPage() {
+  const company = useCompanySettings()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
+    website_url_hp: '',
   })
+  const [busy, setBusy] = useState(false)
+  const [done, setDone] = useState('')
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
+    setBusy(true)
+    setError('')
+    setDone('')
+    try {
+      const res = await fetch('/api/public/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Gönderilemedi')
+      setDone(`${data.message} Ref: ${data.reference_code}`)
+      setFormData({ name: '', email: '', subject: '', message: '', website_url_hp: '' })
+      trackEvent('contact_submit', '/contact')
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const fieldClass =
     'litx-dark-input w-full rounded-lg border border-slate-600 bg-slate-900 px-4 py-3 text-slate-100 placeholder:text-slate-400 shadow-inner focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 [color-scheme:dark]'
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.12),transparent_50%)]" />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20">
-        <div className="text-center mb-16 fade-in">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Contact Us
-            </span>
-          </h1>
-          <p className="text-xl text-gray-100 max-w-3xl mx-auto">
-            Ready to start your project? Get in touch with our team today.
-          </p>
-        </div>
-
-        {/* Call Scheduling Section */}
-        <div className="mb-12 rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-4 text-white">Book a Free Consultation</h2>
-              <p className="text-gray-100 mb-6 leading-relaxed">
-                Schedule a 15-minute call with our team to discuss your project requirements and get a custom quote.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-gray-200">Free project consultation</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-gray-200">Custom pricing estimate</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-200">Technical requirements review</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-200">Timeline & delivery plan</span>
-                </div>
-              </div>
-              <a 
-                href="https://calendly.com/litxtech/consultation" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="glow-button text-lg px-8 py-4 neon-blue flex items-center space-x-2 w-fit"
+    <MarketingChrome>
+      <SeoHead
+        title="İletişim | LitxTech"
+        description="LitxTech ile iletişime geçin. Proje talebi, destek ve danışmanlık."
+        path="/contact"
+      />
+      <div className="relative min-h-screen text-slate-100">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.12),transparent_50%)]" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 py-20">
+          <div className="mb-16 text-center">
+            <h1 className="mb-6 text-5xl font-bold md:text-6xl">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                Contact Us
+              </span>
+            </h1>
+            <p className="mx-auto max-w-3xl text-xl text-gray-100">
+              Ready to start your project? Get in touch with our team today.
+            </p>
+            <div className="mt-6">
+              <Link
+                to="/projemi-anlat"
+                className="inline-flex rounded-xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950"
               >
-                <Calendar className="w-5 h-5" />
+                Projemi Anlat
+              </Link>
+            </div>
+          </div>
+
+          <div className="mb-12 grid grid-cols-1 items-center gap-8 rounded-2xl border border-white/10 bg-white/5 p-8 lg:grid-cols-2">
+            <div>
+              <h2 className="mb-4 text-3xl font-bold text-white">Book a Free Consultation</h2>
+              <p className="mb-6 text-gray-100">
+                Schedule a call to discuss your project requirements.
+              </p>
+              <a
+                href={company.calendly_url || 'https://calendly.com/litxtech/consultation'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glow-button inline-flex items-center space-x-2 px-8 py-4 text-lg neon-blue"
+              >
+                <Calendar className="h-5 w-5" />
                 <span>Schedule Call</span>
               </a>
             </div>
-            
-            <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 p-6">
-              <div className="text-center">
-                <Calendar className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">Quick Call</h3>
-                <p className="text-gray-300 text-sm mb-4">15 minutes • Free consultation</p>
-                <div className="space-y-2 text-sm text-gray-300">
-                  <p>✓ Project scope discussion</p>
-                  <p>✓ Technology recommendations</p>
-                  <p>✓ Pricing & timeline</p>
-                  <p>✓ Next steps planning</p>
-                </div>
-              </div>
+            <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 p-6 text-center">
+              <Calendar className="mx-auto mb-4 h-16 w-16 text-blue-400" />
+              <h3 className="mb-2 text-xl font-bold text-white">Quick Call</h3>
+              <p className="text-sm text-gray-300">15 minutes • Free consultation</p>
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
-            <h2 className="text-3xl font-bold mb-6 text-white">Send us a message</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={fieldClass}
-                  placeholder="Your full name"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={fieldClass}
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className={fieldClass}
-                  placeholder="What's this about?"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={6}
-                  className={`${fieldClass} resize-none`}
-                  placeholder="Tell us about your project..."
-                  required
-                />
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full glow-button text-lg py-4 neon-blue flex items-center justify-center space-x-2"
-              >
-                <Send className="w-5 h-5" />
-                <span>Send Message</span>
-              </button>
-            </form>
-          </div>
-
-          {/* Contact Information */}
-          <div className="space-y-8">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
-              <h2 className="text-3xl font-bold mb-6 text-white">Get in touch</h2>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">Email</h3>
-                    <p className="text-gray-200">support@litxtech.com</p>
-                    <p className="text-sm text-gray-400">We'll respond within 24 hours</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">Phone</h3>
-                    <p className="text-gray-200">+1 (307) 271-5151</p>
-                    <p className="text-sm text-gray-400">Mon-Fri 9AM-6PM PST</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">Address</h3>
-                    <p className="text-gray-200">
-                      <strong className="text-white">LITXTECH LLC</strong><br />
-                      D-U-N-S®: 144849529<br />
-                      15442 Ventura Blvd., STE 201-1834<br />
-                      Sherman Oaks, California 91403<br />
-                      United States
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
-              <h3 className="text-xl font-bold mb-4 text-white">Live Chat Support</h3>
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                  <MessageCircle className="w-6 h-6 text-white" />
+              <h2 className="mb-6 text-3xl font-bold text-white">Send us a message</h2>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-300">
+                    Full Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={fieldClass}
+                    required
+                  />
                 </div>
                 <div>
-                  <p className="text-gray-200">Available 24/7 for urgent questions</p>
-                  <p className="text-sm text-gray-400">Average response time: 2 minutes</p>
+                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-300">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={fieldClass}
+                    required
+                  />
                 </div>
-              </div>
+                <div>
+                  <label htmlFor="subject" className="mb-2 block text-sm font-medium text-gray-300">
+                    Subject
+                  </label>
+                  <input
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className={fieldClass}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="mb-2 block text-sm font-medium text-gray-300">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={6}
+                    className={`${fieldClass} resize-none`}
+                    required
+                  />
+                </div>
+                <input
+                  name="website_url_hp"
+                  value={formData.website_url_hp}
+                  onChange={handleChange}
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden
+                />
+                {done && <p className="text-sm text-emerald-400">{done}</p>}
+                {error && <p className="text-sm text-red-400">{error}</p>}
+                <button
+                  type="submit"
+                  disabled={busy}
+                  className="glow-button flex w-full items-center justify-center space-x-2 py-4 text-lg neon-blue disabled:opacity-60"
+                >
+                  <Send className="h-5 w-5" />
+                  <span>{busy ? 'Sending…' : 'Send Message'}</span>
+                </button>
+              </form>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
-              <h3 className="text-xl font-bold mb-4 text-white">Why choose LitxTech?</h3>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-gray-200">Fast delivery in days, not weeks</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-200">Modern tech stack & best practices</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-gray-200">Dedicated project manager</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-200">Ongoing support & maintenance</span>
+            <div className="space-y-8">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
+                <h2 className="mb-6 text-3xl font-bold text-white">Get in touch</h2>
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-blue-400 to-purple-500">
+                      <Mail className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="mb-1 text-lg font-semibold text-white">Email</h3>
+                      <a
+                        href={`mailto:${company.email}`}
+                        onClick={() => trackEvent('email_click', '/contact')}
+                        className="text-gray-200 hover:text-white"
+                      >
+                        {company.email}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-4">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-purple-400 to-pink-500">
+                      <Phone className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="mb-1 text-lg font-semibold text-white">Phone</h3>
+                      <a
+                        href={`tel:${company.phone_tel}`}
+                        onClick={() => trackEvent('phone_click', '/contact')}
+                        className="text-gray-200 hover:text-white"
+                      >
+                        {company.phone}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-4">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-emerald-400 to-teal-500">
+                      <MessageCircle className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="mb-1 text-lg font-semibold text-white">WhatsApp</h3>
+                      <a
+                        href={getWhatsAppUrl(company)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => trackEvent('whatsapp_click', '/contact')}
+                        className="text-gray-200 hover:text-white"
+                      >
+                        {company.whatsapp?.buttonText || 'Chat on WhatsApp'}
+                      </a>
+                    </div>
+                  </div>
+                  {company.address && (
+                    <div className="flex items-start space-x-4">
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-orange-400 to-red-500">
+                        <MapPin className="h-6 w-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="mb-1 text-lg font-semibold text-white">Address</h3>
+                        <p className="text-gray-200">{company.address}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </MarketingChrome>
   )
 }

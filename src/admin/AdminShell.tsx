@@ -7,17 +7,27 @@ import {
   Shield,
   LogOut,
   Kanban,
+  Home,
+  HelpCircle,
+  Mail,
+  LifeBuoy,
+  ScrollText,
 } from 'lucide-react'
 import { useAdminAuth } from './AdminAuthContext'
 import { clsx } from 'clsx'
 
 const nav = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/content/homepage', label: 'Homepage', icon: Home },
   { to: '/leads', label: 'Leads / CRM', icon: Users },
   { to: '/leads/pipeline', label: 'Pipeline', icon: Kanban },
+  { to: '/messages', label: 'Messages', icon: Mail },
+  { to: '/support/tickets', label: 'Tickets', icon: LifeBuoy },
+  { to: '/faq', label: 'FAQ', icon: HelpCircle },
   { to: '/applications', label: 'Applications', icon: AppWindow },
   { to: '/settings/company', label: 'Company & Contact', icon: Settings },
   { to: '/security', label: 'Security', icon: Shield },
+  { to: '/security/audit-log', label: 'Audit Log', icon: ScrollText },
 ]
 
 export function AdminShell({ children }: { children: React.ReactNode }) {

@@ -222,13 +222,23 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/blog">
-                    Blog
+                  <Link className="hover:text-white" to="/destek">
+                    Destek
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/packages">
-                    Paketler
+                  <Link className="hover:text-white" to="/sss">
+                    SSS
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white" to="/projemi-anlat">
+                    Proje talebi
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white" to="/blog">
+                    Blog
                   </Link>
                 </li>
                 <li>

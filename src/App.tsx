@@ -70,6 +70,8 @@ import { ProfilePage } from './pages/ProfilePage'
 import { MyTrabzonCallback } from './pages/MyTrabzonCallback'
 import { SupportPage } from './pages/SupportPage'
 import { ProjemiAnlatPage } from './pages/ProjemiAnlatPage'
+import { DestekPage } from './pages/DestekPage'
+import { SssPage } from './pages/SssPage'
 import { useEffect } from 'react'
 
 function LegacyAdminRedirect() {
@@ -94,7 +96,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/projemi-anlat" element={<ProjemiAnlatPage />} />
           <Route path="/iletisim" element={<Navigate to="/contact" replace />} />
-          <Route path="/destek" element={<Navigate to="/contact" replace />} />
+          <Route path="/destek" element={<DestekPage />} />
+          <Route path="/sss" element={<SssPage />} />
           <Route path="/cozumler" element={<SolutionsIndexPage />} />
           <Route path="/cozumler/:slug" element={<SolutionDetailPage />} />
           <Route path="/projeler" element={<ProjectsIndexPage />} />

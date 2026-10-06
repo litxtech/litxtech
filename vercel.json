@@ -9,7 +9,9 @@
     { "source": "/solutions/construction", "destination": "/cozumler/ozel-yazilim", "permanent": true },
     { "source": "/solutions/pharma", "destination": "/cozumler/ozel-yazilim", "permanent": true },
     { "source": "/admin", "destination": "https://admin.litxtech.com/dashboard", "permanent": false },
-    { "source": "/admin/login", "destination": "https://admin.litxtech.com/login", "permanent": false }
+    { "source": "/admin/login", "destination": "https://admin.litxtech.com/login", "permanent": false },
+    { "source": "/robots.txt", "destination": "/api/robots", "permanent": false },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap", "permanent": false }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },

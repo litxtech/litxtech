@@ -73,7 +73,7 @@ export function HomePage() {
                 <ChevronRight className="ml-1 h-4 w-4" />
               </Link>
               <Link
-                to="/contact"
+                to="/projemi-anlat"
                 className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3.5 text-sm font-semibold text-white hover:border-white/25"
               >
                 {homeContent.hero.secondaryCta}
@@ -326,7 +326,7 @@ export function HomePage() {
             <p className="mt-4 text-lg text-slate-200">{homeContent.finalCta.subtitle}</p>
             <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap">
               <Link
-                to="/contact"
+                to="/projemi-anlat"
                 className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-slate-900"
               >
                 {homeContent.finalCta.quote}
@@ -340,15 +340,13 @@ export function HomePage() {
                 <MessageCircle className="mr-2 h-4 w-4" />
                 {homeContent.finalCta.whatsapp}
               </a>
-              <a
-                href={siteConfig.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/destek"
                 className="inline-flex items-center justify-center rounded-xl border border-white/20 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/5"
               >
                 <MonitorPlay className="mr-2 h-4 w-4" />
                 {homeContent.finalCta.demo}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

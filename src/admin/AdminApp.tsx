@@ -7,6 +7,11 @@ import { AdminLeadsPage } from './pages/AdminLeadsPage'
 import { AdminSettingsPage } from './pages/AdminSettingsPage'
 import { AdminApplicationsPage } from './pages/AdminApplicationsPage'
 import { AdminSecurityPage } from './pages/AdminSecurityPage'
+import { AdminHomepagePage } from './pages/AdminHomepagePage'
+import { AdminFaqsPage } from './pages/AdminFaqsPage'
+import { AdminMessagesPage } from './pages/AdminMessagesPage'
+import { AdminTicketsPage } from './pages/AdminTicketsPage'
+import { AdminAuditPage } from './pages/AdminAuditPage'
 import { useEffect } from 'react'
 
 function Guard({ children }: { children: React.ReactNode }) {
@@ -46,12 +51,17 @@ export function AdminApp() {
                 <Routes>
                   <Route path="/" element={<Navigate to="/dashboard" replace />} />
                   <Route path="/dashboard" element={<AdminDashboardPage />} />
+                  <Route path="/content/homepage" element={<AdminHomepagePage />} />
                   <Route path="/leads" element={<AdminLeadsPage />} />
                   <Route path="/leads/pipeline" element={<AdminLeadsPage />} />
+                  <Route path="/messages" element={<AdminMessagesPage />} />
+                  <Route path="/support/tickets" element={<AdminTicketsPage />} />
+                  <Route path="/faq" element={<AdminFaqsPage />} />
                   <Route path="/applications" element={<AdminApplicationsPage />} />
                   <Route path="/settings/company" element={<AdminSettingsPage />} />
                   <Route path="/settings/contact" element={<AdminSettingsPage />} />
                   <Route path="/security" element={<AdminSecurityPage />} />
+                  <Route path="/security/audit-log" element={<AdminAuditPage />} />
                   <Route path="*" element={<Navigate to="/dashboard" replace />} />
                 </Routes>
               </AdminShell>

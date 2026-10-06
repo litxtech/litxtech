@@ -386,3 +386,16 @@ CREATE POLICY "public_insert_analytics" ON analytics_events FOR INSERT WITH CHEC
 
 DROP POLICY IF EXISTS "public_insert_contact" ON contact_messages;
 CREATE POLICY "public_insert_contact" ON contact_messages FOR INSERT WITH CHECK (true);
+
+-- Seed FAQs (editable in admin) only if empty
+INSERT INTO cms_faqs (category, question, answer, sort_order, published)
+SELECT v.category, v.question, v.answer, v.sort_order, v.published
+FROM (
+  VALUES
+    ('Genel'::text, 'LitxTech ne geliştiriyor?'::text, 'Mobil uygulamalar, sosyal platformlar, SaaS ürünleri, otel/restoran sistemleri ve özel yazılım çözümleri geliştiriyoruz.'::text, 1, true),
+    ('Genel'::text, 'Nasıl teklif alabilirim?'::text, 'www.litxtech.com/projemi-anlat adresindeki formu doldurun veya WhatsApp / e-posta ile ulaşın.'::text, 2, true),
+    ('Mobil uygulama'::text, 'iOS ve Android birlikte mi geliştirilir?'::text, 'İhtiyaca göre cross-platform veya native yaklaşım planlanır; kapsam keşif görüşmesinde netleşir.'::text, 3, true),
+    ('Sosyal platform'::text, 'Sosyal platform örneğiniz var mı?'::text, 'Tamuso gibi gerçek zamanlı iletişim odaklı ürünler geliştirdik. Benzer bir platform için proje formu üzerinden yazabilirsiniz.'::text, 4, true),
+    ('Destek'::text, 'Destek kanalları neler?'::text, 'Destek merkezi (/destek), e-posta ve WhatsApp üzerinden ulaşabilirsiniz.'::text, 5, true)
+) AS v(category, question, answer, sort_order, published)
+WHERE NOT EXISTS (SELECT 1 FROM cms_faqs LIMIT 1);

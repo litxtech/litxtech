@@ -3,27 +3,28 @@
 **Date:** 2026-10-06  
 **Super Admin UUID:** `26d4e301-9ae7-465d-805c-611ff302c04f`
 
-## Delivered in this push
+## Delivered
 
 | Area | Status | Notes |
 |------|--------|------|
-| Audit docs | PASS | `docs/LITXTECH_CURRENT_AUDIT.md`, architecture, DNS, admin setup |
-| Hardcoded admin password removed | PASS | Legacy `/admin/login` redirects to secure admin |
-| SQL migration CMS/CRM | PASS (file) | `supabase/migrations/20261006_litxtech_cms_crm.sql` — must be run in Supabase |
-| Super Admin seed | PASS (SQL) | UUID upserted as SUPER_ADMIN when migration runs |
-| Admin APIs | PASS (code) | `/api/admin/auth/session`, dashboard, leads, settings, applications |
-| Public APIs | PASS (code) | `/api/public/leads`, company, applications, track |
-| Admin UI shell | PASS (code) | Login, dashboard, leads CRM, apps, settings, security |
-| Hostname routing | PASS (code) | `admin.litxtech.com` → AdminApp |
-| Lead form | PASS (code) | `/projemi-anlat` multi-step → DB |
-| Company settings → public | PASS (code) | MarketingChrome/WhatsApp read `/api/public/company` with TS fallback |
-| Full premium homepage redesign | FAIL / partial | Not fully rebuilt in this slice — foundation first |
-| Full page builder / media library | FAIL | Scaffolded tables; UI not complete |
-| 2FA | NOT CONFIGURED | Documented |
-| Analytics provider | NOT CONFIGURED | Dashboard shows NOT CONFIGURED (no fake numbers) |
-| E2E against production DB | TEST EDİLEMEDİ | Requires Supabase migration + Vercel env |
-| admin.litxtech.com DNS live | TEST EDİLEMEDİ | Manual DNS + Vercel domain attach |
-| Login with UUID account | TEST EDİLEMEDİ | Needs migration + real Supabase password for that user |
+| Audit / deploy / env docs | PASS | docs/* |
+| Hardcoded admin password removed | PASS | Secure Supabase session cookie |
+| SQL migration CMS/CRM | PASS (file) | Must run in Supabase |
+| Super Admin UUID | PASS (SQL) | `26d4e301-9ae7-465d-805c-611ff302c04f` |
+| Admin APIs | PASS | auth, dashboard, leads, settings, apps, homepage, FAQ, messages, tickets, audit |
+| Public APIs | PASS | leads, contact, company, apps, faqs, homepage, track |
+| Admin UI | PASS | dashboard, homepage CMS, CRM, messages, tickets, FAQ, apps, settings, security, audit |
+| Lead form `/projemi-anlat` | PASS | → leads table |
+| Contact form | PASS | → contact_messages + leads |
+| Destek / SSS pages | PASS | FAQ from CMS |
+| Sitemap / robots | PASS | `/api/sitemap`, `/api/robots` |
+| Company settings → public | PASS | with TS fallback |
+| Fake analytics | PASS avoided | shows NOT CONFIGURED |
+| Full visual redesign of every page | PARTIAL | Hero copy + CTAs updated; design system upgrade ongoing |
+| Media library UI | FAIL | table only |
+| 2FA | NOT CONFIGURED | |
+| Live E2E | TEST EDİLEMEDİ | needs SQL + Vercel secrets + DNS |
+| Push to GitHub | depends on valid PAT | |
 
 ## Manual steps required (production)
 
