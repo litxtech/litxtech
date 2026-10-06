@@ -1,8 +1,5 @@
-import { cors, getServiceClient, json, readBody } from '../../_lib/supabaseAdmin.js'
-
-function refCode() {
-  return `LTX-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`
-}
+import { cors, json, readBody } from '../../_lib/supabaseAdmin.js'
+import { saveContactOrFallback } from '../../_lib/formInbox.js'
 
 export default async function handler(req, res) {
   cors(req, res)
@@ -22,42 +19,22 @@ export default async function handler(req, res) {
       return json(res, 400, { error: 'name, email and message required' })
     }
 
-    const supabase = getServiceClient()
-    const reference_code = refCode()
-
-    await supabase.from('contact_messages').insert({
+    const result = await saveContactOrFallback({
       name,
       email,
-      phone: body.phone || null,
+      phone: body.phone,
       subject,
       message,
-      status: 'new',
-    })
-
-    await supabase.from('leads').insert({
-      reference_code,
-      name,
-      email,
-      phone: body.phone || null,
-      project_description: `${subject}\n\n${message}`,
-      project_type: 'contact',
-      customer_type: 'other',
-      source: 'contact-form',
-      status: 'NEW',
-    })
-
-    await supabase.from('analytics_events').insert({
-      event_name: 'contact_submit',
-      path: '/contact',
-      meta: { reference_code },
     })
 
     return json(res, 201, {
       ok: true,
-      reference_code,
+      reference_code: result.reference_code,
       message: 'Mesajınız alındı. En kısa sürede dönüş yapacağız.',
     })
-  } catch {
-    return json(res, 500, { error: 'Could not send message' })
+  } catch (e) {
+    return json(res, 500, {
+      error: e?.message || 'Could not send message',
+    })
   }
 }

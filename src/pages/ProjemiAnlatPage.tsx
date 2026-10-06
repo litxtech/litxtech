@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { submitLead, trackEvent } from '@/lib/publicCms'
@@ -29,6 +29,7 @@ const customerTypes = [
 
 export function ProjemiAnlatPage() {
   const settings = useCompanySettings()
+  const [searchParams] = useSearchParams()
   const [step, setStep] = useState(1)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -43,8 +44,24 @@ export function ProjemiAnlatPage() {
     whatsapp: '',
     company: '',
     preferred_contact: 'email',
+    budget_range: '',
     website_url_hp: '',
   })
+
+  useEffect(() => {
+    const plan = searchParams.get('plan')
+    const projectType = searchParams.get('project_type')
+    if (projectType && projectTypes.some((t) => t.id === projectType)) {
+      setForm((f) => ({ ...f, project_type: projectType }))
+    }
+    if (plan) {
+      setForm((f) => ({
+        ...f,
+        budget_range: plan,
+        project_description: f.project_description || `Paket talebi: ${plan}`,
+      }))
+    }
+  }, [searchParams])
 
   const wa = useMemo(() => getWhatsAppUrl(settings), [settings])
 

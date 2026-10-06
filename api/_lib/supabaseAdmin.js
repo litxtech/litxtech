@@ -1,8 +1,21 @@
 import { createClient } from '@supabase/supabase-js'
+import { env } from './env.js'
+
+function supabaseUrl() {
+  return env('SUPABASE_URL') || env('VITE_SUPABASE_URL')
+}
+
+function serviceKey() {
+  return env('SUPABASE_SERVICE_ROLE_KEY')
+}
+
+function anonKey() {
+  return env('SUPABASE_ANON_KEY') || env('VITE_SUPABASE_ANON_KEY')
+}
 
 export function getServiceClient() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  const url = supabaseUrl()
+  const key = serviceKey()
   if (!url || !key) {
     throw new Error(
       'Server Supabase not configured (set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY on Vercel)',
@@ -14,14 +27,43 @@ export function getServiceClient() {
 }
 
 export function getAnonClient() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-  const key = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
+  const url = supabaseUrl()
+  const key = anonKey()
   if (!url || !key) {
     throw new Error('Anon Supabase not configured')
   }
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
   })
+}
+
+/** Prefer service role; fall back to anon for public writes when RLS allows. */
+export function getDbClient() {
+  const url = supabaseUrl()
+  const service = serviceKey()
+  const anon = anonKey()
+  if (!url) throw new Error('SUPABASE_URL missing')
+  if (service) {
+    return createClient(url, service, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    })
+  }
+  if (anon) {
+    return createClient(url, anon, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    })
+  }
+  throw new Error('No Supabase keys configured')
+}
+
+export function isDbRestrictedError(err) {
+  const msg = String(err?.message || err || '')
+  const code = err?.code || err?.status || ''
+  return (
+    code === 402 ||
+    code === '402' ||
+    /402|Payment Required|exceed_storage|restricted|quota/i.test(msg)
+  )
 }
 
 export function json(res, status, body) {
@@ -74,7 +116,7 @@ export async function requireAdmin(req, res) {
       return null
     }
 
-    const supabase = getServiceClient()
+    const supabase = getDbClient()
     const { data: sessionRows, error } = await supabase.rpc('validate_admin_session', {
       token,
     })
@@ -89,7 +131,6 @@ export async function requireAdmin(req, res) {
         .single()
       admin = user
     } else {
-      // Fallback: session table direct lookup
       const { data: sess } = await supabase
         .from('admin_sessions')
         .select('admin_user_id, expires_at')
@@ -114,6 +155,13 @@ export async function requireAdmin(req, res) {
 
     return admin
   } catch (e) {
+    if (isDbRestrictedError(e)) {
+      json(res, 503, {
+        error:
+          'Veritabanı kotası dolu (Supabase storage). Projeyi restore edin veya plan yükseltin.',
+      })
+      return null
+    }
     json(res, 500, { error: 'Auth check failed' })
     return null
   }
@@ -124,18 +172,22 @@ export function isSuperAdmin(admin) {
 }
 
 export async function writeAudit(supabase, entry) {
-  await supabase.from('audit_logs').insert({
-    actor_id: entry.actor_id || null,
-    actor_email: entry.actor_email || null,
-    action: entry.action,
-    resource: entry.resource || null,
-    resource_id: entry.resource_id || null,
-    old_value: entry.old_value || null,
-    new_value: entry.new_value || null,
-    ip_address: entry.ip_address || null,
-    user_agent: entry.user_agent || null,
-    result: entry.result || 'OK',
-  })
+  try {
+    await supabase.from('audit_logs').insert({
+      actor_id: entry.actor_id || null,
+      actor_email: entry.actor_email || null,
+      action: entry.action,
+      resource: entry.resource || null,
+      resource_id: entry.resource_id || null,
+      old_value: entry.old_value || null,
+      new_value: entry.new_value || null,
+      ip_address: entry.ip_address || null,
+      user_agent: entry.user_agent || null,
+      result: entry.result || 'OK',
+    })
+  } catch {
+    // non-fatal
+  }
 }
 
 export function readBody(req) {
@@ -161,8 +213,8 @@ export function readBody(req) {
 export function cors(req, res) {
   const origin = req.headers.origin || ''
   const allowed = [
-    process.env.VITE_ADMIN_SITE_URL,
-    process.env.VITE_PUBLIC_SITE_URL,
+    env('VITE_ADMIN_SITE_URL'),
+    env('VITE_PUBLIC_SITE_URL'),
     'https://admin.litxtech.com',
     'https://www.litxtech.com',
     'https://litxtech.com',

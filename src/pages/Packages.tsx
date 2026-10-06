@@ -17,7 +17,7 @@ export function Packages() {
             "Hosting setup"
           ],
           popular: false,
-          stripeLink: "https://buy.stripe.com/test_lite_package",
+          requestPath: '/projemi-anlat?plan=LITE&project_type=web',
           icon: <Zap className="w-8 h-8" />
         },
         {
@@ -36,7 +36,7 @@ export function Packages() {
             "Priority support"
           ],
           popular: true,
-          stripeLink: "https://buy.stripe.com/test_pro_package",
+          requestPath: '/projemi-anlat?plan=PRO&project_type=web',
           icon: <Rocket className="w-8 h-8" />
         },
         {
@@ -57,7 +57,7 @@ export function Packages() {
             "Source code included"
           ],
           popular: false,
-          stripeLink: "https://buy.stripe.com/test_ultra_package",
+          requestPath: '/projemi-anlat?plan=ULTRA&project_type=custom',
           icon: <Crown className="w-8 h-8" />
         }
       ]
@@ -128,18 +128,16 @@ export function Packages() {
                 ))}
               </ul>
               
-              <a 
-                href={pkg.stripeLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`w-full py-4 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
-                  pkg.popular 
-                    ? 'glow-button neon-purple' 
+              <Link
+                to={pkg.requestPath}
+                className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
+                  pkg.popular
+                    ? 'glow-button neon-purple'
                     : 'glass-card text-white hover:bg-white/10'
                 }`}
               >
-                {pkg.popular ? 'Get Started Now' : 'Choose Plan'}
-              </a>
+                {pkg.popular ? 'Talep Gönder' : 'Planı Seç'}
+              </Link>
             </div>
           ))}
         </div>
@@ -180,11 +178,11 @@ export function Packages() {
               <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
                 We also offer custom software solutions tailored to your specific business needs.
               </p>
-          <Link 
-            to="/contact" 
+          <Link
+            to="/projemi-anlat?plan=CUSTOM"
             className="glow-button text-lg px-8 py-4 neon-blue"
           >
-            Get a Custom Quote
+            Özel Teklif İste
           </Link>
         </div>
       </div>

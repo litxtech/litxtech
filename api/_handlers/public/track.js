@@ -1,4 +1,4 @@
-import { cors, getServiceClient, json, readBody } from '../../_lib/supabaseAdmin.js'
+import { cors, getDbClient, json, readBody } from '../../_lib/supabaseAdmin.js'
 
 const ALLOWED = new Set([
   'page_view',
@@ -13,6 +13,7 @@ const ALLOWED = new Set([
   'service_view',
   'contact_submit',
   'application_view',
+  'audit_ping',
 ])
 
 export default async function handler(req, res) {
@@ -26,12 +27,16 @@ export default async function handler(req, res) {
     if (!ALLOWED.has(event_name)) {
       return json(res, 400, { error: 'Invalid event' })
     }
-    const supabase = getServiceClient()
-    await supabase.from('analytics_events').insert({
-      event_name,
-      path: body.path || null,
-      meta: body.meta || {},
-    })
+    try {
+      const supabase = getDbClient()
+      await supabase.from('analytics_events').insert({
+        event_name,
+        path: body.path || null,
+        meta: body.meta || {},
+      })
+    } catch {
+      // analytics must never break UX
+    }
     return json(res, 201, { ok: true })
   } catch {
     return json(res, 200, { ok: false })

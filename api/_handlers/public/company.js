@@ -1,4 +1,4 @@
-import { cors, getServiceClient, json } from '../../_lib/supabaseAdmin.js'
+import { cors, getDbClient, json } from '../../_lib/supabaseAdmin.js'
 
 export default async function handler(req, res) {
   cors(req, res)
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method !== 'GET') return json(res, 405, { error: 'Method not allowed' })
 
   try {
-    const supabase = getServiceClient()
+    const supabase = getDbClient()
     const { data, error } = await supabase.from('company_settings').select('*').eq('id', 1).maybeSingle()
     if (error || !data) {
       return json(res, 200, {

@@ -16,7 +16,11 @@ export function ResetPasswordPage() {
 
   // URL hash'inde token varsa (Supabase şifre sıfırlama linki) update sayfasına geç
   useEffect(() => {
-    if (!supabase) return
+    if (!supabase) {
+      setMessage('Kimlik doğrulama servisi şu an kullanılamıyor. Lütfen daha sonra tekrar deneyin veya support@litxtech.com yazın.')
+      setMessageType('error')
+      return
+    }
 
     let mounted = true
 
