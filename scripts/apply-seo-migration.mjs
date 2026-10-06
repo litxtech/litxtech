@@ -40,7 +40,12 @@ async function tryHttpSql() {
     const anon = await fetch(`${supabaseUrl}/rest/v1/company_settings?select=id&id=eq.1`, {
       headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
     })
+    const regionHeaders = [...anon.headers.entries()]
+      .filter(([name]) => /region|server|sb-/i.test(name))
+      .map(([name, value]) => `${name}=${value.slice(0, 80)}`)
+      .join(' | ')
     console.log('anon_status', anon.status, redact(await anon.text()))
+    console.log('anon_headers', regionHeaders || '(none)')
   }
   const probe = await fetch(`${supabaseUrl}/rest/v1/company_settings?select=id,default_seo&id=eq.1`, {
     headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
@@ -80,26 +85,39 @@ async function tryHttpSql() {
   }
 
   const ref = new URL(supabaseUrl).hostname.split('.')[0]
-  const client = new pg.Client({
-    host: `db.${ref}.supabase.co`,
-    port: 5432,
-    user: 'postgres',
-    password: serviceKey,
-    database: 'postgres',
-    ssl: { rejectUnauthorized: false },
-    connectionTimeoutMillis: 12000,
-  })
-  try {
-    await client.connect()
-    await client.query(sqlBody)
-    console.log('direct_sql applied')
-    return true
-  } catch (error) {
-    console.log('direct_sql', error.code || '', String(error.message).slice(0, 300))
-    return false
-  } finally {
-    await client.end().catch(() => {})
+  const regions = ['eu-central-1', 'eu-west-1', 'eu-north-1', 'us-east-1', 'us-west-1', 'ap-southeast-1']
+  const attempts = [
+    { host: `db.${ref}.supabase.co`, port: 5432, user: 'postgres' },
+    ...regions.flatMap((region) => [
+      { host: `aws-0-${region}.pooler.supabase.com`, port: 6543, user: `postgres.${ref}` },
+      { host: `aws-1-${region}.pooler.supabase.com`, port: 5432, user: `postgres.${ref}` },
+    ]),
+  ]
+  for (const attempt of attempts) {
+    const client = new pg.Client({
+      host: attempt.host,
+      port: attempt.port,
+      user: attempt.user,
+      password: serviceKey,
+      database: 'postgres',
+      ssl: { rejectUnauthorized: false },
+      connectionTimeoutMillis: 8000,
+    })
+    try {
+      await client.connect()
+      await client.query(sqlBody)
+      console.log('direct_sql applied', attempt.host, attempt.port)
+      return true
+    } catch (error) {
+      console.log('direct_sql', attempt.host, attempt.port, error.code || '', String(error.message).split('\n')[0].slice(0, 180))
+      const message = String(error.message)
+      if (/password authentication failed|Tenant or user not found|database ".+" does not exist/i.test(message)) continue
+      if (error.code === 'ENOTFOUND' || error.code === 'ENETUNREACH' || error.code === 'ETIMEDOUT' || error.code === 'ECONNREFUSED') continue
+    } finally {
+      await client.end().catch(() => {})
+    }
   }
+  return false
 }
 
 if (!url) {
