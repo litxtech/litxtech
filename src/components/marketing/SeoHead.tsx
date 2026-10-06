@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { absoluteUrl, organizationJsonLd, seoConfig, websiteJsonLd } from '@/data/seoConfig'
+import { expandDescription } from '@/lib/metaText'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
 
 type SeoHeadProps = {
@@ -66,10 +67,11 @@ export function SeoHead({
     const url = absoluteUrl(path)
     const imageUrl = absoluteUrl(image)
 
+    const summary = expandDescription(description, title)
     document.title = title
     document.documentElement.lang = seoConfig.language
 
-    upsertMeta('name', 'description', description)
+    upsertMeta('name', 'description', summary)
     upsertMeta('name', 'robots', robots)
     upsertMeta('name', 'googlebot', robots)
     upsertMeta('name', 'author', seoConfig.legalName)
@@ -80,14 +82,14 @@ export function SeoHead({
     upsertMeta('property', 'og:site_name', seoConfig.siteName)
     upsertMeta('property', 'og:locale', seoConfig.locale)
     upsertMeta('property', 'og:title', title)
-    upsertMeta('property', 'og:description', description)
+    upsertMeta('property', 'og:description', summary)
     upsertMeta('property', 'og:url', url)
     upsertMeta('property', 'og:image', imageUrl)
     upsertMeta('property', 'og:image:alt', `${seoConfig.siteName} – yazılım şirketi`)
 
     upsertMeta('name', 'twitter:card', 'summary_large_image')
     upsertMeta('name', 'twitter:title', title)
-    upsertMeta('name', 'twitter:description', description)
+    upsertMeta('name', 'twitter:description', summary)
     upsertMeta('name', 'twitter:image', imageUrl)
 
     upsertLink('canonical', url)

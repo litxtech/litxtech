@@ -56,8 +56,25 @@ const BUILTIN_REDIRECTS = [
   { source: '/products/kbs-prime', destination: '/kbs-prime', status_code: 301, enabled: true },
 ]
 
+export function expandDescription(description, title) {
+  const name = String(title || 'LitxTech').split('|')[0].trim() || 'LitxTech'
+  const text = String(description || '').replace(/\s+/g, ' ').trim()
+  if (text.length >= 120 && text.length <= 160) return text
+  if (text.length > 160) {
+    const cut = text.slice(0, 150).replace(/\s+\S*$/, '').replace(/[.,;:\s]+$/, '')
+    return `${cut}.`
+  }
+  const lead = text ? text.replace(/\.+$/, '') : name
+  let combined = `${lead}. ${name} sayfası LitxTech resmi sitesinde yayımlanır ve güncel bilgiyi içerir.`
+  if (combined.length < 120) combined += ' İletişim ve destek bağlantıları bu sayfadadır.'
+  if (combined.length > 160) {
+    combined = `${combined.slice(0, 150).replace(/\s+\S*$/, '').replace(/[.,;:\s]+$/, '')}.`
+  }
+  return combined
+}
+
 function page(row) {
-  return {
+  const next = {
     index: true,
     follow: true,
     sitemap: true,
@@ -69,6 +86,8 @@ function page(row) {
     h1: '',
     ...row,
   }
+  next.description = expandDescription(next.description, next.h1 || next.title)
+  return next
 }
 
 const HUBS = [
@@ -642,6 +661,7 @@ function applyOverride(base, row) {
   }
   if (row.include_in_sitemap === false) next.sitemap = false
   if (row.updated_at) next.updated = String(row.updated_at).slice(0, 10)
+  next.description = expandDescription(next.description, next.h1 || next.title)
   next.override = true
   return next
 }
