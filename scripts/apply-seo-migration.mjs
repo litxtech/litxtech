@@ -35,10 +35,26 @@ async function tryHttpSql() {
     console.log('missing supabase url or service role')
     return false
   }
-  const probe = await fetch(`${supabaseUrl}/rest/v1/company_settings?select=id&id=eq.1`, {
+  const anonKey = val('SUPABASE_ANON_KEY') || val('VITE_SUPABASE_ANON_KEY')
+  if (anonKey) {
+    const anon = await fetch(`${supabaseUrl}/rest/v1/company_settings?select=id&id=eq.1`, {
+      headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+    })
+    console.log('anon_status', anon.status, redact(await anon.text()))
+  }
+  const probe = await fetch(`${supabaseUrl}/rest/v1/company_settings?select=id,default_seo&id=eq.1`, {
     headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
   })
   console.log('rest_status', probe.status, redact(await probe.text()))
+  for (const check of [
+    'seo_metadata?select=h1,focus_topic,schema_type,status,include_in_sitemap&limit=1',
+    'seo_logs?select=id&limit=1',
+  ]) {
+    const res = await fetch(`${supabaseUrl}/rest/v1/${check}`, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    })
+    console.log('schema', check.split('?')[0], res.status, redact(await res.text()))
+  }
 
   const sqlBody = fs.readFileSync(
     new URL('../supabase/migrations/20261006_seo_system.sql', import.meta.url),
@@ -62,7 +78,28 @@ async function tryHttpSql() {
     console.log('sql_endpoint', new URL(target).pathname, res.status, body)
     if (res.ok) return true
   }
-  return false
+
+  const ref = new URL(supabaseUrl).hostname.split('.')[0]
+  const client = new pg.Client({
+    host: `db.${ref}.supabase.co`,
+    port: 5432,
+    user: 'postgres',
+    password: serviceKey,
+    database: 'postgres',
+    ssl: { rejectUnauthorized: false },
+    connectionTimeoutMillis: 12000,
+  })
+  try {
+    await client.connect()
+    await client.query(sqlBody)
+    console.log('direct_sql applied')
+    return true
+  } catch (error) {
+    console.log('direct_sql', error.code || '', String(error.message).slice(0, 300))
+    return false
+  } finally {
+    await client.end().catch(() => {})
+  }
 }
 
 if (!url) {
