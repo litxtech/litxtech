@@ -10,11 +10,11 @@
     { "source": "/solutions/pharma", "destination": "/cozumler/ozel-yazilim", "permanent": true },
     { "source": "/admin", "destination": "/login?admin=1", "permanent": false },
     { "source": "/admin/login", "destination": "/login?admin=1", "permanent": false },
-    { "source": "/api/admin/auth/session", "destination": "/api/admin/session", "permanent": false },
-    { "source": "/robots.txt", "destination": "/api/robots", "permanent": false },
-    { "source": "/sitemap.xml", "destination": "/api/sitemap", "permanent": false }
+    { "source": "/api/admin/auth/session", "destination": "/api/admin/session", "permanent": false }
   ],
   "rewrites": [
+    { "source": "/robots.txt", "destination": "/api/robots" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
