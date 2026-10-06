@@ -20,9 +20,59 @@ const url =
   val('SUPABASE_DB_URL') ||
   val('DIRECT_URL')
 
+const supabaseUrl = val('SUPABASE_URL') || val('VITE_SUPABASE_URL')
+const serviceKey = val('SUPABASE_SERVICE_ROLE_KEY')
+
+function redact(text) {
+  return String(text)
+    .replace(/eyJ[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+/g, '[jwt]')
+    .replace(/sb_[A-Za-z0-9_]+/g, '[sb]')
+    .slice(0, 800)
+}
+
+async function tryHttpSql() {
+  if (!supabaseUrl || !serviceKey) {
+    console.log('missing supabase url or service role')
+    return false
+  }
+  const probe = await fetch(`${supabaseUrl}/rest/v1/company_settings?select=id&id=eq.1`, {
+    headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+  })
+  console.log('rest_status', probe.status, redact(await probe.text()))
+
+  const sqlBody = fs.readFileSync(
+    new URL('../supabase/migrations/20261006_seo_system.sql', import.meta.url),
+    'utf8'
+  )
+  const targets = [
+    `${supabaseUrl}/pg/query`,
+    `${supabaseUrl}/pg-meta/default/query`,
+  ]
+  for (const target of targets) {
+    const res = await fetch(target, {
+      method: 'POST',
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: sqlBody }),
+    })
+    const body = redact(await res.text())
+    console.log('sql_endpoint', new URL(target).pathname, res.status, body)
+    if (res.ok) return true
+  }
+  return false
+}
+
 if (!url) {
-  console.log('No Postgres connection string in Vercel production env. SQL was not run.')
-  process.exit(2)
+  const applied = await tryHttpSql()
+  if (!applied) {
+    console.log('No Postgres connection string, and the HTTP SQL endpoints did not apply the migration.')
+    process.exit(2)
+  }
+  console.log('migration applied via HTTP SQL endpoint')
+  process.exit(0)
 }
 
 const sql = fs.readFileSync(new URL('../supabase/migrations/20261006_seo_system.sql', import.meta.url), 'utf8')
