@@ -11,6 +11,6 @@ export default async function handler(req, res) {
   const xml = buildSitemapXml(ctx)
   res.statusCode = 200
   res.setHeader('Content-Type', 'application/xml; charset=utf-8')
-  res.setHeader('Cache-Control', 'public, max-age=3600')
+  res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=120')
   res.end(xml)
 }

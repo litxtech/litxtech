@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ChevronDown, Menu, Phone, X, Zap } from 'lucide-react'
+import { ChevronDown, Menu, Phone, Search, X, Zap } from 'lucide-react'
 import { solutionsData } from '@/data/solutionsData'
 import { siteConfig } from '@/data/siteConfig'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
@@ -109,6 +109,13 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <Link
+              to="/search"
+              aria-label="Sitede ara"
+              className="inline-flex items-center justify-center rounded-lg border border-white/10 p-2 text-slate-200 hover:border-white/20 hover:text-white"
+            >
+              <Search className="h-4 w-4" />
+            </Link>
             {authLoading ? (
               <span className="h-9 w-24 animate-pulse rounded-lg bg-white/10" />
             ) : user ? (
@@ -209,6 +216,9 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               </Link>
               <Link to="/contact" className="py-2 font-semibold text-white" onClick={() => setOpen(false)}>
                 Start a Project
+              </Link>
+              <Link to="/search" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Site arama
               </Link>
               {user ? (
                 <>

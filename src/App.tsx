@@ -69,10 +69,12 @@ import { DonationPage } from './pages/DonationPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { MyTrabzonCallback } from './pages/MyTrabzonCallback'
 import { SupportPage } from './pages/SupportPage'
+import { CmsPublicPage } from './pages/CmsPublicPage'
 import { ProjemiAnlatPage } from './pages/ProjemiAnlatPage'
 import { DestekPage } from './pages/DestekPage'
 import { SssPage } from './pages/SssPage'
 import { FeedPage } from './pages/FeedPage'
+import { SearchPage } from './pages/SearchPage'
 import {
   CaseStudiesPage,
   CaseStudyPage,
@@ -150,6 +152,7 @@ function App() {
           <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
           <Route path="/terms" element={<Navigate to="/terms-of-service" replace />} />
           <Route path="/cookies" element={<CookiesPage />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/500" element={<ServerErrorPage />} />
           <Route path="/donation" element={<DonationPage />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -222,6 +225,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />
           <Route path="/cancel" element={<CancelPage />} />
+          <Route path="/sayfa/:slug" element={<CmsPublicPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

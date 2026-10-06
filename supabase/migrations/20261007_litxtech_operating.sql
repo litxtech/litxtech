@@ -133,7 +133,7 @@ FROM (
     ('technology', 5, 'Technology', 'The stack this company uses to ship.', NULL, 'See the stack', '/technology'),
     ('process', 6, 'How we work', 'Eight steps, editable in admin.', NULL, 'See the process', '/process'),
     ('feed', 7, 'Latest from LitxTech', 'Product updates, engineering notes, and company news.', NULL, 'Explore all insights', '/feed'),
-    ('cta', 8, 'Start a project with LitxTech.', 'Tell us what you need to run. We will reply from the contact details configured in company settings.', 'Start a Project', '/contact')
+    ('cta', 8, 'Start a project with LitxTech.', 'Tell us what you need to run. We will reply from the contact details configured in company settings.', NULL, 'Start a Project', '/contact')
 ) AS v(section_key, sort_order, title, subtitle, description, cta_label, cta_href)
 WHERE NOT EXISTS (SELECT 1 FROM homepage_sections LIMIT 1);
 

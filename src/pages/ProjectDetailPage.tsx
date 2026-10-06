@@ -1,19 +1,58 @@
+import { useEffect, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ExternalLink, MessageCircle } from 'lucide-react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
-import { getProjectBySlug } from '@/data/projectsData'
+import { getProjectBySlug, type ProjectEntry } from '@/data/projectsData'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
 import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
 
 export function ProjectDetailPage() {
   const { slug } = useParams()
   const company = useCompanySettings()
-  const project = getProjectBySlug(slug)
+  const staticProject = getProjectBySlug(slug)
+  const [remote, setRemote] = useState<ProjectEntry | null>(null)
+  const [missing, setMissing] = useState(false)
 
-  if (!project) {
+  useEffect(() => {
+    if (staticProject || !slug) return
+    setMissing(false)
+    fetch(`/api/public/projects/${encodeURIComponent(slug)}`)
+      .then((response) => (response.ok ? response.json() : Promise.reject()))
+      .then((data) => {
+        const row = data?.project
+        if (!row) {
+          setMissing(true)
+          return
+        }
+        setRemote({
+          slug: row.slug,
+          title: row.name || row.slug,
+          summary: row.summary || '',
+          description: row.description || row.summary || '',
+          image: row.cover_image || row.image_url || '/og-litxtech.jpg',
+          imageAlt: row.name || row.slug,
+          tags: row.category ? [row.category] : [],
+          ctaLabel: 'İletişime geç',
+          internalPath: row.internal_path || '/contact',
+          externalUrl: row.external_url || undefined,
+        })
+      })
+      .catch(() => setMissing(true))
+  }, [slug, staticProject])
+
+  if (!staticProject && missing) {
     return <Navigate to="/projeler" replace />
+  }
+
+  const project = staticProject || remote
+  if (!project) {
+    return (
+      <MarketingChrome>
+        <p className="px-4 py-24 text-center text-slate-400">Yükleniyor…</p>
+      </MarketingChrome>
+    )
   }
 
   const primaryHref = project.internalPath ?? project.externalUrl ?? '/contact'

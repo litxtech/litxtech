@@ -7,6 +7,7 @@ import {
   writeAudit,
 } from '../../_lib/supabaseAdmin.js'
 import { handleSeoAdmin } from './seoAdmin.js'
+import { clearSeoCache } from '../../_lib/seoData.js'
 
 function parts(req) {
   return String(req.platformPath || '').split('/').filter(Boolean)
@@ -139,6 +140,7 @@ async function feed(req, res, supabase, admin, id) {
     const { data, error } = await supabase.from('feed_posts').insert(row).select('*').single()
     if (error) return json(res, 400, { error: error.message })
     await writeAudit(supabase, { actor_id: admin.id, actor_email: admin.email, action: 'FEED_CREATED', resource: 'feed_posts', resource_id: data.id, new_value: { title } })
+    clearSeoCache()
     return json(res, 201, { post: data })
   }
   if ((req.method === 'PATCH' || req.method === 'PUT') && id) {
@@ -151,12 +153,14 @@ async function feed(req, res, supabase, admin, id) {
     const { data, error } = await supabase.from('feed_posts').update(patch).eq('id', id).select('*').single()
     if (error) return json(res, 400, { error: error.message })
     await writeAudit(supabase, { actor_id: admin.id, actor_email: admin.email, action: 'FEED_UPDATED', resource: 'feed_posts', resource_id: id, new_value: { status: data.status } })
+    clearSeoCache()
     return json(res, 200, { post: data })
   }
   if (req.method === 'DELETE' && id) {
     const { error } = await supabase.from('feed_posts').update({ deleted_at: new Date().toISOString() }).eq('id', id)
     if (error) return json(res, 400, { error: error.message })
     await writeAudit(supabase, { actor_id: admin.id, actor_email: admin.email, action: 'FEED_DELETED', resource: 'feed_posts', resource_id: id })
+    clearSeoCache()
     return json(res, 200, { ok: true })
   }
   return json(res, 405, { error: 'Method not allowed' })
@@ -327,6 +331,7 @@ async function pages(req, res, supabase, admin) {
       .single()
     if (error) return json(res, 400, { error: error.message })
     await writeAudit(supabase, { actor_id: admin.id, actor_email: admin.email, action: 'PAGE_CREATED', resource: 'cms_pages', resource_id: data.id })
+    clearSeoCache()
     return json(res, 201, { page: data })
   }
   const { data, error } = await supabase.from('cms_pages').select('*').is('deleted_at', null).order('updated_at', { ascending: false })

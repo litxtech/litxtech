@@ -4,6 +4,12 @@
   "installCommand": "npm install",
   "framework": "vite",
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "litxtech.com" }],
+      "destination": "https://www.litxtech.com/:path*",
+      "permanent": true
+    },
     { "source": "/solutions/hotels", "destination": "/cozumler/otel-yonetim-sistemi", "permanent": true },
     { "source": "/solutions/restaurants", "destination": "/cozumler/restoran-yonetim-sistemi", "permanent": true },
     { "source": "/solutions/construction", "destination": "/cozumler/ozel-yazilim", "permanent": true },
@@ -63,7 +69,10 @@
     },
     {
       "source": "/sitemap.xml",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=60, stale-while-revalidate=120" }
+      ]
     },
     {
       "source": "/robots.txt",

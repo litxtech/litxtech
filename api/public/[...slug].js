@@ -11,6 +11,7 @@ import feed from '../_handlers/public/feed.js'
 import homepage from '../_handlers/public/homepage.js'
 import leads from '../_handlers/public/leads.js'
 import presence from '../_handlers/public/presence.js'
+import pages from '../_handlers/public/pages.js'
 import products from '../_handlers/public/products.js'
 import services from '../_handlers/public/services.js'
 import seo from '../_handlers/public/seo.js'
@@ -28,6 +29,7 @@ const routes = {
   feed,
   homepage,
   leads,
+  pages,
   presence,
   products,
   services,

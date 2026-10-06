@@ -18,6 +18,19 @@ const PRIVATE_PREFIXES = [
   '/success',
   '/cancel',
   '/dashboard',
+  '/leads',
+  '/content',
+  '/customers',
+  '/analytics',
+  '/marketing',
+  '/settings',
+  '/system',
+  '/faq',
+  '/applications',
+  '/messages',
+  '/security',
+  '/support/chat',
+  '/support/tickets',
   '/seo-health',
   '/sifremi-unuttum',
   '/donation',
@@ -224,6 +237,15 @@ const HUBS = [
     outbound: ['/privacy-policy'],
   }),
   page({
+    path: '/search',
+    title: 'Site arama | LitxTech',
+    description:
+      'LitxTech resmi sitesinde ara. Resmi adres https://www.litxtech.com — ürünler, hizmetler, çözümler ve iletişim.',
+    h1: 'LitxTech site arama',
+    priority: '0.4',
+    outbound: ['/', '/products', '/services', '/contact'],
+  }),
+  page({
     path: '/feed',
     title: 'Feed | LitxTech',
     description: 'Ürün, mühendislik ve şirket güncellemeleri.',
@@ -238,11 +260,33 @@ const HUBS = [
       'LitxTech blogunda yayınlanan yazılım, mobil uygulama ve dijital ürün yazıları. Taslak içerik listelenmez.',
     h1: 'Blog',
     schema: 'CollectionPage',
-    changefreq: 'weekly',
-    priority: '0.6',
-    index: false,
-    sitemap: false,
+    changefreq: 'daily',
+    priority: '0.7',
     outbound: ['/cozumler', '/products'],
+  }),
+  page({
+    path: '/ai-builder',
+    title: 'AI Builder | LitxTech',
+    description: 'LitxTech AI Builder ile uygulama fikrinizi tarif edin ve yazılım geliştirme sürecini başlatın.',
+    h1: 'AI Builder',
+    priority: '0.5',
+    outbound: ['/contact', '/packages'],
+  }),
+  page({
+    path: '/investment',
+    title: 'Investment | LitxTech',
+    description: 'LitxTech ile büyüme ve iş birliği fırsatları. Stratejik ortaklık için iletişime geçin.',
+    h1: 'Investment',
+    priority: '0.4',
+    outbound: ['/contact', '/about'],
+  }),
+  page({
+    path: '/packages',
+    title: 'Paketler | LitxTech',
+    description: 'LitxTech web ve yazılım paketleri. Kapsamı inceleyip projenizi anlatın.',
+    h1: 'Paketler',
+    priority: '0.6',
+    outbound: ['/projemi-anlat', '/contact', '/services'],
   }),
 ]
 
@@ -467,6 +511,14 @@ export function websiteNode(company = {}) {
     description: clean(company.description) || BRAND_DESCRIPTION,
     inLanguage: 'tr',
     publisher: { '@id': `${origin}/#organization` },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${origin}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   }
 }
 
@@ -613,7 +665,7 @@ export function mergeCatalog(ctx = {}) {
       if (newest) blog.updated = String(newest).slice(0, 10)
     }
     for (const post of posts) {
-      if (!post.slug || post.status && post.status !== 'published') continue
+      if (!post.slug || (post.status && post.status !== 'published')) continue
       const path = `/blog/${String(post.slug).toLowerCase()}`
       const seo = post.seo && typeof post.seo === 'object' ? post.seo : {}
       map.set(
@@ -628,6 +680,7 @@ export function mergeCatalog(ctx = {}) {
           published: post.published_at ? String(post.published_at).slice(0, 10) : undefined,
           author: clean(post.author) || BRAND,
           ogImage: clean(post.cover) || clean(seo.og_image) || '',
+          image: clean(post.cover) || clean(seo.og_image) || '',
           priority: '0.6',
           changefreq: 'weekly',
           outbound: ['/blog', '/cozumler', '/products', '/contact'],
@@ -666,6 +719,89 @@ export function mergeCatalog(ctx = {}) {
         schema: 'Article',
         updated: String(study.updated_at || CONTENT_REVISION).slice(0, 10),
         outbound: ['/case-studies', '/projeler', '/contact'],
+      }),
+    )
+  }
+  for (const product of ctx.products || []) {
+    if (!product.slug || (product.status && product.status !== 'published')) continue
+    const path = `/products/${String(product.slug).toLowerCase()}`
+    if (matchRedirect(path, ctx) || isPrivatePath(path)) continue
+    const image = clean(product.cover_image_url) || clean(product.og_image) || ''
+    if (map.has(path)) {
+      const existing = map.get(path)
+      if (product.updated_at) existing.updated = String(product.updated_at).slice(0, 10)
+      if (image) existing.image = image
+      continue
+    }
+    map.set(
+      path,
+      page({
+        path,
+        title: clean(product.seo_title) || `${product.name || product.slug} | LitxTech`,
+        description: clean(product.seo_description) || clean(product.short_description) || clean(product.name),
+        h1: product.name || product.slug,
+        schema: 'SoftwareApplication',
+        updated: String(product.updated_at || CONTENT_REVISION).slice(0, 10),
+        image,
+        ogImage: image,
+        priority: '0.7',
+        changefreq: 'weekly',
+        outbound: ['/products', '/contact'],
+      }),
+    )
+  }
+  for (const project of ctx.projects || []) {
+    if (!project.slug || (project.status && project.status !== 'published')) continue
+    const path = `/projeler/${String(project.slug).toLowerCase()}`
+    if (matchRedirect(path, ctx) || isPrivatePath(path)) continue
+    const image = clean(project.cover_image) || clean(project.image_url) || ''
+    if (map.has(path)) {
+      const existing = map.get(path)
+      if (project.updated_at) existing.updated = String(project.updated_at).slice(0, 10)
+      if (image) existing.image = image
+      continue
+    }
+    map.set(
+      path,
+      page({
+        path,
+        title: clean(project.seo_title) || `${project.name || project.slug} | LitxTech Projeler`,
+        description: clean(project.seo_description) || clean(project.summary) || clean(project.name),
+        h1: project.name || project.slug,
+        schema: 'Article',
+        updated: String(project.updated_at || project.published_at || CONTENT_REVISION).slice(0, 10),
+        image,
+        ogImage: image,
+        priority: '0.7',
+        changefreq: 'weekly',
+        outbound: ['/projeler', '/contact'],
+      }),
+    )
+  }
+  for (const cmsPage of ctx.cmsPages || []) {
+    if (!cmsPage.slug || (cmsPage.status && cmsPage.status !== 'published')) continue
+    const slug = String(cmsPage.slug).replace(/^\/+|\/+$/g, '')
+    if (!slug) continue
+    const path = normalizePath(`/sayfa/${slug}`)
+    if (matchRedirect(path, ctx) || isPrivatePath(path)) continue
+    const image = clean(cmsPage.og_image) || clean(cmsPage.featured_image) || ''
+    const indexable = cmsPage.no_index !== true
+    map.set(
+      path,
+      page({
+        path,
+        title: clean(cmsPage.seo_title) || `${cmsPage.title || slug} | LitxTech`,
+        description: clean(cmsPage.seo_description) || clean(cmsPage.excerpt) || clean(cmsPage.title),
+        h1: cmsPage.title || slug,
+        canonical: clean(cmsPage.canonical_url) || '',
+        updated: String(cmsPage.updated_at || cmsPage.published_at || CONTENT_REVISION).slice(0, 10),
+        image,
+        ogImage: image,
+        index: indexable,
+        sitemap: indexable,
+        priority: '0.6',
+        changefreq: 'weekly',
+        outbound: ['/', '/contact'],
       }),
     )
   }
@@ -763,18 +899,35 @@ export function buildRobotsTxt(ctx = {}) {
   return lines.join('\n')
 }
 
+const CHANGEFREQ = new Set(['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'])
+
+function sitemapPriority(value) {
+  const number = Number(value)
+  if (!Number.isFinite(number)) return '0.5'
+  return Math.min(1, Math.max(0, number)).toFixed(1)
+}
+
+function sitemapImage(row) {
+  const raw = clean(row.image) || clean(row.ogImage)
+  if (!/^https:\/\//i.test(raw)) return ''
+  return `    <image:image>\n      <image:loc>${escapeHtml(raw)}</image:loc>\n    </image:image>\n`
+}
+
 export function buildSitemapXml(ctx = {}) {
-  if (ctx.settings?.sitemap_enabled === false) {
-    return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`
-  }
-  const pages = mergeCatalog(ctx).filter((row) => row.sitemap && row.index && !isPrivatePath(row.path))
+  const empty = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"></urlset>`
+  if (ctx.settings?.sitemap_enabled === false) return empty
+  const pages = mergeCatalog(ctx)
+    .filter((row) => row.sitemap && row.index && !isPrivatePath(row.path) && !matchRedirect(row.path, ctx))
+    .sort((a, b) => (a.path === '/' ? -1 : b.path === '/' ? 1 : a.path.localeCompare(b.path)))
   const urls = pages
     .map((row) => {
-      const lastmod = /^\d{4}-\d{2}-\d{2}$/.test(row.updated) ? row.updated : CONTENT_REVISION
-      return `  <url>\n    <loc>${escapeHtml(absoluteUrl(row.path))}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${row.changefreq || 'monthly'}</changefreq>\n    <priority>${row.priority || '0.5'}</priority>\n  </url>`
+      const lastmod = /^\d{4}-\d{2}-\d{2}/.test(String(row.updated || '')) ? String(row.updated).slice(0, 10) : CONTENT_REVISION
+      const freq = CHANGEFREQ.has(row.changefreq) ? row.changefreq : 'monthly'
+      const image = sitemapImage(row)
+      return `  <url>\n    <loc>${escapeHtml(absoluteUrl(row.path))}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${sitemapPriority(row.priority)}</priority>\n${image}  </url>`
     })
     .join('\n')
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls}\n</urlset>`
 }
 
 export function renderHeadBlock(pageRow, ctx = {}) {

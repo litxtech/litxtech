@@ -101,6 +101,14 @@ export function websiteJsonLd(company?: CompanySeoInput) {
     description: company?.description || seoConfig.defaultDescription,
     inLanguage: seoConfig.language,
     publisher: { '@id': `${seoConfig.origin}/#organization` },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${seoConfig.origin}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   }
 }
 

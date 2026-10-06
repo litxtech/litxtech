@@ -41,7 +41,7 @@ function Guard({ children }: { children: React.ReactNode }) {
       </div>
     )
   }
-  if (!user) return <Navigate to="/login" replace />
+  if (!user) return <Navigate to="/login?admin=1" replace />
   return <>{children}</>
 }
 
