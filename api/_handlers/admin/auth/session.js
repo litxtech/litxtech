@@ -40,6 +40,8 @@ export default async function handler(req, res) {
       const token = match ? decodeURIComponent(match[1]) : null
       const supabase = getServiceClient()
       if (token) {
+        // Live schema uses `token` (+ optional revoke); support both shapes
+        await supabase.from('admin_sessions').update({ revoked: true }).eq('token', token)
         await supabase.from('admin_sessions').delete().eq('session_token', token)
       }
       clearAdminCookie(res)
@@ -110,17 +112,41 @@ export default async function handler(req, res) {
 
     const sessionToken = crypto.randomUUID()
     const expiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000).toISOString()
+    const ua = req.headers['user-agent'] || null
+    const ipRaw = req.headers['x-forwarded-for']
+    const ip = Array.isArray(ipRaw) ? ipRaw[0] : String(ipRaw || '').split(',')[0].trim() || null
 
-    const { error: sessError } = await supabase.from('admin_sessions').insert({
-      admin_user_id: admin.id,
-      session_token: sessionToken,
-      expires_at: expiresAt,
-      ip_address: null,
-      user_agent: req.headers['user-agent'] || null,
-    })
+    // Production table columns: admin_id, username, token (not admin_user_id/session_token)
+    let sessError = (
+      await supabase.from('admin_sessions').insert({
+        admin_id: admin.id,
+        username: admin.email || 'admin',
+        token: sessionToken,
+        expires_at: expiresAt,
+        ip_address: ip,
+        user_agent: ua,
+        revoked: false,
+      })
+    ).error
+
+    // Fallback for legacy schema from supabase-admin-setup.sql
+    if (sessError) {
+      const legacy = await supabase.from('admin_sessions').insert({
+        admin_user_id: admin.id,
+        session_token: sessionToken,
+        expires_at: expiresAt,
+        ip_address: ip,
+        user_agent: ua,
+      })
+      sessError = legacy.error
+    }
 
     if (sessError) {
-      return json(res, 500, { error: 'Session creation failed' })
+      console.error('admin_sessions insert failed:', sessError)
+      return json(res, 500, {
+        error: 'Session creation failed',
+        detail: sessError.message || String(sessError.code || ''),
+      })
     }
 
     await supabase

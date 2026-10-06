@@ -131,13 +131,29 @@ export async function requireAdmin(req, res) {
         .single()
       admin = user
     } else {
-      const { data: sess } = await supabase
+      const nowIso = new Date().toISOString()
+      // Live schema: token / admin_id / revoked
+      let sess = null
+      const live = await supabase
         .from('admin_sessions')
-        .select('admin_user_id, expires_at')
-        .eq('session_token', token)
-        .gt('expires_at', new Date().toISOString())
+        .select('admin_id, expires_at, revoked')
+        .eq('token', token)
+        .eq('revoked', false)
+        .gt('expires_at', nowIso)
         .maybeSingle()
-      if (sess) {
+      if (live.data) sess = { admin_user_id: live.data.admin_id }
+
+      if (!sess) {
+        const legacy = await supabase
+          .from('admin_sessions')
+          .select('admin_user_id, expires_at')
+          .eq('session_token', token)
+          .gt('expires_at', nowIso)
+          .maybeSingle()
+        if (legacy.data) sess = legacy.data
+      }
+
+      if (sess?.admin_user_id) {
         const { data: user } = await supabase
           .from('admin_users')
           .select('id, email, role, full_name, is_active, auth_user_id')

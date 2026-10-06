@@ -230,16 +230,30 @@ export const adminAuth = {
       const sessionToken = crypto.randomUUID()
       const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 saat
 
-      // Session kaydet
-      const { error: sessionError } = await client
-        .from('admin_sessions')
-        .insert({
-          admin_user_id: data.id,
-          session_token: sessionToken,
+      // Session kaydet (live schema: admin_id/token/username)
+      let sessionError = (
+        await client.from('admin_sessions').insert({
+          admin_id: data.id,
+          username: data.email || 'admin',
+          token: sessionToken,
           expires_at: expiresAt.toISOString(),
-          ip_address: null, // Client-side'da IP alamayız
-          user_agent: navigator.userAgent
+          ip_address: null,
+          user_agent: navigator.userAgent,
+          revoked: false,
         })
+      ).error
+
+      if (sessionError) {
+        sessionError = (
+          await client.from('admin_sessions').insert({
+            admin_user_id: data.id,
+            session_token: sessionToken,
+            expires_at: expiresAt.toISOString(),
+            ip_address: null,
+            user_agent: navigator.userAgent,
+          })
+        ).error
+      }
 
       if (sessionError) {
         throw new Error('Session creation failed')
@@ -267,10 +281,8 @@ export const adminAuth = {
       const sessionToken = localStorage.getItem('admin_session_token')
       
       if (client && sessionToken) {
-        await client
-          .from('admin_sessions')
-          .delete()
-          .eq('session_token', sessionToken)
+        await client.from('admin_sessions').update({ revoked: true }).eq('token', sessionToken)
+        await client.from('admin_sessions').delete().eq('session_token', sessionToken)
       }
 
       localStorage.removeItem('admin_session_token')
