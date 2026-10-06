@@ -161,11 +161,13 @@ export const userAuth = {
     return data.subscription
   },
 
-  /** Request password-reset email with 6-digit {{ .Token }} (configure Recovery template). */
+  /** Request password-reset email with 6-digit {{ .Token }} and/or recovery link. */
   async resetPassword(email: string) {
     if (!supabase) throw new Error('Auth not configured')
+    // Always land on the new-password page (not Site URL /)
+    const redirectTo = `${window.location.origin}/auth/reset-password`
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
+      redirectTo,
     })
     if (error) throw error
     return data

@@ -76,8 +76,9 @@ export function AuthCallback() {
         } 
         // Eğer password recovery ise
         else if (type === 'recovery') {
+          sessionStorage.setItem('ltx_password_recovery', '1')
           if (openMyTrabzonDeepLink('auth/reset-password', hashSuffix)) return
-          navigate('/auth/reset-password')
+          navigate(`/auth/reset-password${hashSuffix}`, { replace: true })
         }
         // OAuth girişi veya normal giriş
         else {
@@ -107,12 +108,19 @@ export function AuthCallback() {
     if (!supabase) return
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session?.user) {
-        const hash = window.location.hash
-        const hashParams = new URLSearchParams(hash.substring(1))
-        const type = hashParams.get('type')
+      const hash = window.location.hash
+      const hashParams = new URLSearchParams(hash.substring(1))
+      const type = hashParams.get('type')
 
-        // Hash'i temizle (güvenlik için)
+      if (event === 'PASSWORD_RECOVERY' || (session?.user && type === 'recovery')) {
+        sessionStorage.setItem('ltx_password_recovery', '1')
+        if (openMyTrabzonDeepLink('auth/reset-password', hash || '')) return
+        navigate(`/auth/reset-password${hash || ''}`, { replace: true })
+        return
+      }
+
+      if (event === 'SIGNED_IN' && session?.user) {
+        // Hash'i temizle (güvenlik için) — recovery değilse
         if (hash) {
           window.history.replaceState(null, '', window.location.pathname)
         }
@@ -125,9 +133,6 @@ export function AuthCallback() {
             if (openMyTrabzonDeepLink('auth/callback', '')) return
             navigate('/')
           }
-        } else if (type === 'recovery') {
-          if (openMyTrabzonDeepLink('auth/reset-password', '')) return
-          navigate('/auth/reset-password')
         } else {
           // OAuth veya normal giriş
           if (!session.user.user_metadata?.onboarding_completed && !session.user.user_metadata?.full_name) {

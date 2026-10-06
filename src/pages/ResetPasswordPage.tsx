@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { userAuth } from '../lib/supabase'
+import { userAuth, supabase } from '../lib/supabase'
 import { Lock, Mail, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react'
 import { OtpCodeInput } from '@/components/auth/OtpCodeInput'
 import { openMyTrabzonDeepLink } from '../lib/utils'
+import {
+  clearPasswordRecovery,
+  getAuthUrlParams,
+  isPasswordRecoveryUrl,
+  markPasswordRecovery,
+} from '@/lib/authRedirect'
 
 type Step = 'request' | 'verify' | 'update'
 
@@ -15,6 +21,7 @@ export function ResetPasswordPage() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [booting, setBooting] = useState(true)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'success' | 'error' | ''>('')
 
@@ -22,6 +29,70 @@ export function ResetPasswordPage() {
     setMessage(text)
     setMessageType(type)
   }
+
+  // Handle magic-link / recovery redirect from email
+  useEffect(() => {
+    let mounted = true
+    const client = supabase
+    if (!client) {
+      setBooting(false)
+      flash('Kimlik doğrulama servisi kullanılamıyor.', 'error')
+      return
+    }
+
+    const goUpdate = () => {
+      if (!mounted) return
+      markPasswordRecovery()
+      setStep('update')
+      flash('Bağlantı doğrulandı. Yeni şifrenizi yazın.', 'success')
+      // Clean sensitive tokens from URL after session is established
+      window.history.replaceState(null, '', '/auth/reset-password')
+    }
+
+    const boot = async () => {
+      try {
+        const { type, accessToken, code } = getAuthUrlParams()
+
+        if (type === 'recovery' || isPasswordRecoveryUrl()) {
+          markPasswordRecovery()
+        }
+
+        // Let Supabase parse hash / exchange PKCE code
+        if (accessToken || code || type === 'recovery') {
+          await new Promise((r) => setTimeout(r, 400))
+          const { data } = await client.auth.getSession()
+          if (data.session && (type === 'recovery' || isPasswordRecoveryUrl())) {
+            goUpdate()
+            return
+          }
+        }
+
+        // Already in recovery session (navigated from AuthHashRedirect)
+        if (isPasswordRecoveryUrl()) {
+          const { data } = await client.auth.getSession()
+          if (data.session) {
+            goUpdate()
+            return
+          }
+        }
+      } finally {
+        if (mounted) setBooting(false)
+      }
+    }
+
+    const { data: sub } = client.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY' && session) {
+        if (openMyTrabzonDeepLink('auth/reset-password', window.location.hash || '')) return
+        goUpdate()
+      }
+    })
+
+    void boot()
+    return () => {
+      mounted = false
+      sub.subscription.unsubscribe()
+    }
+  }, [])
 
   const handleRequestReset = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,7 +106,10 @@ export function ResetPasswordPage() {
       await userAuth.resetPassword(email.trim())
       setOtp('')
       setStep('verify')
-      flash('6 haneli doğrulama kodu e-posta adresinize gönderildi. Spam klasörünü de kontrol edin.', 'success')
+      flash(
+        'E-postanıza 6 haneli kod ve/veya sıfırlama bağlantısı gönderildi. Kodu buraya girebilir veya e-postadaki linke tıklayabilirsiniz.',
+        'success',
+      )
     } catch (err: any) {
       flash(err.message || 'Kod gönderilemedi. Lütfen tekrar deneyin.', 'error')
     } finally {
@@ -49,6 +123,7 @@ export function ResetPasswordPage() {
       setLoading(true)
       setMessage('')
       await userAuth.verifyRecoveryOtp(email.trim(), otp)
+      markPasswordRecovery()
       setStep('update')
       flash('Kod doğrulandı. Yeni şifrenizi belirleyin.', 'success')
     } catch (err: any) {
@@ -63,9 +138,9 @@ export function ResetPasswordPage() {
       setLoading(true)
       setMessage('')
       await userAuth.resetPassword(email.trim())
-      flash('Yeni kod gönderildi.', 'success')
+      flash('Yeni kod / bağlantı gönderildi.', 'success')
     } catch (err: any) {
-      flash(err.message || 'Kod yeniden gönderilemedi.', 'error')
+      flash(err.message || 'Yeniden gönderilemedi.', 'error')
     } finally {
       setLoading(false)
     }
@@ -89,13 +164,14 @@ export function ResetPasswordPage() {
         return
       }
       await userAuth.updatePassword(password)
+      clearPasswordRecovery()
       flash('Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz…', 'success')
       setTimeout(() => {
         if (openMyTrabzonDeepLink('auth/callback', '')) return
         navigate('/auth')
       }, 1500)
     } catch (err: any) {
-      flash(err.message || 'Şifre güncellenemedi.', 'error')
+      flash(err.message || 'Şifre güncellenemedi. Link süresi dolmuş olabilir; kod ile tekrar deneyin.', 'error')
     } finally {
       setLoading(false)
     }
@@ -115,6 +191,14 @@ export function ResetPasswordPage() {
       </div>
     )
 
+  if (booting) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 text-white">
+        Bağlantı doğrulanıyor…
+      </div>
+    )
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
       <div className="w-full max-w-md rounded-2xl border border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-lg">
@@ -125,12 +209,12 @@ export function ResetPasswordPage() {
           <h1 className="mb-2 text-3xl font-bold text-white">
             {step === 'request' && 'Şifremi Unuttum'}
             {step === 'verify' && 'Doğrulama Kodu'}
-            {step === 'update' && 'Yeni Şifre'}
+            {step === 'update' && 'Yeni Şifre Belirle'}
           </h1>
           <p className="text-gray-300">
-            {step === 'request' && 'E-postanıza 6 haneli kod göndereceğiz'}
+            {step === 'request' && 'E-postanıza 6 haneli kod veya sıfırlama linki göndereceğiz'}
             {step === 'verify' && `${email} adresine gelen 6 haneli kodu girin`}
-            {step === 'update' && 'Hesabınız için yeni bir şifre belirleyin'}
+            {step === 'update' && 'Hesabınız için yeni bir şifre yazın'}
           </p>
         </div>
 
@@ -159,7 +243,7 @@ export function ResetPasswordPage() {
               disabled={loading}
               className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 py-3 font-semibold text-white disabled:opacity-60"
             >
-              {loading ? 'Gönderiliyor…' : '6 Haneli Kod Gönder'}
+              {loading ? 'Gönderiliyor…' : 'Kod / Link Gönder'}
             </button>
           </form>
         )}
@@ -175,13 +259,8 @@ export function ResetPasswordPage() {
             >
               {loading ? 'Doğrulanıyor…' : 'Kodu Doğrula'}
             </button>
-            <button
-              type="button"
-              onClick={handleResend}
-              disabled={loading}
-              className="w-full text-sm text-purple-300 hover:text-purple-200 disabled:opacity-60"
-            >
-              Kodu tekrar gönder
+            <button type="button" onClick={handleResend} disabled={loading} className="w-full text-sm text-purple-300">
+              Kodu / linki tekrar gönder
             </button>
             <button
               type="button"
@@ -211,6 +290,7 @@ export function ResetPasswordPage() {
                 placeholder="En az 6 karakter"
                 className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-purple-500"
                 required
+                autoFocus
               />
             </div>
             <div>
@@ -238,10 +318,7 @@ export function ResetPasswordPage() {
           </form>
         )}
 
-        <Link
-          to="/auth"
-          className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-white"
-        >
+        <Link to="/auth" className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-white">
           <ArrowLeft className="h-4 w-4" />
           Giriş sayfasına dön
         </Link>

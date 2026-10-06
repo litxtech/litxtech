@@ -73,6 +73,7 @@ import { ProjemiAnlatPage } from './pages/ProjemiAnlatPage'
 import { DestekPage } from './pages/DestekPage'
 import { SssPage } from './pages/SssPage'
 import { useEffect } from 'react'
+import { AuthHashRedirect } from './components/auth/AuthHashRedirect'
 
 function LegacyAdminRedirect() {
   useEffect(() => {
@@ -91,6 +92,7 @@ function App() {
     <LanguageProvider>
       <div className="min-h-screen bg-background">
         <ScrollToTop />
+        <AuthHashRedirect />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/projemi-anlat" element={<ProjemiAnlatPage />} />
