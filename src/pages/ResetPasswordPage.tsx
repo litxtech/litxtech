@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { userAuth, supabase } from '../lib/supabase'
 import { Lock, Mail, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react'
 import { OtpCodeInput } from '@/components/auth/OtpCodeInput'
+import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { openMyTrabzonDeepLink } from '../lib/utils'
 import {
   clearPasswordRecovery,
@@ -193,14 +194,17 @@ export function ResetPasswordPage() {
 
   if (booting) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 text-white">
-        Bağlantı doğrulanıyor…
-      </div>
+      <MarketingChrome>
+        <div className="flex min-h-[50vh] items-center justify-center bg-[#070a12] p-4 text-white">
+          Bağlantı doğrulanıyor…
+        </div>
+      </MarketingChrome>
     )
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+    <MarketingChrome>
+    <div className="flex min-h-[70vh] items-center justify-center bg-gradient-to-br from-[#070a12] via-slate-900 to-[#0b1220] p-4">
       <div className="w-full max-w-md rounded-2xl border border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-lg">
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-purple-600">
@@ -318,11 +322,12 @@ export function ResetPasswordPage() {
           </form>
         )}
 
-        <Link to="/auth" className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-white">
+        <Link to="/giris" className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-white">
           <ArrowLeft className="h-4 w-4" />
           Giriş sayfasına dön
         </Link>
       </div>
     </div>
+    </MarketingChrome>
   )
 }

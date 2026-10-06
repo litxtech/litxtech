@@ -113,7 +113,11 @@ function App() {
           <Route path="/donation" element={<DonationPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/giris" element={<AuthPage />} />
+          <Route path="/kayit" element={<AuthPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/sifremi-unuttum" element={<ResetPasswordPage />} />
           <Route path="/auth/confirm" element={<EmailConfirmPage />} />
           <Route path="/auth/onboarding" element={<OnboardingPage />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
@@ -129,7 +133,6 @@ function App() {
           <Route path="/ai-builder" element={<AIBuilder />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/packages" element={<Packages />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/legal" element={<LegalDocumentPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />

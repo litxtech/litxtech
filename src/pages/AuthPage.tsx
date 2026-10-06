@@ -1,13 +1,28 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { userAuth, supabase } from '../lib/supabase'
 import { openMyTrabzonDeepLink } from '../lib/utils'
 import { Mail, Lock, LogIn, UserPlus, Sparkles, HelpCircle } from 'lucide-react'
 import { OtpCodeInput } from '@/components/auth/OtpCodeInput'
+import { MarketingChrome } from '@/components/marketing/MarketingChrome'
+
+function initialAuthMode(pathname: string, modeParam: string | null) {
+  if (pathname === '/kayit' || modeParam === 'signup') return 'signup'
+  return 'signin'
+}
 
 export function AuthPage() {
   const navigate = useNavigate()
-  const [mode, setMode] = useState<'signin' | 'signup' | 'verify-signup' | 'otp-login'>('signin')
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const [mode, setMode] = useState<'signin' | 'signup' | 'verify-signup' | 'otp-login'>(() =>
+    initialAuthMode(location.pathname, searchParams.get('mode')),
+  )
+
+  useEffect(() => {
+    const next = initialAuthMode(location.pathname, searchParams.get('mode'))
+    if (next === 'signup' || next === 'signin') setMode(next)
+  }, [location.pathname, searchParams])
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -234,7 +249,8 @@ export function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+    <MarketingChrome>
+    <div className="flex min-h-[70vh] items-center justify-center bg-gradient-to-br from-[#070a12] via-slate-900 to-[#0b1220] p-4">
       <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4">
@@ -517,5 +533,6 @@ export function AuthPage() {
         )}
       </div>
     </div>
+    </MarketingChrome>
   )
 }

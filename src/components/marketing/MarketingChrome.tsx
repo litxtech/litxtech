@@ -95,6 +95,21 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <Link
+              to="/giris"
+              className={clsx(
+                'inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition hover:text-white',
+                isActive('/auth') && 'text-white',
+              )}
+            >
+              Giriş
+            </Link>
+            <Link
+              to="/kayit"
+              className="inline-flex items-center rounded-lg border border-white/15 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-white/30 hover:bg-white/5"
+            >
+              Kayıt
+            </Link>
             <a
               href={`tel:${company.phone_tel || siteConfig.phoneTel}`}
               onClick={() => trackEvent('phone_click', location.pathname)}
@@ -156,6 +171,19 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               </Link>
               <Link to="/contact" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
                 İletişim
+              </Link>
+              <Link to="/giris" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Giriş
+              </Link>
+              <Link to="/kayit" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Kayıt ol
+              </Link>
+              <Link
+                to="/sifremi-unuttum"
+                className="py-2 text-slate-400"
+                onClick={() => setOpen(false)}
+              >
+                Şifremi unuttum
               </Link>
               <div className="mt-2 flex flex-col gap-2 border-t border-white/10 pt-4">
                 {company.whatsapp?.enabled !== false && (
@@ -239,6 +267,21 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                 <li>
                   <Link className="hover:text-white" to="/blog">
                     Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white" to="/giris">
+                    Giriş
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white" to="/kayit">
+                    Kayıt ol
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white" to="/sifremi-unuttum">
+                    Şifremi unuttum
                   </Link>
                 </li>
                 <li>
