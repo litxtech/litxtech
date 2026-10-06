@@ -9,8 +9,8 @@ export function SolutionsIndexPage() {
   return (
     <MarketingChrome>
       <SeoHead
-        title="Çözümler | LitxTech"
-        description="Otel, restoran, sosyal platform, eşleşme, şehir uygulamaları ve kuruma özel yazılım çözümleri."
+        title="Yazılım Çözümleri | LitxTech – Otel, Restoran, Mobil ve Özel Yazılım"
+        description="LitxTech yazılım çözümleri: otel yönetim sistemi, restoran yazılımı, sosyal platform, eşleşme uygulamaları, şehir uygulamaları ve özel yazılım geliştirme."
         path="/cozumler"
       />
       <section className="border-b border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f]">

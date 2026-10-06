@@ -19,7 +19,7 @@ import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { homeContent } from '@/data/homeContent'
 import { projectsData } from '@/data/projectsData'
 import { solutionsData } from '@/data/solutionsData'
-import { getWhatsAppLink, siteConfig } from '@/data/siteConfig'
+import { getWhatsAppLink } from '@/data/siteConfig'
 import { fetchHomepageContent } from '@/lib/publicCms'
 
 export function HomePage() {
@@ -45,8 +45,8 @@ export function HomePage() {
   return (
     <MarketingChrome>
       <SeoHead
-        title="LitxTech | İşletmeler için modern yazılım çözümleri"
-        description={siteConfig.tagline}
+        title="LitxTech | Yazılım Şirketi – Mobil Uygulama, SaaS ve Özel Yazılım"
+        description="LitxTech (Litx); mobil uygulama, SaaS, otel/restoran yazılımı ve özel yazılım geliştiren teknoloji şirketidir. Fikirden yayına ürün tasarımı, geliştirme ve destek."
         path="/"
       />
 
@@ -327,6 +327,42 @@ export function HomePage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Brand / entity SEO (crawlable LitxTech + Litx signals) */}
+      <section className="border-t border-white/10 py-16 md:py-20" id="litxtech">
+        <div className="mx-auto max-w-3xl px-4 md:px-6">
+          <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
+            LitxTech nedir?
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-slate-400">
+            <strong className="font-semibold text-slate-200">LitxTech</strong> (kısa adıyla{' '}
+            <strong className="font-semibold text-slate-200">Litx</strong>), yazılım ürünleri
+            geliştiren bir teknoloji şirketidir. Mobil uygulamalar, sosyal platformlar, SaaS, otel
+            ve restoran yönetim sistemleri ile işletmelere özel yazılımı uçtan uca teslim ederiz.
+            Resmi site adresimiz{' '}
+            <a className="text-blue-300 hover:text-blue-200" href="https://www.litxtech.com">
+              www.litxtech.com
+            </a>
+            .
+          </p>
+          <p className="mt-4 leading-relaxed text-slate-400">
+            Yazılım şirketi arayanlar için LitxTech; planlama, tasarım, geliştirme, test, mağaza
+            yayını ve destek süreçlerini tek ekip altında birleştirir. Detaylar için{' '}
+            <Link className="text-blue-300 hover:text-blue-200" to="/about">
+              hakkımızda
+            </Link>
+            ,{' '}
+            <Link className="text-blue-300 hover:text-blue-200" to="/cozumler">
+              çözümler
+            </Link>{' '}
+            ve{' '}
+            <Link className="text-blue-300 hover:text-blue-200" to="/projeler">
+              projeler
+            </Link>{' '}
+            sayfalarına bakın.
+          </p>
         </div>
       </section>
 

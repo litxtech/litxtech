@@ -10,8 +10,8 @@ export function ProjectsIndexPage() {
   return (
     <MarketingChrome>
       <SeoHead
-        title="Projeler | LitxTech"
-        description="Valoria Hotel, KBS Prime, şehir uygulamaları ve eşleşme çözümleri gibi gerçek ürün örnekleri."
+        title="LitxTech Projeleri | Mobil Uygulama ve Yazılım Referansları"
+        description="LitxTech proje referansları: otel yazılımları, sosyal platformlar, eşleşme uygulamaları, Vora, Tamuso ve şehir uygulamaları."
         path="/projeler"
       />
       <section className="border-b border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f]">

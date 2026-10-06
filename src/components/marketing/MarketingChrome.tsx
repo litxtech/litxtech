@@ -284,7 +284,12 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-            <p>© {new Date().getFullYear()} LitxTech LLC · Wyoming, United States · D-U-N-S®: 144849529</p>
+            <p>
+              © {new Date().getFullYear()} LitxTech LLC (Litx) · Wyoming, United States · D-U-N-S®: 144849529 ·{' '}
+              <a className="hover:text-slate-300" href="https://www.litxtech.com">
+                www.litxtech.com
+              </a>
+            </p>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               <Link className="hover:text-slate-300" to="/privacy-policy">
                 Gizlilik
@@ -295,6 +300,9 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               <Link className="hover:text-slate-300" to="/commercial-agreement">
                 Ticari sözleşme
               </Link>
+              <a className="hover:text-slate-300" href="/sitemap.xml">
+                Sitemap
+              </a>
             </div>
           </div>
         </div>
