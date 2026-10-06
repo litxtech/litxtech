@@ -19,10 +19,13 @@ import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { homeContent } from '@/data/homeContent'
 import { projectsData } from '@/data/projectsData'
 import { solutionsData } from '@/data/solutionsData'
-import { getWhatsAppLink } from '@/data/siteConfig'
-import { fetchHomepageContent } from '@/lib/publicCms'
+import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { fetchHomepageContent, getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
+import { TrustStrip } from '@/components/marketing/TrustStrip'
 
 export function HomePage() {
+  const company = useCompanySettings()
+  const wa = getWhatsAppUrl(company)
   const featured = useMemo(() => projectsData.slice(0, 4), [])
   const [slide, setSlide] = useState(0)
   const [content, setContent] = useState(homeContent)
@@ -41,17 +44,35 @@ export function HomePage() {
   const prev = () => setSlide((s) => (s - 1 + featured.length) % featured.length)
 
   const active = featured[slide]
+  const order: string[] = (content as { sectionOrder?: string[] }).sectionOrder || []
+  const hidden = new Set((content as { hiddenSections?: string[] }).hiddenSections || [])
+  const rank = (id: string) => {
+    const i = order.indexOf(id)
+    return i === -1 ? 50 : i
+  }
+  const sectionStyle = (id: string) =>
+    hidden.has(id) ? { display: 'none' } : { order: rank(id) }
 
   return (
     <MarketingChrome>
       <SeoHead
-        title="LitxTech | Yazılım Şirketi – Mobil Uygulama, SaaS ve Özel Yazılım"
-        description="LitxTech (Litx); mobil uygulama, SaaS, otel/restoran yazılımı ve özel yazılım geliştiren teknoloji şirketidir. Fikirden yayına ürün tasarımı, geliştirme ve destek."
+        title="LitxTech | Yazılım ve Dijital Ürün Geliştirme Şirketi"
+        description="LitxTech, modern web ve mobil uygulamalar, özel yazılım çözümleri, dijital ürünler ve teknoloji platformları geliştiren bir yazılım şirketidir."
         path="/"
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-white/10">
+      <div className="flex flex-col">
+      <section className="relative overflow-hidden border-b border-white/10" style={sectionStyle('hero')}>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+          }}
+        />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.22),transparent_55%),radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.18),transparent_55%)]" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 md:px-6 md:py-24 lg:grid-cols-2 lg:gap-16">
           <div>
@@ -78,20 +99,23 @@ export function HomePage() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
-                to="/projeler"
-                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/30 transition hover:opacity-95"
+                to="/contact"
+                onClick={() => trackEvent('cta_click', '/')}
+                className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
               >
-                {content.hero.primaryCta}
+                Start a Project
                 <ChevronRight className="ml-1 h-4 w-4" />
               </Link>
               <Link
-                to="/projemi-anlat"
+                to="/products"
+                onClick={() => trackEvent('cta_click', '/products')}
                 className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3.5 text-sm font-semibold text-white hover:border-white/25"
               >
-                {content.hero.secondaryCta}
+                Explore Our Products
               </Link>
               <a
-                href={getWhatsAppLink()}
+                href={wa}
+                onClick={() => trackEvent('whatsapp_click', '/')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-6 py-3.5 text-sm font-semibold text-emerald-100 hover:bg-emerald-500/15"
@@ -100,21 +124,14 @@ export function HomePage() {
                 {content.hero.tertiaryCta}
               </a>
             </div>
-            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {content.stats.map((s) => (
-                <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                  <div className="text-2xl font-bold text-white">{s.value}</div>
-                  <div className="mt-1 text-xs text-slate-400">{s.label}</div>
-                </div>
-              ))}
-            </div>
+            <TrustStrip />
           </div>
           <DashboardMockup />
         </div>
       </section>
 
       {/* Solutions */}
-      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20" id="cozumler">
+      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20" id="cozumler" style={sectionStyle('solutions')}>
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wide text-blue-300/90">
             {content.sections.solutions}
@@ -144,6 +161,7 @@ export function HomePage() {
       <section
         className="border-y border-white/10 bg-gradient-to-b from-[#05070f] to-[#070a12] py-16 md:py-20"
         id="projeler"
+        style={sectionStyle('projects')}
       >
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -243,7 +261,7 @@ export function HomePage() {
       </section>
 
       {/* Capabilities */}
-      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20" style={sectionStyle('capabilities')}>
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.capabilities.title}</h2>
           <p className="mt-4 text-lg text-slate-400">{content.capabilities.subtitle}</p>
@@ -264,7 +282,7 @@ export function HomePage() {
       </section>
 
       {/* Process */}
-      <section className="border-y border-white/10 bg-[#05070f] py-16 md:py-20">
+      <section className="border-y border-white/10 bg-[#05070f] py-16 md:py-20" style={sectionStyle('process')}>
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.process.title}</h2>
@@ -283,7 +301,7 @@ export function HomePage() {
       </section>
 
       {/* Why */}
-      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+      <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20" style={sectionStyle('why')}>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.why.title}</h2>
@@ -306,7 +324,7 @@ export function HomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="border-t border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f] py-16 md:py-20">
+      <section className="border-t border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f] py-16 md:py-20" style={sectionStyle('faq')}>
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <h2 className="text-center font-display text-3xl font-bold text-white md:text-4xl">
             {content.faq.title}
@@ -331,7 +349,7 @@ export function HomePage() {
       </section>
 
       {/* Brand / entity SEO (crawlable LitxTech + Litx signals) */}
-      <section className="border-t border-white/10 py-16 md:py-20" id="litxtech">
+      <section className="border-t border-white/10 py-16 md:py-20" id="litxtech" style={sectionStyle('about')}>
         <div className="mx-auto max-w-3xl px-4 md:px-6">
           <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
             LitxTech nedir?
@@ -367,7 +385,7 @@ export function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="border-t border-white/10 bg-gradient-to-r from-blue-600/20 via-violet-600/15 to-fuchsia-600/15">
+      <section className="border-t border-white/10 bg-gradient-to-r from-blue-600/20 via-violet-600/15 to-fuchsia-600/15" style={sectionStyle('cta')}>
         <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.finalCta.title}</h2>
@@ -380,7 +398,8 @@ export function HomePage() {
                 {content.finalCta.quote}
               </Link>
               <a
-                href={getWhatsAppLink()}
+                href={wa}
+                onClick={() => trackEvent('whatsapp_click', '/')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-emerald-500/10 px-6 py-3.5 text-sm font-semibold text-emerald-50 hover:bg-emerald-500/15"
@@ -399,6 +418,7 @@ export function HomePage() {
           </div>
         </div>
       </section>
+      </div>
 
       <WhatsAppFloat />
     </MarketingChrome>

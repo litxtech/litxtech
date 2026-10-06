@@ -87,61 +87,6 @@ export const userAuth = {
     return this.sendEmailOtp(email, false)
   },
 
-  async signInWithProvider(provider: 'google' | 'apple') {
-    if (!supabase) {
-      const errorMsg = 'Auth not configured. Please check your Supabase environment variables (VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY).'
-      console.error('❌ OAuth Error:', errorMsg)
-      console.error('')
-      console.error('📋 Environment Variables Status:')
-      console.error('  VITE_SUPABASE_URL:', import.meta.env.VITE_SUPABASE_URL ? '✓ Set' : '✗ Missing')
-      console.error('  VITE_SUPABASE_ANON_KEY:', import.meta.env.VITE_SUPABASE_ANON_KEY ? '✓ Set' : '✗ Missing')
-      console.error('')
-      console.error('🔧 Quick Fix:')
-      console.error('  1. Create .env file in project root')
-      console.error('  2. Add: VITE_SUPABASE_URL=https://xxxxx.supabase.co')
-      console.error('  3. Add: VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...')
-      console.error('  4. Restart development server')
-      console.error('')
-      console.error('📖 See OAUTH_TROUBLESHOOTING.md for detailed guide')
-      throw new Error(errorMsg)
-    }
-    
-    console.log('✓ Supabase client initialized')
-    console.log('✓ Starting OAuth for provider:', provider)
-    
-    // Deep link veya web için redirect URL belirle
-    let redirectTo = `${window.location.origin}/auth/callback`
-    
-    // Eğer mobile app içindeyse deep link kullan
-    if (window.location.protocol === 'mytrabzon:' || window.location.protocol === 'litxtech:') {
-      redirectTo = `${window.location.protocol}//auth/callback`
-    } else {
-      // Web için origin kullan
-      redirectTo = `${window.location.origin}/auth/callback`
-    }
-    
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          }
-        }
-      })
-      if (error) {
-        console.error('OAuth sign in error:', error)
-        throw error
-      }
-      return data
-    } catch (err: any) {
-      console.error('OAuth provider error:', err)
-      throw err
-    }
-  },
-
   async signOut() {
     if (!supabase) return
     const { error } = await supabase.auth.signOut()

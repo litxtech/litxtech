@@ -27,12 +27,18 @@ export function AdminDashboardPage() {
   if (!data) return <p className="text-slate-400">Loading dashboard…</p>
 
   const cards = [
-    { label: 'New Leads', value: data.cards.new_leads },
-    { label: 'Open Leads', value: data.cards.open_leads },
-    { label: 'Open Tickets', value: data.cards.open_tickets },
-    { label: 'Published Apps', value: data.cards.published_apps },
-    { label: 'New Messages', value: data.cards.new_messages },
-    { label: 'Website Visitors', value: data.analytics_status },
+    { label: 'Bugünkü ziyaretçi', value: data.cards.visitors_today ?? 0 },
+    { label: 'Son 7 gün', value: data.cards.visitors_7d ?? 0 },
+    { label: 'Son 30 gün', value: data.cards.visitors_30d ?? 0 },
+    { label: 'Şu an çevrimiçi', value: data.cards.online_users ?? 0 },
+    { label: 'Yeni lead', value: data.cards.new_leads },
+    { label: 'Açık talep', value: data.cards.open_tickets },
+    { label: 'Bekleyen mesaj', value: data.cards.new_messages },
+    { label: 'WhatsApp tıklama', value: data.cards.whatsapp_clicks ?? 0 },
+    { label: 'Telefon tıklama', value: data.cards.phone_clicks ?? 0 },
+    { label: 'E-posta tıklama', value: data.cards.email_clicks ?? 0 },
+    { label: 'Hatalı giriş', value: data.cards.failed_logins ?? 0 },
+    { label: 'Sayfa görüntüleme', value: data.cards.page_views_30d ?? 0 },
   ]
 
   return (

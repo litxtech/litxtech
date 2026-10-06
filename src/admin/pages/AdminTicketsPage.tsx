@@ -48,6 +48,28 @@ export function AdminTicketsPage() {
                 <option value="CLOSED">CLOSED</option>
               </select>
             </div>
+            <div className="mt-3 space-y-2">
+              {(t.support_messages || []).map((m: any) => (
+                <p key={m.id} className="text-sm text-slate-300">
+                  <span className="text-slate-500">{m.sender_type}: </span>
+                  {m.body}
+                </p>
+              ))}
+              <form
+                className="flex gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const input = (e.currentTarget.elements.namedItem('reply') as HTMLInputElement)
+                  adminApi.updateTicket({ id: t.id, reply: input.value }).then(() => {
+                    input.value = ''
+                    load()
+                  })
+                }}
+              >
+                <input name="reply" required placeholder="Yanıt" className="flex-1 rounded border border-white/15 bg-slate-900 px-2 py-1 text-sm" />
+                <button type="submit" className="rounded bg-white px-3 py-1 text-sm font-semibold text-slate-950">Gönder</button>
+              </form>
+            </div>
           </article>
         ))}
         {!tickets.length && <p className="text-slate-500">No tickets yet.</p>}

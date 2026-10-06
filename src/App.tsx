@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { ScrollToTop } from './components/marketing/ScrollToTop'
 import { HomePage } from './pages/HomePage'
@@ -72,8 +72,29 @@ import { SupportPage } from './pages/SupportPage'
 import { ProjemiAnlatPage } from './pages/ProjemiAnlatPage'
 import { DestekPage } from './pages/DestekPage'
 import { SssPage } from './pages/SssPage'
+import { FeedPage } from './pages/FeedPage'
+import {
+  CaseStudiesPage,
+  CaseStudyPage,
+  CookiesPage,
+  FeedPostPage,
+  NotFoundPage,
+  ProcessPage,
+  ProductPage,
+  ProductsPage,
+  ServerErrorPage,
+  ServicePage,
+  ServicesPage,
+  TechnologyPage,
+} from './pages/platform/CatalogPages'
 import { useEffect } from 'react'
 import { AuthHashRedirect } from './components/auth/AuthHashRedirect'
+import { SeoHealthPage, SeoRuntime } from './components/marketing/SeoRuntime'
+
+function ProjectAlias() {
+  const { slug } = useParams()
+  return <Navigate to={`/projeler/${slug || ''}`} replace />
+}
 
 function LegacyAdminRedirect() {
   useEffect(() => {
@@ -93,6 +114,7 @@ function App() {
       <div className="min-h-screen bg-background">
         <ScrollToTop />
         <AuthHashRedirect />
+        <SeoRuntime />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/projemi-anlat" element={<ProjemiAnlatPage />} />
@@ -110,6 +132,25 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<FeedPostPage />} />
+          <Route path="/seo-health" element={<SeoHealthPage />} />
+          <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:slug" element={<FeedPostPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:slug" element={<ProductPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:slug" element={<ServicePage />} />
+          <Route path="/projects" element={<Navigate to="/projeler" replace />} />
+          <Route path="/projects/:slug" element={<ProjectAlias />} />
+          <Route path="/case-studies" element={<CaseStudiesPage />} />
+          <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
+          <Route path="/technology" element={<TechnologyPage />} />
+          <Route path="/process" element={<ProcessPage />} />
+          <Route path="/support" element={<Navigate to="/destek" replace />} />
+          <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
+          <Route path="/terms" element={<Navigate to="/terms-of-service" replace />} />
+          <Route path="/cookies" element={<CookiesPage />} />
+          <Route path="/500" element={<ServerErrorPage />} />
           <Route path="/donation" element={<DonationPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/auth" element={<AuthPage />} />
@@ -181,6 +222,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/success" element={<SuccessPage />} />
           <Route path="/cancel" element={<CancelPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </LanguageProvider>

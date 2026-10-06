@@ -35,10 +35,20 @@ export async function saveLeadOrFallback(payload) {
         lead_id: data.id,
         event_type: 'FORM_SUBMITTED',
         to_status: 'NEW',
-        meta: { source: row.source },
+        meta: { source: row.source, path: payload.path || null, utm: payload.utm || null },
       })
     } catch {
       // optional
+    }
+    try {
+      await supabase.from('admin_notifications').insert({
+        type: 'lead',
+        title: 'New lead',
+        body: `${row.name} · ${row.email}`,
+        href: '/leads',
+      })
+    } catch {
+      // optional until migration is applied
     }
     try {
       await supabase.from('analytics_events').insert({

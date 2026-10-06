@@ -10,8 +10,8 @@ export function ProjectsIndexPage() {
   return (
     <MarketingChrome>
       <SeoHead
-        title="LitxTech Projeleri | Mobil Uygulama ve Yazılım Referansları"
-        description="LitxTech proje referansları: otel yazılımları, sosyal platformlar, eşleşme uygulamaları, Vora, Tamuso ve şehir uygulamaları."
+        title="Projeler ve Case Studies | LitxTech"
+        description="LitxTech projeleri: otel yazılımı, sosyal platform, mobil uygulama ve şehir ürünleri. İlgili çözümlere buradan geçin."
         path="/projeler"
       />
       <section className="border-b border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f]">
@@ -44,7 +44,10 @@ export function ProjectsIndexPage() {
                 <img
                   src={p.image}
                   alt={p.imageAlt}
+                  width={1200}
+                  height={750}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#070a12] via-[#070a12]/40 to-transparent" />

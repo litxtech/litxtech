@@ -1,20 +1,15 @@
 /** Türkçe ana sayfa metinleri ve listeler (veri odaklı düzen). */
 export const homeContent = {
   hero: {
-    title: 'Fikrinizi çalışan bir dijital ürüne dönüştürelim.',
-    subtitle: 'Mobil uygulamalardan sosyal platformlara, işletme yazılımlarından yapay zeka destekli ürünlere.',
+    title: 'We build software that moves businesses forward.',
+    subtitle: 'Mobile products, operating systems, and custom software — shipped and supported by LitxTech.',
     description:
-      'LitxTech; mobil uygulamalar, sosyal platformlar, SaaS, otel/restoran sistemleri ve özel yazılımı fikir aşamasından yayına kadar planlar, tasarlar, geliştirir ve destekler.',
+      'LitxTech builds products such as Vora and Tamuso, and the business software behind hotels, restaurants, and custom operations. From architecture to store release.',
     primaryCta: 'Projeleri İncele',
     secondaryCta: 'Projemi Anlat',
     tertiaryCta: 'İletişime Geç',
   },
-  stats: [
-    { value: '10+', label: 'Tamamlanan proje' },
-    { value: '6', label: 'Çözüm alanı' },
-    { value: '5', label: 'Adımlı teslim süreci' },
-    { value: '7/7', label: 'Hızlı iletişim' },
-  ],
+  stats: [] as { value: string; label: string }[],
   capabilities: {
     title: 'Neler geliştirebiliriz?',
     subtitle:

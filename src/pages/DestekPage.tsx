@@ -23,6 +23,45 @@ const fallbackFaqs: Faq[] = [
   },
 ]
 
+function TicketForm() {
+  const [msg, setMsg] = useState('')
+  const [error, setError] = useState('')
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', website_url_hp: '' })
+  return (
+    <form
+      className="mt-10 space-y-3 rounded-2xl border border-white/10 p-5"
+      onSubmit={async (e) => {
+        e.preventDefault()
+        setError('')
+        setMsg('')
+        const res = await fetch('/api/public/tickets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        })
+        const data = await res.json()
+        if (!res.ok) {
+          setError(data.error || 'Gönderilemedi')
+          return
+        }
+        void trackEvent('ticket_created', '/destek')
+        setMsg(`Talebiniz alındı. Referans: ${data.reference_code}`)
+        setForm({ name: '', email: '', subject: '', message: '', website_url_hp: '' })
+      }}
+    >
+      <h2 className="text-xl font-semibold text-white">Destek talebi</h2>
+      <input className="hidden" tabIndex={-1} autoComplete="off" value={form.website_url_hp} onChange={(e) => setForm({ ...form, website_url_hp: e.target.value })} />
+      <input required placeholder="Ad" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2" />
+      <input required type="email" placeholder="E-posta" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2" />
+      <input required placeholder="Konu" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2" />
+      <textarea required rows={4} placeholder="Mesaj" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full rounded-lg border border-white/10 bg-transparent px-3 py-2" />
+      {error && <p className="text-sm text-red-300">{error}</p>}
+      {msg && <p className="text-sm text-emerald-300">{msg}</p>}
+      <button type="submit" className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950">Gönder</button>
+    </form>
+  )
+}
+
 export function DestekPage() {
   const company = useCompanySettings()
   const [faqs, setFaqs] = useState<Faq[]>(fallbackFaqs)
@@ -39,8 +78,8 @@ export function DestekPage() {
   return (
     <MarketingChrome>
       <SeoHead
-        title="Destek | LitxTech"
-        description="LitxTech destek merkezi: SSS, iletişim ve proje desteği."
+        title="Destek Merkezi | LitxTech"
+        description="LitxTech destek merkezi: sık sorulan sorular, proje talebi ve doğrudan iletişim. Ürün ve yazılım projeleriniz için yardım alın."
         path="/destek"
       />
       <section className="mx-auto max-w-4xl px-4 py-16 md:px-6">
@@ -73,6 +112,8 @@ export function DestekPage() {
             <p className="mt-1 text-sm text-slate-400">{company.email}</p>
           </a>
         </div>
+
+        <TicketForm />
 
         <div className="mt-12 space-y-4">
           <div className="flex items-center justify-between">

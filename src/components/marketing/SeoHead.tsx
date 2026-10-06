@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { absoluteUrl, organizationJsonLd, seoConfig, websiteJsonLd } from '@/data/seoConfig'
+import { useCompanySettings } from '@/contexts/CompanySettingsContext'
 
 type SeoHeadProps = {
   title: string
@@ -58,6 +59,7 @@ export function SeoHead({
   type = 'website',
   jsonLd,
 }: SeoHeadProps) {
+  const company = useCompanySettings()
   const jsonLdKey = jsonLd ? JSON.stringify(jsonLd) : ''
 
   useEffect(() => {
@@ -97,8 +99,8 @@ export function SeoHead({
       upsertMeta('name', 'google-site-verification', verification)
     }
 
-    upsertJsonLd('ld-organization', organizationJsonLd())
-    upsertJsonLd('ld-website', websiteJsonLd())
+    upsertJsonLd('ld-organization', organizationJsonLd(company))
+    upsertJsonLd('ld-website', websiteJsonLd(company))
 
     if (jsonLdKey) {
       const parsed = JSON.parse(jsonLdKey) as Record<string, unknown> | Record<string, unknown>[]
@@ -110,7 +112,7 @@ export function SeoHead({
       const pageLd = document.getElementById('ld-page')
       if (pageLd) pageLd.remove()
     }
-  }, [title, description, path, robots, image, type, jsonLdKey])
+  }, [title, description, path, robots, image, type, jsonLdKey, company])
 
   return null
 }

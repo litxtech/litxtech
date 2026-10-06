@@ -1,4 +1,5 @@
 import { cors, getDbClient, json, readBody } from '../../_lib/supabaseAdmin.js'
+import { clientGeo, deviceFromUa } from '../../_lib/notify.js'
 
 const ALLOWED = new Set([
   'page_view',
@@ -14,6 +15,22 @@ const ALLOWED = new Set([
   'contact_submit',
   'application_view',
   'audit_ping',
+  'demo_click',
+  'live_chat_open',
+  'ticket_created',
+  'feed_view',
+  'feed_click',
+  'login',
+  'logout',
+  'signup',
+  'session_start',
+  'product_view',
+  'case_study_view',
+  'cta_click',
+  'download_click',
+  'support_click',
+  'search',
+  'share',
 ])
 
 export default async function handler(req, res) {
@@ -34,6 +51,22 @@ export default async function handler(req, res) {
         path: body.path || null,
         meta: body.meta || {},
       })
+      if (event_name === 'page_view') {
+        const geo = clientGeo(req)
+        const parsed = deviceFromUa(req.headers['user-agent'])
+        await supabase.from('page_views').insert({
+          path: body.path || '/',
+          visitor_id: body.visitor_id || null,
+          session_id: body.session_id || null,
+          referrer: body.meta?.referrer || null,
+          device: parsed.device,
+          browser: parsed.browser,
+          os: parsed.os,
+          country: geo.country,
+          city: geo.city,
+          utm: body.meta?.utm || {},
+        })
+      }
     } catch {
       // analytics must never break UX
     }

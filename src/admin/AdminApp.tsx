@@ -12,6 +12,24 @@ import { AdminFaqsPage } from './pages/AdminFaqsPage'
 import { AdminMessagesPage } from './pages/AdminMessagesPage'
 import { AdminTicketsPage } from './pages/AdminTicketsPage'
 import { AdminAuditPage } from './pages/AdminAuditPage'
+import {
+  AdminAnalyticsPage,
+  AdminChatPage,
+  AdminCtasPage,
+  AdminEmailPage,
+  AdminErrorsPage,
+  AdminFeedPage,
+  AdminHealthPage,
+  AdminMediaPage,
+  AdminNavigationPage,
+  AdminNotificationsPage,
+  AdminPagesCms,
+  AdminPipelinePage,
+  AdminRolesPage,
+  AdminSeoPage,
+  AdminServicesPage,
+  AdminUsersPage,
+} from './pages/AdminOps'
 import { useEffect } from 'react'
 
 function Guard({ children }: { children: React.ReactNode }) {
@@ -53,7 +71,22 @@ export function AdminApp() {
                   <Route path="/dashboard" element={<AdminDashboardPage />} />
                   <Route path="/content/homepage" element={<AdminHomepagePage />} />
                   <Route path="/leads" element={<AdminLeadsPage />} />
-                  <Route path="/leads/pipeline" element={<AdminLeadsPage />} />
+                  <Route path="/leads/pipeline" element={<AdminPipelinePage />} />
+                  <Route path="/content/pages" element={<AdminPagesCms />} />
+                  <Route path="/content/services" element={<AdminServicesPage />} />
+                  <Route path="/content/feed" element={<AdminFeedPage />} />
+                  <Route path="/content/media" element={<AdminMediaPage />} />
+                  <Route path="/customers/users" element={<AdminUsersPage />} />
+                  <Route path="/support/chat" element={<AdminChatPage />} />
+                  <Route path="/analytics" element={<AdminAnalyticsPage />} />
+                  <Route path="/marketing/seo" element={<AdminSeoPage />} />
+                  <Route path="/marketing/ctas" element={<AdminCtasPage />} />
+                  <Route path="/settings/email" element={<AdminEmailPage />} />
+                  <Route path="/settings/navigation" element={<AdminNavigationPage />} />
+                  <Route path="/system/notifications" element={<AdminNotificationsPage />} />
+                  <Route path="/system/roles" element={<AdminRolesPage />} />
+                  <Route path="/system/health" element={<AdminHealthPage />} />
+                  <Route path="/system/errors" element={<AdminErrorsPage />} />
                   <Route path="/messages" element={<AdminMessagesPage />} />
                   <Route path="/support/tickets" element={<AdminTicketsPage />} />
                   <Route path="/faq" element={<AdminFaqsPage />} />

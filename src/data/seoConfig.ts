@@ -6,9 +6,9 @@ export const seoConfig = {
   origin: 'https://www.litxtech.com',
   locale: 'tr_TR',
   language: 'tr',
-  defaultTitle: 'LitxTech | Yazılım Şirketi – Mobil Uygulama, SaaS ve Özel Yazılım',
+  defaultTitle: 'LitxTech | Yazılım ve Dijital Ürün Geliştirme Şirketi',
   defaultDescription:
-    'LitxTech (Litx); mobil uygulama, SaaS, otel/restoran yazılımı ve özel yazılım geliştiren teknoloji şirketidir. Fikirden yayına kadar ürün tasarımı, geliştirme ve destek.',
+    'LitxTech, modern web ve mobil uygulamalar, özel yazılım çözümleri, dijital ürünler ve teknoloji platformları geliştiren bir yazılım şirketidir.',
   ogImagePath: '/og-litxtech.jpg',
   twitterHandle: '@litxtech',
   email: 'support@litxtech.com',
@@ -40,73 +40,67 @@ export function absoluteUrl(path = ''): string {
   return `${seoConfig.origin}${path.startsWith('/') ? path : `/${path}`}`
 }
 
-export function organizationJsonLd() {
-  return {
+type CompanySeoInput = {
+  company_name?: string
+  legal_name?: string | null
+  description?: string | null
+  email?: string
+  phone?: string
+  website?: string
+  logo_url?: string | null
+  address?: string | null
+  city?: string | null
+  country?: string | null
+  social?: Record<string, string> | null
+}
+
+export function organizationJsonLd(company?: CompanySeoInput) {
+  const email = company?.email || seoConfig.email
+  const phone = company?.phone || seoConfig.phone
+  const sameAs = Object.values(company?.social || {}).filter((url) => typeof url === 'string' && url.startsWith('https://'))
+  const node: Record<string, unknown> = {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'ProfessionalService'],
+    '@type': 'Organization',
     '@id': `${seoConfig.origin}/#organization`,
-    name: seoConfig.siteName,
-    legalName: seoConfig.legalName,
-    alternateName: [...seoConfig.alternateNames],
-    url: seoConfig.origin,
-    logo: absoluteUrl('/og-litxtech.jpg'),
-    image: absoluteUrl('/og-litxtech.jpg'),
-    description: seoConfig.defaultDescription,
-    email: seoConfig.email,
-    telephone: seoConfig.phone,
-    foundingDate: '2020',
-    areaServed: ['TR', 'US', 'Worldwide'],
-    knowsAbout: [
-      'Software development',
-      'Mobile application development',
-      'SaaS',
-      'Hotel management software',
-      'Restaurant management software',
-      'Custom software',
-    ],
-    address: {
-      '@type': 'PostalAddress',
-      ...seoConfig.address,
-    },
+    name: company?.company_name || seoConfig.siteName,
+    url: company?.website || seoConfig.origin,
+    logo: company?.logo_url || absoluteUrl('/favicon.svg'),
+    description: company?.description || seoConfig.defaultDescription,
+    email,
+    telephone: phone,
     contactPoint: [
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: seoConfig.email,
-        telephone: seoConfig.phone,
-        availableLanguage: ['Turkish', 'English'],
-      },
-      {
-        '@type': 'ContactPoint',
-        contactType: 'sales',
-        email: seoConfig.email,
-        telephone: seoConfig.phone,
+        email,
+        telephone: phone,
         availableLanguage: ['Turkish', 'English'],
       },
     ],
-    sameAs: [...seoConfig.sameAs],
   }
+  if (company?.legal_name || seoConfig.legalName) node.legalName = company?.legal_name || seoConfig.legalName
+  if (sameAs.length) node.sameAs = sameAs
+  if (company?.address || (company?.city && company?.country)) {
+    node.address = {
+      '@type': 'PostalAddress',
+      streetAddress: company?.address || undefined,
+      addressLocality: company?.city || undefined,
+      addressCountry: company?.country || undefined,
+    }
+  }
+  return node
 }
 
-export function websiteJsonLd() {
+export function websiteJsonLd(company?: CompanySeoInput) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': `${seoConfig.origin}/#website`,
-    url: seoConfig.origin,
-    name: seoConfig.siteName,
-    alternateName: [...seoConfig.alternateNames],
-    description: seoConfig.defaultDescription,
+    url: `${seoConfig.origin}/`,
+    name: company?.company_name || seoConfig.siteName,
+    description: company?.description || seoConfig.defaultDescription,
     inLanguage: seoConfig.language,
     publisher: { '@id': `${seoConfig.origin}/#organization` },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${seoConfig.origin}/cozumler?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
   }
 }
 

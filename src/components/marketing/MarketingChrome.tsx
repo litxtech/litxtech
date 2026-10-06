@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown, Menu, Phone, X, Zap } from 'lucide-react'
 import { solutionsData } from '@/data/solutionsData'
 import { siteConfig } from '@/data/siteConfig'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { useUserAuth } from '@/contexts/UserAuthContext'
 import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
 import { clsx } from 'clsx'
+import { LiveChatWidget } from '@/components/marketing/LiveChatWidget'
+import { CookieConsent } from '@/components/marketing/CookieConsent'
 
 const navLink = 'text-sm font-medium text-slate-200/90 transition hover:text-white'
 
@@ -15,7 +18,16 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
   const [solutionsOpen, setSolutionsOpen] = useState(false)
   const location = useLocation()
   const company = useCompanySettings()
-  const waLink = getWhatsAppUrl(company)
+  const { user, loading: authLoading, signOut } = useUserAuth()
+  const waLink = company.whatsapp?.enabled === false ? '' : getWhatsAppUrl(company)
+  const displayName =
+    (user?.user_metadata?.full_name as string | undefined) || user?.email?.split('@')[0] || 'Hesap'
+
+  useEffect(() => {
+    void trackEvent('page_view', location.pathname, {
+      referrer: document.referrer || undefined,
+    })
+  }, [location.pathname])
 
   const isActive = (path: string) =>
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
@@ -23,8 +35,8 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#070a12] text-slate-100">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070a12]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
-          <Link to="/" className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4 md:px-6">
+          <Link to="/" className="flex shrink-0 items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 shadow-lg shadow-blue-900/30">
               <Zap className="h-6 w-6 text-white" />
             </span>
@@ -33,11 +45,13 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex">
-            <Link className={clsx(navLink, isActive('/') && 'text-white')} to="/">
-              Ana Sayfa
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 lg:flex">
+            <Link className={clsx(navLink, isActive('/products') && 'text-white')} to="/products">
+              Products
             </Link>
-
+            <Link className={clsx(navLink, isActive('/services') && 'text-white')} to="/services">
+              Services
+            </Link>
             <div
               className="relative"
               onMouseEnter={() => setSolutionsOpen(true)}
@@ -51,7 +65,7 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                 )}
                 aria-expanded={solutionsOpen ? 'true' : 'false'}
               >
-                Çözümler
+                Solutions
                 <ChevronDown className="h-4 w-4 opacity-70" />
               </button>
               {solutionsOpen && (
@@ -77,52 +91,67 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               )}
             </div>
 
-            <Link
-              className={clsx(navLink, isActive('/projeler') && 'text-white')}
-              to="/projeler"
-            >
-              Projeler
+            <Link className={clsx(navLink, isActive('/technology') && 'text-white')} to="/technology">
+              Technology
             </Link>
-            <Link className={navLink} to="/about">
-              Hakkımızda
+            <Link className={clsx(navLink, isActive('/about') && 'text-white')} to="/about">
+              Company
             </Link>
-            <Link className={navLink} to="/blog">
+            <Link className={clsx(navLink, isActive('/feed') && 'text-white')} to="/feed">
+              Insights
+            </Link>
+            <Link className={clsx(navLink, isActive('/blog') && 'text-white')} to="/blog">
               Blog
             </Link>
-            <Link className={clsx(navLink, isActive('/contact') && 'text-white')} to="/contact">
-              İletişim
+            <Link className={clsx(navLink, isActive('/destek') && 'text-white')} to="/destek">
+              Destek
             </Link>
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Link
-              to="/giris"
-              className={clsx(
-                'inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition hover:text-white',
-                isActive('/auth') && 'text-white',
-              )}
-            >
-              Giriş
-            </Link>
-            <Link
-              to="/kayit"
-              className="inline-flex items-center rounded-lg border border-white/15 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-white/30 hover:bg-white/5"
-            >
-              Kayıt
-            </Link>
+            {authLoading ? (
+              <span className="h-9 w-24 animate-pulse rounded-lg bg-white/10" />
+            ) : user ? (
+              <>
+                <Link
+                  to="/profile"
+                  className="inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-white"
+                >
+                  {displayName}
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => void signOut()}
+                  className="inline-flex items-center rounded-lg border border-white/15 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-white/30 hover:bg-white/5"
+                >
+                  Çıkış
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/giris"
+                className={clsx(
+                  'inline-flex items-center rounded-lg border border-white/15 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-white/30 hover:bg-white/5',
+                  isActive('/auth') && 'border-white/40 text-white',
+                )}
+              >
+                Giriş
+              </Link>
+            )}
             <a
               href={`tel:${company.phone_tel || siteConfig.phoneTel}`}
               onClick={() => trackEvent('phone_click', location.pathname)}
-              className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-slate-200 hover:border-white/20 hover:text-white"
+              className="hidden items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-slate-200 hover:border-white/20 hover:text-white xl:inline-flex"
             >
               <Phone className="h-4 w-4" />
               {company.phone || siteConfig.phone}
             </a>
             <Link
-              to="/projemi-anlat"
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/25 transition hover:opacity-95"
+              to="/contact"
+              onClick={() => trackEvent('cta_click', location.pathname)}
+              className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
             >
-              Projenizi Anlatın
+              Start a Project
             </Link>
           </div>
 
@@ -143,10 +172,28 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
             className="border-t border-white/10 bg-[#070a12] px-4 py-4 lg:hidden"
           >
             <div className="mx-auto flex max-w-7xl flex-col gap-3">
-              <Link to="/" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Ana Sayfa
+              <Link to="/products" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Products
               </Link>
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Çözümler</p>
+              <Link to="/services" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Services
+              </Link>
+              <Link to="/technology" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Technology
+              </Link>
+              <Link to="/about" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Company
+              </Link>
+              <Link to="/feed" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Insights
+              </Link>
+              <Link to="/blog" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Blog
+              </Link>
+              <Link to="/destek" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                Destek
+              </Link>
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Solutions</p>
               {solutionsData.map((s) => (
                 <Link
                   key={s.slug}
@@ -158,26 +205,32 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
               <Link to="/cozumler" className="py-2 text-blue-300" onClick={() => setOpen(false)}>
-                Tüm çözümler
+                All solutions
               </Link>
-              <Link to="/projeler" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Projeler
+              <Link to="/contact" className="py-2 font-semibold text-white" onClick={() => setOpen(false)}>
+                Start a Project
               </Link>
-              <Link to="/about" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Hakkımızda
-              </Link>
-              <Link to="/blog" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Blog
-              </Link>
-              <Link to="/contact" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                İletişim
-              </Link>
-              <Link to="/giris" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Giriş
-              </Link>
-              <Link to="/kayit" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Kayıt ol
-              </Link>
+              {user ? (
+                <>
+                  <Link to="/profile" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                    {displayName}
+                  </Link>
+                  <button
+                    type="button"
+                    className="py-2 text-left text-slate-200"
+                    onClick={() => {
+                      setOpen(false)
+                      void signOut()
+                    }}
+                  >
+                    Çıkış
+                  </button>
+                </>
+              ) : (
+                <Link to="/giris" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
+                  Giriş
+                </Link>
+              )}
               <Link
                 to="/sifremi-unuttum"
                 className="py-2 text-slate-400"
@@ -211,6 +264,9 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
       </header>
 
       <main>{children}</main>
+
+      <LiveChatWidget />
+      <CookieConsent />
 
       <footer className="border-t border-white/10 bg-[#05070f]">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
@@ -270,14 +326,15 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/giris">
-                    Giriş
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-white" to="/kayit">
-                    Kayıt ol
-                  </Link>
+                  {user ? (
+                    <Link className="hover:text-white" to="/profile">
+                      Hesabım
+                    </Link>
+                  ) : (
+                    <Link className="hover:text-white" to="/giris">
+                      Giriş
+                    </Link>
+                  )}
                 </li>
                 <li>
                   <Link className="hover:text-white" to="/sifremi-unuttum">
@@ -312,26 +369,35 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                     {company.phone || siteConfig.phone}
                   </a>
                 </li>
-                <li>
-                  <a
-                    className="hover:text-white"
-                    href={waLink}
-                    onClick={() => trackEvent('whatsapp_click', location.pathname)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    WhatsApp
-                  </a>
-                </li>
+                {waLink && (
+                  <li>
+                    <a
+                      className="hover:text-white"
+                      href={waLink}
+                      onClick={() => trackEvent('whatsapp_click', location.pathname)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {company.whatsapp?.buttonText || 'WhatsApp'}
+                    </a>
+                  </li>
+                )}
+                {Object.entries(company.social || {})
+                  .filter(([, url]) => typeof url === 'string' && url.startsWith('http'))
+                  .map(([name, url]) => (
+                    <li key={name}>
+                      <a className="capitalize hover:text-white" href={url} target="_blank" rel="noopener noreferrer">
+                        {name}
+                      </a>
+                    </li>
+                  ))}
               </ul>
             </div>
           </div>
           <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-            <p>
-              © {new Date().getFullYear()} LitxTech LLC (Litx) · Wyoming, United States · D-U-N-S®: 144849529 ·{' '}
-              <a className="hover:text-slate-300" href="https://www.litxtech.com">
-                www.litxtech.com
-              </a>
+              <p>
+              {company.copyright ||
+                `© ${new Date().getFullYear()} ${company.company_name || 'LitxTech'}. Tüm hakları saklıdır.`}
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               <Link className="hover:text-slate-300" to="/privacy-policy">

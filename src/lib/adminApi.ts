@@ -73,4 +73,6 @@ export const adminApi = {
   createTicket: (body: Record<string, unknown>) =>
     request<{ ticket: any }>('/api/admin/tickets', { method: 'POST', body: JSON.stringify(body) }),
   audit: () => request<{ logs: any[] }>('/api/admin/audit'),
+  platform: (path: string, init?: RequestInit) =>
+    request<any>(`/api/admin/platform/${path}`, init),
 }

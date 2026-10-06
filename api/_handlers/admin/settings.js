@@ -50,6 +50,12 @@ export default async function handler(req, res) {
         'whatsapp_show_desktop',
         'whatsapp_show_mobile',
         'calendly_url',
+        'whatsapp_country_code',
+        'whatsapp_display',
+        'working_hours',
+        'default_seo',
+        'analytics_ids',
+        'cookie_text',
       ]
       const patch = { updated_at: new Date().toISOString(), updated_by: admin.id }
       for (const key of allowed) {

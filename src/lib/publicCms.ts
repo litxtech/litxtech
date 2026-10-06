@@ -15,11 +15,15 @@ export type PublicCompanySettings = {
   whatsapp: {
     enabled: boolean
     number: string
+    countryCode?: string
+    display?: string
     message: string
     buttonText: string
     showDesktop: boolean
     showMobile: boolean
   }
+  working_hours?: unknown
+  updated_at?: string
 }
 
 export function fallbackCompanySettings(): PublicCompanySettings {
@@ -66,16 +70,48 @@ export async function fetchPublishedApplications() {
 }
 
 export function getWhatsAppUrl(settings: PublicCompanySettings, message?: string) {
-  const text = encodeURIComponent(message ?? settings.whatsapp.message)
-  return `https://wa.me/${settings.whatsapp.number}?text=${text}`
+  const raw = String(settings.whatsapp?.number || '').replace(/\D/g, '')
+  const cc = String(settings.whatsapp?.countryCode || '').replace(/\D/g, '')
+  const number = !raw ? '' : cc && !raw.startsWith(cc) ? `${cc}${raw}` : raw
+  const text = encodeURIComponent(message ?? settings.whatsapp?.message ?? '')
+  return `https://wa.me/${number}?text=${text}`
+}
+
+function visitorId() {
+  const key = 'ltx_visitor'
+  let id = localStorage.getItem(key)
+  if (!id) {
+    id = crypto.randomUUID()
+    localStorage.setItem(key, id)
+  }
+  return id
+}
+
+function sessionId() {
+  const key = 'ltx_session'
+  let id = sessionStorage.getItem(key)
+  if (!id) {
+    id = crypto.randomUUID()
+    sessionStorage.setItem(key, id)
+  }
+  return id
 }
 
 export async function trackEvent(event_name: string, path?: string, meta?: Record<string, unknown>) {
   try {
+    if (localStorage.getItem('ltx_cookie_consent') !== 'accepted') return
+    const ua = navigator.userAgent
+    const device = /Mobi|Android/i.test(ua) ? 'mobile' : 'desktop'
     await fetch('/api/public/track', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event_name, path, meta }),
+      body: JSON.stringify({
+        event_name,
+        path,
+        visitor_id: visitorId(),
+        session_id: sessionId(),
+        meta: { device, browser: ua.slice(0, 180), ...meta },
+      }),
     })
   } catch {
     // ignore

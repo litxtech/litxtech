@@ -8,8 +8,8 @@ export function AboutPage() {
   return (
     <MarketingChrome>
       <SeoHead
-        title="LitxTech Hakkında | Yazılım ve Teknoloji Şirketi (Litx)"
-        description="LitxTech (Litx) kimdir? Mobil uygulama, SaaS, otel/restoran yazılımı ve özel yazılım geliştiren LitxTech LLC hakkında bilgi edinin."
+        title="Hakkımızda | LitxTech"
+        description="LitxTech; modern web ve mobil uygulamalar, özel yazılım ve dijital ürünler geliştiren bir yazılım şirketidir. Hizmetler, ürünler ve iletişim burada."
         path="/about"
         jsonLd={breadcrumbJsonLd([
           { name: 'Ana Sayfa', path: '/' },

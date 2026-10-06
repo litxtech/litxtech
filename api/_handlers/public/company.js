@@ -26,6 +26,7 @@ export default async function handler(req, res) {
         phone_tel: data.phone_tel,
         email: data.email,
         support_email: data.support_email,
+        sales_email: data.sales_email,
         website: data.website,
         logo_url: data.logo_url,
         copyright: data.copyright,
@@ -34,6 +35,8 @@ export default async function handler(req, res) {
         whatsapp: {
           enabled: data.whatsapp_enabled,
           number: data.whatsapp_number,
+          countryCode: data.whatsapp_country_code || '',
+          display: data.whatsapp_display || data.phone || '',
           message: data.whatsapp_message,
           buttonText: data.whatsapp_button_text,
           showDesktop: data.whatsapp_show_desktop,
@@ -42,6 +45,8 @@ export default async function handler(req, res) {
         address: data.address,
         city: data.city,
         country: data.country,
+        working_hours: data.working_hours || data.business_hours || null,
+        updated_at: data.updated_at,
       },
     })
   } catch {

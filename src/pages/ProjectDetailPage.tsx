@@ -4,10 +4,12 @@ import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { getProjectBySlug } from '@/data/projectsData'
-import { getWhatsAppLink } from '@/data/siteConfig'
+import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
 
 export function ProjectDetailPage() {
   const { slug } = useParams()
+  const company = useCompanySettings()
   const project = getProjectBySlug(slug)
 
   if (!project) {
@@ -55,7 +57,8 @@ export function ProjectDetailPage() {
                   </Link>
                 )}
                 <a
-                  href={getWhatsAppLink(`Merhaba, "${project.title}" projesi hakkında bilgi almak istiyorum.`)}
+                  href={getWhatsAppUrl(company, `Merhaba, "${project.title}" projesi hakkında bilgi almak istiyorum.`)}
+                  onClick={() => trackEvent('whatsapp_click', `/projeler/${project.slug}`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:border-white/25"

@@ -14,8 +14,3 @@ export const siteConfig = {
   calendlyUrl: 'https://calendly.com/litxtech/consultation',
   demoUrl: 'https://www.litxtech.com/demo',
 } as const
-
-export function getWhatsAppLink(message?: string): string {
-  const text = encodeURIComponent(message ?? siteConfig.whatsapp.defaultMessage)
-  return `https://wa.me/${siteConfig.whatsapp.number}?text=${text}`
-}

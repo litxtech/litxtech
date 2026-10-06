@@ -2,6 +2,58 @@ import { useEffect, useState } from 'react'
 import { adminApi } from '@/lib/adminApi'
 import { homeContent } from '@/data/homeContent'
 
+const SECTION_IDS = ['hero', 'solutions', 'projects', 'capabilities', 'process', 'why', 'faq', 'about', 'cta']
+
+function SectionOrder({
+  content,
+  setContent,
+}: {
+  content: any
+  setContent: (v: any) => void
+}) {
+  const order: string[] = content.sectionOrder?.length ? content.sectionOrder : SECTION_IDS
+  const hidden: string[] = content.hiddenSections || []
+  const move = (id: string, dir: -1 | 1) => {
+    const next = [...order]
+    const i = next.indexOf(id)
+    const j = i + dir
+    if (i < 0 || j < 0 || j >= next.length) return
+    ;[next[i], next[j]] = [next[j], next[i]]
+    setContent({ ...content, sectionOrder: next })
+  }
+  return (
+    <div className="rounded-2xl border border-white/10 p-5">
+      <h3 className="font-semibold text-white">Bölüm sırası</h3>
+      <p className="mb-3 text-sm text-slate-400">Yukarı/aşağı ile sıralayın, görünürlüğü kapatın.</p>
+      <ul className="space-y-2">
+        {order.map((id) => (
+          <li key={id} className="flex items-center justify-between gap-2 rounded-lg bg-white/5 px-3 py-2">
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={!hidden.includes(id)}
+                onChange={(e) => {
+                  const nextHidden = e.target.checked ? hidden.filter((h) => h !== id) : [...hidden, id]
+                  setContent({ ...content, hiddenSections: nextHidden, sectionOrder: order })
+                }}
+              />
+              {id}
+            </label>
+            <span className="flex gap-2">
+              <button type="button" className="text-xs text-slate-300" onClick={() => move(id, -1)}>
+                Yukarı
+              </button>
+              <button type="button" className="text-xs text-slate-300" onClick={() => move(id, 1)}>
+                Aşağı
+              </button>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 export function AdminHomepagePage() {
   const [status, setStatus] = useState('draft')
   const [content, setContent] = useState<any>(homeContent)
@@ -102,6 +154,8 @@ export function AdminHomepagePage() {
           />
         </label>
       </div>
+
+      <SectionOrder content={content} setContent={setContent} />
 
       {msg && <p className="text-emerald-400">{msg}</p>}
       {error && <p className="text-red-400">{error}</p>}

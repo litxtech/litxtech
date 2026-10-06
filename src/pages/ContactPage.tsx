@@ -53,7 +53,7 @@ export function ContactPage() {
     <MarketingChrome>
       <SeoHead
         title="İletişim | LitxTech"
-        description="LitxTech ile iletişime geçin. Proje talebi, destek ve danışmanlık."
+        description="Proje, destek veya iş birliği için LitxTech ile iletişime geçin. Formu doldurun ya da telefon, e-posta ve WhatsApp üzerinden yazın."
         path="/contact"
       />
       <div className="relative min-h-screen text-slate-100">
@@ -62,7 +62,7 @@ export function ContactPage() {
           <div className="mb-16 text-center">
             <h1 className="mb-6 text-5xl font-bold md:text-6xl">
               <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                Contact Us
+                İletişim
               </span>
             </h1>
             <p className="mx-auto max-w-3xl text-xl text-gray-100">

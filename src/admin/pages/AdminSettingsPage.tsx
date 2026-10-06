@@ -46,11 +46,17 @@ export function AdminSettingsPage() {
           ['phone_tel', 'Phone tel: link'],
           ['email', 'Email'],
           ['support_email', 'Support email'],
-          ['whatsapp_number', 'WhatsApp number (digits)'],
+          ['website', 'Website'],
+          ['city', 'City'],
+          ['country', 'Country'],
+          ['address', 'Address'],
+          ['working_hours', 'Working hours'],
+          ['whatsapp_country_code', 'WhatsApp country code'],
+          ['whatsapp_number', 'WhatsApp number (digits, with country code)'],
+          ['whatsapp_display', 'WhatsApp display number'],
           ['whatsapp_message', 'WhatsApp default message'],
           ['whatsapp_button_text', 'WhatsApp button text'],
           ['calendly_url', 'Calendly URL'],
-          ['address', 'Address'],
           ['copyright', 'Copyright'],
         ].map(([key, label]) => (
           <div key={key}>
@@ -79,6 +85,21 @@ export function AdminSettingsPage() {
           placeholder="Company description"
           className="w-full rounded-lg border border-white/15 bg-slate-900 px-3 py-2 text-white"
         />
+        <div>
+          <label className="mb-1 block text-sm text-slate-300">Social links (JSON)</label>
+          <textarea
+            value={typeof form.social === 'string' ? form.social : JSON.stringify(form.social || {}, null, 2)}
+            onChange={(e) => {
+              try {
+                set('social', JSON.parse(e.target.value))
+              } catch {
+                set('social', e.target.value)
+              }
+            }}
+            rows={6}
+            className="w-full rounded-lg border border-white/15 bg-slate-900 px-3 py-2 font-mono text-sm text-white"
+          />
+        </div>
 
         {msg && <p className="text-sm text-emerald-400">{msg}</p>}
         {error && <p className="text-sm text-red-400">{error}</p>}

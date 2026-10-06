@@ -6,11 +6,14 @@ import { DashboardMockup } from '@/components/marketing/DashboardMockup'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { getSolutionBySlug } from '@/data/solutionsData'
-import { getWhatsAppLink, siteConfig } from '@/data/siteConfig'
+import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
 import { solutionAccentClasses } from '@/lib/solutionStyles'
 
 export function SolutionDetailPage() {
   const { slug } = useParams()
+  const company = useCompanySettings()
+  const wa = getWhatsAppUrl(company)
   const solution = getSolutionBySlug(slug)
 
   if (!solution) {
@@ -43,7 +46,8 @@ export function SolutionDetailPage() {
                 Teklif Al
               </Link>
               <a
-                href={getWhatsAppLink()}
+                href={wa}
+                onClick={() => trackEvent('whatsapp_click', `/cozumler/${solution.slug}`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:border-white/25"
@@ -52,7 +56,7 @@ export function SolutionDetailPage() {
                 WhatsApp
               </a>
               <a
-                href={siteConfig.demoUrl}
+                href={company.calendly_url || company.website || '/contact'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:border-white/25"
@@ -135,7 +139,8 @@ export function SolutionDetailPage() {
               Teklif Al
             </Link>
             <a
-              href={getWhatsAppLink()}
+              href={wa}
+                onClick={() => trackEvent('whatsapp_click', `/cozumler/${solution.slug}`)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-5 py-3 text-sm font-semibold text-white hover:bg-white/5"

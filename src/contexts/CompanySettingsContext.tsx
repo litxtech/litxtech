@@ -12,11 +12,18 @@ export function CompanySettingsProvider({ children }: { children: React.ReactNod
 
   useEffect(() => {
     let alive = true
-    fetchCompanySettings().then((s) => {
-      if (alive) setSettings(s)
-    })
+    const load = () => {
+      fetchCompanySettings().then((s) => {
+        if (alive) setSettings(s)
+      })
+    }
+    load()
+    const timer = window.setInterval(load, 20000)
+    window.addEventListener('focus', load)
     return () => {
       alive = false
+      window.clearInterval(timer)
+      window.removeEventListener('focus', load)
     }
   }, [])
 
