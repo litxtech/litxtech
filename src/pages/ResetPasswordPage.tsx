@@ -1,128 +1,71 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { userAuth, supabase } from '../lib/supabase'
+import { userAuth } from '../lib/supabase'
 import { Lock, Mail, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react'
+import { OtpCodeInput } from '@/components/auth/OtpCodeInput'
 import { openMyTrabzonDeepLink } from '../lib/utils'
+
+type Step = 'request' | 'verify' | 'update'
 
 export function ResetPasswordPage() {
   const navigate = useNavigate()
-  const [step, setStep] = useState<'request' | 'update'>('request')
+  const [step, setStep] = useState<Step>('request')
   const [email, setEmail] = useState('')
+  const [otp, setOtp] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'success' | 'error' | ''>('')
 
-  // URL hash'inde token varsa (Supabase şifre sıfırlama linki) update sayfasına geç
-  useEffect(() => {
-    if (!supabase) {
-      setMessage('Kimlik doğrulama servisi şu an kullanılamıyor. Lütfen daha sonra tekrar deneyin veya support@litxtech.com yazın.')
-      setMessageType('error')
-      return
-    }
-
-    let mounted = true
-
-    const checkForRecoveryToken = async () => {
-      // URL hash'ini kontrol et (Supabase token'ları hash'te gönderir)
-      const hash = window.location.hash.substring(1)
-      if (!hash) return
-
-      const hashParams = new URLSearchParams(hash)
-      const type = hashParams.get('type')
-      const accessToken = hashParams.get('access_token')
-      
-      // Eğer hash'te recovery token varsa
-        if (type === 'recovery' && accessToken) {
-        try {
-          // Supabase otomatik olarak hash'teki token'ları işler
-          // Biraz bekle ki Supabase session'ı ayarlasın
-          await new Promise((r) => setTimeout(r, 100))
-          
-          // Session'ı kontrol et
-          if (!supabase) return
-          const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-          
-          if (mounted) {
-            if (session && !sessionError) {
-              if (openMyTrabzonDeepLink('auth/reset-password', `#${hash}`)) {
-                return
-              }
-              setStep('update')
-              // Hash'i temizle (güvenlik için)
-              window.history.replaceState(null, '', window.location.pathname)
-            } else {
-              console.error('Session error:', sessionError)
-              setMessage('Geçersiz veya süresi dolmuş şifre sıfırlama bağlantısı')
-              setMessageType('error')
-            }
-          }
-        } catch (error) {
-          console.error('Recovery token check error:', error)
-          if (mounted) {
-            setMessage('Şifre sıfırlama bağlantısı işlenirken bir hata oluştu')
-            setMessageType('error')
-          }
-        }
-      }
-    }
-    
-    // Auth state değişikliklerini dinle
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!mounted) return
-      
-      console.log('Auth state change:', event, session ? 'has session' : 'no session')
-      
-      if (event === 'PASSWORD_RECOVERY' && session) {
-        if (openMyTrabzonDeepLink('auth/reset-password', window.location.hash || '')) {
-          return
-        }
-        setStep('update')
-        window.history.replaceState(null, '', window.location.pathname)
-      } else if (event === 'SIGNED_IN' && session) {
-        // Eğer recovery token ile giriş yapıldıysa
-        const hash = window.location.hash
-        if (hash.includes('type=recovery')) {
-          if (openMyTrabzonDeepLink('auth/reset-password', hash)) {
-            return
-          }
-          setStep('update')
-          window.history.replaceState(null, '', window.location.pathname)
-        }
-      }
-    })
-    
-    // İlk kontrolü yap
-    checkForRecoveryToken()
-    
-    return () => {
-      mounted = false
-      subscription.unsubscribe()
-    }
-  }, [])
+  const flash = (text: string, type: 'success' | 'error') => {
+    setMessage(text)
+    setMessageType(type)
+  }
 
   const handleRequestReset = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       setLoading(true)
       setMessage('')
-      setMessageType('')
-      
-      if (!email) {
-        setMessage('Lütfen e-posta adresinizi girin')
-        setMessageType('error')
-        setLoading(false)
+      if (!email.trim()) {
+        flash('Lütfen e-posta adresinizi girin', 'error')
         return
       }
+      await userAuth.resetPassword(email.trim())
+      setOtp('')
+      setStep('verify')
+      flash('6 haneli doğrulama kodu e-posta adresinize gönderildi. Spam klasörünü de kontrol edin.', 'success')
+    } catch (err: any) {
+      flash(err.message || 'Kod gönderilemedi. Lütfen tekrar deneyin.', 'error')
+    } finally {
+      setLoading(false)
+    }
+  }
 
-      await userAuth.resetPassword(email)
-      setMessage('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi! Lütfen e-postanızı kontrol edin (spam klasörü dahil). Bağlantı 1 saat süreyle geçerlidir.')
-      setMessageType('success')
-    } catch (e: any) {
-      console.error('Password reset error:', e)
-      setMessage(e.message || 'Şifre sıfırlama isteği gönderilemedi. Lütfen tekrar deneyin.')
-      setMessageType('error')
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      setLoading(true)
+      setMessage('')
+      await userAuth.verifyRecoveryOtp(email.trim(), otp)
+      setStep('update')
+      flash('Kod doğrulandı. Yeni şifrenizi belirleyin.', 'success')
+    } catch (err: any) {
+      flash(err.message || 'Kod geçersiz veya süresi dolmuş.', 'error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleResend = async () => {
+    try {
+      setLoading(true)
+      setMessage('')
+      await userAuth.resetPassword(email.trim())
+      flash('Yeni kod gönderildi.', 'success')
+    } catch (err: any) {
+      flash(err.message || 'Kod yeniden gönderilemedi.', 'error')
     } finally {
       setLoading(false)
     }
@@ -133,193 +76,176 @@ export function ResetPasswordPage() {
     try {
       setLoading(true)
       setMessage('')
-      setMessageType('')
-
       if (!password || !confirmPassword) {
-        setMessage('Lütfen tüm alanları doldurun')
-        setMessageType('error')
+        flash('Lütfen tüm alanları doldurun', 'error')
         return
       }
-
       if (password.length < 6) {
-        setMessage('Şifre en az 6 karakter olmalıdır')
-        setMessageType('error')
+        flash('Şifre en az 6 karakter olmalıdır', 'error')
         return
       }
-
       if (password !== confirmPassword) {
-        setMessage('Şifreler eşleşmiyor')
-        setMessageType('error')
+        flash('Şifreler eşleşmiyor', 'error')
         return
       }
-
       await userAuth.updatePassword(password)
-      setMessage('Şifreniz başarıyla güncellendi! Giriş sayfasına yönlendiriliyorsunuz...')
-      setMessageType('success')
-      
+      flash('Şifreniz güncellendi. Giriş sayfasına yönlendiriliyorsunuz…', 'success')
       setTimeout(() => {
-        // Mobil uygulamaya yönlendir (eğer mobil cihazdaysa)
         if (openMyTrabzonDeepLink('auth/callback', '')) return
         navigate('/auth')
-      }, 2000)
-    } catch (e: any) {
-      console.error('Password update error:', e)
-      setMessage(e.message || 'Şifre güncellenemedi. Lütfen tekrar deneyin.')
-      setMessageType('error')
+      }, 1500)
+    } catch (err: any) {
+      flash(err.message || 'Şifre güncellenemedi.', 'error')
     } finally {
       setLoading(false)
     }
   }
 
-  if (step === 'update') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4">
-              <Lock className="w-8 h-8 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Yeni Şifre Belirle</h1>
-            <p className="text-gray-300">Yeni şifrenizi girin</p>
+  const banner =
+    message && (
+      <div
+        className={`flex items-start gap-2 rounded-lg border p-4 ${
+          messageType === 'success'
+            ? 'border-green-500/30 bg-green-500/20 text-green-300'
+            : 'border-red-500/30 bg-red-500/20 text-red-300'
+        }`}
+      >
+        {messageType === 'success' ? <CheckCircle className="mt-0.5 h-5 w-5" /> : <AlertCircle className="mt-0.5 h-5 w-5" />}
+        <p className="text-sm">{message}</p>
+      </div>
+    )
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+      <div className="w-full max-w-md rounded-2xl border border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-lg">
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-purple-600">
+            {step === 'update' ? <Lock className="h-8 w-8 text-white" /> : <Mail className="h-8 w-8 text-white" />}
           </div>
+          <h1 className="mb-2 text-3xl font-bold text-white">
+            {step === 'request' && 'Şifremi Unuttum'}
+            {step === 'verify' && 'Doğrulama Kodu'}
+            {step === 'update' && 'Yeni Şifre'}
+          </h1>
+          <p className="text-gray-300">
+            {step === 'request' && 'E-postanıza 6 haneli kod göndereceğiz'}
+            {step === 'verify' && `${email} adresine gelen 6 haneli kodu girin`}
+            {step === 'update' && 'Hesabınız için yeni bir şifre belirleyin'}
+          </p>
+        </div>
 
-          <form onSubmit={handleUpdatePassword} className="space-y-6">
+        {step === 'request' && (
+          <form onSubmit={handleRequestReset} className="space-y-6">
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-                Yeni Şifre
+              <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-300">
+                E-posta
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="En az 6 karakter"
-                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="ornek@email.com"
+                  className="w-full rounded-lg border border-white/20 bg-white/10 py-3 pl-10 pr-4 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-purple-500"
                   required
                 />
               </div>
             </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                Şifreyi Tekrar Girin
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  id="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Şifreyi tekrar girin"
-                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  required
-                />
-              </div>
-            </div>
-
-            {message && (
-              <div className={`flex items-center gap-2 p-4 rounded-lg ${
-                messageType === 'success' 
-                  ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
-                  : 'bg-red-500/20 text-red-300 border border-red-500/30'
-              }`}>
-                {messageType === 'success' ? (
-                  <CheckCircle className="w-5 h-5" />
-                ) : (
-                  <AlertCircle className="w-5 h-5" />
-                )}
-                <p className="text-sm">{message}</p>
-              </div>
-            )}
-
+            {banner}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+              className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 py-3 font-semibold text-white disabled:opacity-60"
             >
-              {loading ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
+              {loading ? 'Gönderiliyor…' : '6 Haneli Kod Gönder'}
             </button>
-
-            <Link
-              to="/auth"
-              className="flex items-center justify-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Giriş sayfasına dön
-            </Link>
           </form>
-        </div>
-      </div>
-    )
-  }
+        )}
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4">
-            <Mail className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Şifremi Unuttum</h1>
-          <p className="text-gray-300">E-posta adresinize şifre sıfırlama bağlantısı göndereceğiz</p>
-          <p className="text-sm text-gray-400 mt-2">E-postanızı kontrol etmeyi unutmayın (spam klasörü dahil)</p>
-        </div>
+        {step === 'verify' && (
+          <form onSubmit={handleVerifyOtp} className="space-y-6">
+            <OtpCodeInput value={otp} onChange={setOtp} disabled={loading} />
+            {banner}
+            <button
+              type="submit"
+              disabled={loading || otp.replace(/\D/g, '').length !== 6}
+              className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 py-3 font-semibold text-white disabled:opacity-60"
+            >
+              {loading ? 'Doğrulanıyor…' : 'Kodu Doğrula'}
+            </button>
+            <button
+              type="button"
+              onClick={handleResend}
+              disabled={loading}
+              className="w-full text-sm text-purple-300 hover:text-purple-200 disabled:opacity-60"
+            >
+              Kodu tekrar gönder
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setStep('request')
+                setOtp('')
+                setMessage('')
+              }}
+              className="w-full text-sm text-gray-400 hover:text-white"
+            >
+              E-postayı değiştir
+            </button>
+          </form>
+        )}
 
-        <form onSubmit={handleRequestReset} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-              E-posta Adresi
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+        {step === 'update' && (
+          <form onSubmit={handleUpdatePassword} className="space-y-6">
+            <div>
+              <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-300">
+                Yeni şifre
+              </label>
               <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="ornek@email.com"
-                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="En az 6 karakter"
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-purple-500"
                 required
               />
             </div>
-          </div>
-
-          {message && (
-            <div className={`flex items-center gap-2 p-4 rounded-lg ${
-              messageType === 'success' 
-                ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
-                : 'bg-red-500/20 text-red-300 border border-red-500/30'
-            }`}>
-              {messageType === 'success' ? (
-                <CheckCircle className="w-5 h-5" />
-              ) : (
-                <AlertCircle className="w-5 h-5" />
-              )}
-              <p className="text-sm">{message}</p>
+            <div>
+              <label htmlFor="confirmPassword" className="mb-2 block text-sm font-medium text-gray-300">
+                Şifre tekrar
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Şifreyi tekrar girin"
+                className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
             </div>
-          )}
+            {banner}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 py-3 font-semibold text-white disabled:opacity-60"
+            >
+              {loading ? 'Güncelleniyor…' : 'Şifreyi Güncelle'}
+            </button>
+          </form>
+        )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
-          >
-            {loading ? 'Gönderiliyor...' : 'Şifre Sıfırlama Bağlantısı Gönder'}
-          </button>
-
-          <Link
-            to="/auth"
-            className="flex items-center justify-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Giriş sayfasına dön
-          </Link>
-        </form>
+        <Link
+          to="/auth"
+          className="mt-6 flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-white"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Giriş sayfasına dön
+        </Link>
       </div>
     </div>
   )
 }
-

@@ -25,16 +25,23 @@ function requireClient(): SupabaseClient {
   return supabase
 }
 
+export type EmailOtpType = 'signup' | 'recovery' | 'email' | 'invite' | 'magiclink' | 'email_change'
+
+function normalizeOtp(code: string) {
+  return String(code || '').replace(/\D/g, '').slice(0, 6)
+}
+
 // General user authentication helpers (public site)
 export const userAuth = {
   async signUpWithEmail(email: string, password: string) {
     if (!supabase) throw new Error('Auth not configured')
-    const { data, error } = await supabase.auth.signUp({ 
-      email, 
+    const { data, error } = await supabase.auth.signUp({
+      email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/confirm`
-      }
+        // SMTP template should include {{ .Token }} (6-digit code)
+        emailRedirectTo: `${window.location.origin}/auth/confirm`,
+      },
     })
     if (error) throw error
     return data
@@ -47,11 +54,37 @@ export const userAuth = {
     return data
   },
 
-  async signInWithMagicLink(email: string) {
+  /** Send 6-digit email OTP (login / passwordless). */
+  async sendEmailOtp(email: string, shouldCreateUser = false) {
     if (!supabase) throw new Error('Auth not configured')
-    const { data, error } = await supabase.auth.signInWithOtp({ email })
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser,
+        // Prefer OTP code over magic-link when templates use {{ .Token }}
+      },
+    })
     if (error) throw error
     return data
+  },
+
+  /** Verify 6-digit code from email. */
+  async verifyEmailOtp(email: string, token: string, type: EmailOtpType = 'email') {
+    if (!supabase) throw new Error('Auth not configured')
+    const code = normalizeOtp(token)
+    if (code.length !== 6) throw new Error('Doğrulama kodu 6 haneli olmalıdır')
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token: code,
+      type,
+    })
+    if (error) throw error
+    return data
+  },
+
+  async signInWithMagicLink(email: string) {
+    // Kept for compatibility — now sends email OTP (6-digit when template uses Token)
+    return this.sendEmailOtp(email, false)
   },
 
   async signInWithProvider(provider: 'google' | 'apple') {
@@ -128,10 +161,29 @@ export const userAuth = {
     return data.subscription
   },
 
+  /** Request password-reset email with 6-digit {{ .Token }} (configure Recovery template). */
   async resetPassword(email: string) {
     if (!supabase) throw new Error('Auth not configured')
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`
+      redirectTo: `${window.location.origin}/auth/reset-password`,
+    })
+    if (error) throw error
+    return data
+  },
+
+  async verifyRecoveryOtp(email: string, token: string) {
+    return this.verifyEmailOtp(email, token, 'recovery')
+  },
+
+  async verifySignupOtp(email: string, token: string) {
+    return this.verifyEmailOtp(email, token, 'signup')
+  },
+
+  async resendSignupOtp(email: string) {
+    if (!supabase) throw new Error('Auth not configured')
+    const { data, error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
     })
     if (error) throw error
     return data
@@ -140,11 +192,11 @@ export const userAuth = {
   async updatePassword(newPassword: string) {
     if (!supabase) throw new Error('Auth not configured')
     const { data, error } = await supabase.auth.updateUser({
-      password: newPassword
+      password: newPassword,
     })
     if (error) throw error
     return data
-  }
+  },
 }
 
 // Admin authentication fonksiyonları

@@ -3,13 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { userAuth, supabase } from '../lib/supabase'
 import { openMyTrabzonDeepLink } from '../lib/utils'
 import { Mail, Lock, LogIn, UserPlus, Sparkles, HelpCircle } from 'lucide-react'
+import { OtpCodeInput } from '@/components/auth/OtpCodeInput'
 
 export function AuthPage() {
   const navigate = useNavigate()
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin')
+  const [mode, setMode] = useState<'signin' | 'signup' | 'verify-signup' | 'otp-login'>('signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [otp, setOtp] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'success' | 'error' | ''>('')
@@ -139,7 +141,9 @@ export function AuthPage() {
       }
 
       await userAuth.signUpWithEmail(email, password)
-      setMessage('Registration successful! A verification link was sent to your email. Please check your inbox.')
+      setOtp('')
+      setMode('verify-signup')
+      setMessage('Kayıt alındı. E-postanıza gelen 6 haneli doğrulama kodunu girin.')
       setMessageType('success')
     } catch (e: any) {
       setMessage(e.message || 'Registration failed')
@@ -149,24 +153,80 @@ export function AuthPage() {
     }
   }
 
-  const handleMagicLink = async (e: React.FormEvent) => {
+  const handleVerifySignup = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
       setLoading(true)
       setMessage('')
       setMessageType('')
-      
+      await userAuth.verifySignupOtp(email, otp)
+      setMessage('E-posta doğrulandı! Yönlendiriliyorsunuz…')
+      setMessageType('success')
+      setTimeout(() => {
+        if (openMyTrabzonDeepLink('auth/onboarding', '')) return
+        navigate('/auth/onboarding')
+      }, 1000)
+    } catch (e: any) {
+      setMessage(e.message || 'Kod geçersiz veya süresi dolmuş')
+      setMessageType('error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleSendLoginOtp = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      setLoading(true)
+      setMessage('')
+      setMessageType('')
       if (!email) {
-        setMessage('Please enter your email address')
+        setMessage('E-posta adresinizi girin')
         setMessageType('error')
         return
       }
-
-      await userAuth.signInWithMagicLink(email)
-      setMessage('Magic link sent to your email! Please check your inbox.')
+      await userAuth.sendEmailOtp(email, false)
+      setOtp('')
+      setMode('otp-login')
+      setMessage('6 haneli giriş kodu e-postanıza gönderildi.')
       setMessageType('success')
     } catch (e: any) {
-      setMessage(e.message || 'Could not send magic link')
+      setMessage(e.message || 'Kod gönderilemedi')
+      setMessageType('error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleVerifyLoginOtp = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      setLoading(true)
+      setMessage('')
+      setMessageType('')
+      await userAuth.verifyEmailOtp(email, otp, 'email')
+      setMessage('Giriş başarılı! Yönlendiriliyorsunuz…')
+      setMessageType('success')
+      setTimeout(() => {
+        if (openMyTrabzonDeepLink('auth/callback', '')) return
+        navigate('/')
+      }, 1000)
+    } catch (e: any) {
+      setMessage(e.message || 'Kod geçersiz veya süresi dolmuş')
+      setMessageType('error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleResendSignupOtp = async () => {
+    try {
+      setLoading(true)
+      await userAuth.resendSignupOtp(email)
+      setMessage('Yeni doğrulama kodu gönderildi.')
+      setMessageType('success')
+    } catch (e: any) {
+      setMessage(e.message || 'Kod yeniden gönderilemedi')
       setMessageType('error')
     } finally {
       setLoading(false)
@@ -181,16 +241,20 @@ export function AuthPage() {
             <Sparkles className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">
-            {mode === 'signin' ? 'Welcome' : 'Create Account'}
+            {mode === 'signin' && 'Hoş geldiniz'}
+            {mode === 'signup' && 'Hesap oluştur'}
+            {mode === 'verify-signup' && 'E-posta doğrulama'}
+            {mode === 'otp-login' && 'Giriş kodu'}
           </h1>
           <p className="text-gray-300">
-            {mode === 'signin' 
-              ? 'Sign in to your account' 
-              : 'Create a new account and get started'}
+            {mode === 'signin' && 'Hesabınıza giriş yapın'}
+            {mode === 'signup' && 'Yeni hesap oluşturun'}
+            {mode === 'verify-signup' && `${email} adresine gelen 6 haneli kodu girin`}
+            {mode === 'otp-login' && `${email} adresine gelen 6 haneli kodu girin`}
           </p>
         </div>
 
-        {/* Mode Toggle */}
+        {(mode === 'signin' || mode === 'signup') && (
         <div className="flex bg-white/5 rounded-lg p-1 mb-6">
           <button
             onClick={() => {
@@ -204,7 +268,7 @@ export function AuthPage() {
                 : 'text-gray-400 hover:text-white'
             }`}
           >
-            Sign In
+            Giriş
           </button>
           <button
             onClick={() => {
@@ -218,34 +282,27 @@ export function AuthPage() {
                 : 'text-gray-400 hover:text-white'
             }`}
           >
-            Sign Up
+            Kayıt
           </button>
         </div>
+        )}
 
-        {/* Social Login */}
+        {(mode === 'signin' || mode === 'signup') && (
+          <>
         <div className="space-y-3 mb-6">
           <button
             disabled={loading}
             onClick={() => handleProvider('google')}
             className="w-full bg-white/10 hover:bg-white/20 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed border border-white/20 flex items-center justify-center gap-2"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            {mode === 'signin' ? 'Sign in' : 'Sign up'} with Google
+            Google ile devam et
           </button>
           <button
             disabled={loading}
             onClick={() => handleProvider('apple')}
             className="w-full bg-white/10 hover:bg-white/20 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed border border-white/20 flex items-center justify-center gap-2"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
-            </svg>
-            {mode === 'signin' ? 'Sign in' : 'Sign up'} with Apple
+            Apple ile devam et
           </button>
         </div>
 
@@ -254,15 +311,14 @@ export function AuthPage() {
             <div className="w-full border-t border-white/20"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-transparent text-gray-400">or</span>
+            <span className="px-2 bg-transparent text-gray-400">veya</span>
           </div>
         </div>
 
-        {/* Email/Password Form */}
         <form onSubmit={mode === 'signin' ? handleSignIn : handleSignUp} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-              Email address
+              E-posta
             </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -271,7 +327,7 @@ export function AuthPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="ornek@email.com"
                 className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
               />
@@ -280,7 +336,7 @@ export function AuthPage() {
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-              Password
+              Şifre
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -300,7 +356,7 @@ export function AuthPage() {
             <>
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
-                  Confirm password
+                  Şifre tekrar
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -318,7 +374,11 @@ export function AuthPage() {
               <div className="flex items-start gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                 <HelpCircle className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
                 <p className="text-xs text-gray-300">
-                  If you forget your password, use the <Link to="/auth/reset-password" className="text-purple-400 hover:text-purple-300 underline">"Forgot password"</Link> link on the sign-in page.
+                  Kayıttan sonra e-postanıza 6 haneli doğrulama kodu gelir. Şifrenizi unutursanız{' '}
+                  <Link to="/auth/reset-password" className="text-purple-400 hover:text-purple-300 underline">
+                    şifremi unuttum
+                  </Link>{' '}
+                  ile yine 6 haneli kod kullanın.
                 </p>
               </div>
             </>
@@ -330,7 +390,7 @@ export function AuthPage() {
                 to="/auth/reset-password"
                 className="text-sm text-purple-400 hover:text-purple-300 transition-colors font-medium underline underline-offset-2"
               >
-                Forgot password?
+                Şifremi unuttum
               </Link>
             </div>
           )}
@@ -351,18 +411,18 @@ export function AuthPage() {
             className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
           >
             {loading ? (
-              'Processing...'
+              'İşleniyor…'
             ) : (
               <>
                 {mode === 'signin' ? (
                   <>
                     <LogIn className="w-5 h-5" />
-                    Sign In
+                    Giriş yap
                   </>
                 ) : (
                   <>
                     <UserPlus className="w-5 h-5" />
-                    Sign Up
+                    Kayıt ol
                   </>
                 )}
               </>
@@ -370,17 +430,91 @@ export function AuthPage() {
           </button>
         </form>
 
-        {/* Magic Link */}
-        <div className="mt-6">
-          <button
-            onClick={handleMagicLink}
-            disabled={loading}
-            className="w-full text-gray-300 hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
-          >
-            <Mail className="w-4 h-4" />
-            {mode === 'signin' ? 'Sign in' : 'Sign up'} with Magic Link
-          </button>
-        </div>
+        {mode === 'signin' && (
+          <div className="mt-6">
+            <button
+              onClick={handleSendLoginOtp}
+              disabled={loading}
+              className="w-full text-gray-300 hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
+            >
+              <Mail className="w-4 h-4" />
+              E-posta ile 6 haneli kod gönder
+            </button>
+          </div>
+        )}
+          </>
+        )}
+
+        {mode === 'verify-signup' && (
+          <form onSubmit={handleVerifySignup} className="space-y-6">
+            <OtpCodeInput value={otp} onChange={setOtp} disabled={loading} />
+            {message && (
+              <div className={`p-4 rounded-lg ${
+                messageType === 'success'
+                  ? 'bg-green-500/20 text-green-300 border border-green-500/30'
+                  : 'bg-red-500/20 text-red-300 border border-red-500/30'
+              }`}>
+                <p className="text-sm">{message}</p>
+              </div>
+            )}
+            <button
+              type="submit"
+              disabled={loading || otp.replace(/\D/g, '').length !== 6}
+              className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 py-3 font-semibold text-white disabled:opacity-60"
+            >
+              {loading ? 'Doğrulanıyor…' : 'Kodu doğrula'}
+            </button>
+            <button
+              type="button"
+              onClick={handleResendSignupOtp}
+              disabled={loading}
+              className="w-full text-sm text-purple-300 hover:text-purple-200"
+            >
+              Kodu tekrar gönder
+            </button>
+          </form>
+        )}
+
+        {mode === 'otp-login' && (
+          <form onSubmit={handleVerifyLoginOtp} className="space-y-6">
+            <OtpCodeInput value={otp} onChange={setOtp} disabled={loading} />
+            {message && (
+              <div className={`p-4 rounded-lg ${
+                messageType === 'success'
+                  ? 'bg-green-500/20 text-green-300 border border-green-500/30'
+                  : 'bg-red-500/20 text-red-300 border border-red-500/30'
+              }`}>
+                <p className="text-sm">{message}</p>
+              </div>
+            )}
+            <button
+              type="submit"
+              disabled={loading || otp.replace(/\D/g, '').length !== 6}
+              className="w-full rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 py-3 font-semibold text-white disabled:opacity-60"
+            >
+              {loading ? 'Giriş yapılıyor…' : 'Kod ile giriş yap'}
+            </button>
+            <button
+              type="button"
+              onClick={handleSendLoginOtp}
+              disabled={loading}
+              className="w-full text-sm text-purple-300 hover:text-purple-200"
+            >
+              Kodu tekrar gönder
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMode('signin')
+                setOtp('')
+                setMessage('')
+              }}
+              className="w-full text-sm text-gray-400 hover:text-white"
+            >
+              Şifre ile girişe dön
+            </button>
+          </form>
+        )}
       </div>
     </div>
   )
