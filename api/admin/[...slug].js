@@ -20,6 +20,7 @@ const routes = {
   messages,
   settings,
   tickets,
+  session,
   'auth/session': session,
 }
 

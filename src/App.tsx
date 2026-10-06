@@ -76,9 +76,8 @@ import { useEffect } from 'react'
 
 function LegacyAdminRedirect() {
   useEffect(() => {
-    const local =
-      window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    window.location.replace(local ? '/login?admin=1' : 'https://admin.litxtech.com/login')
+    // Same-origin admin mode works without admin.* DNS
+    window.location.replace('/login?admin=1')
   }, [])
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-200">

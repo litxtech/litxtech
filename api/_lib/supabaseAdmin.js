@@ -4,7 +4,9 @@ export function getServiceClient() {
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !key) {
-    throw new Error('Server Supabase not configured')
+    throw new Error(
+      'Server Supabase not configured (set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY on Vercel)',
+    )
   }
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },

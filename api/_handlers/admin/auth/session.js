@@ -56,7 +56,14 @@ export default async function handler(req, res) {
       return json(res, 400, { error: 'access_token required' })
     }
 
-    const supabase = getServiceClient()
+    let supabase
+    try {
+      supabase = getServiceClient()
+    } catch (cfgErr) {
+      return json(res, 503, {
+        error: cfgErr.message || 'Server Supabase not configured',
+      })
+    }
     const { data: authData, error: authError } = await supabase.auth.getUser(accessToken)
     if (authError || !authData?.user) {
       await supabase.from('login_attempts').insert({

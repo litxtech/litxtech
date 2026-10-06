@@ -23,13 +23,13 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const adminApi = {
-  me: () => request<{ user: AdminUser }>('/api/admin/auth/session'),
+  me: () => request<{ user: AdminUser }>('/api/admin/session'),
   createSession: (access_token: string) =>
-    request<{ user: AdminUser }>('/api/admin/auth/session', {
+    request<{ user: AdminUser }>('/api/admin/session', {
       method: 'POST',
       body: JSON.stringify({ access_token }),
     }),
-  logout: () => request<{ ok: boolean }>('/api/admin/auth/session', { method: 'DELETE' }),
+  logout: () => request<{ ok: boolean }>('/api/admin/session', { method: 'DELETE' }),
   dashboard: () => request<any>('/api/admin/dashboard'),
   leads: (params?: { status?: string; q?: string }) => {
     const qs = new URLSearchParams()
