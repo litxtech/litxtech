@@ -3,7 +3,9 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown, Menu, Phone, X, Zap } from 'lucide-react'
 import { solutionsData } from '@/data/solutionsData'
-import { siteConfig, getWhatsAppLink } from '@/data/siteConfig'
+import { siteConfig } from '@/data/siteConfig'
+import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
 import { clsx } from 'clsx'
 
 const navLink = 'text-sm font-medium text-slate-200/90 transition hover:text-white'
@@ -12,6 +14,8 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const [solutionsOpen, setSolutionsOpen] = useState(false)
   const location = useLocation()
+  const company = useCompanySettings()
+  const waLink = getWhatsAppUrl(company)
 
   const isActive = (path: string) =>
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
@@ -92,17 +96,18 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
 
           <div className="hidden items-center gap-3 lg:flex">
             <a
-              href={`tel:${siteConfig.phoneTel}`}
+              href={`tel:${company.phone_tel || siteConfig.phoneTel}`}
+              onClick={() => trackEvent('phone_click', location.pathname)}
               className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-slate-200 hover:border-white/20 hover:text-white"
             >
               <Phone className="h-4 w-4" />
-              {siteConfig.phone}
+              {company.phone || siteConfig.phone}
             </a>
             <Link
-              to="/contact"
+              to="/projemi-anlat"
               className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/25 transition hover:opacity-95"
             >
-              Teklif Al
+              Projenizi Anlatın
             </Link>
           </div>
 
@@ -153,20 +158,23 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                 İletişim
               </Link>
               <div className="mt-2 flex flex-col gap-2 border-t border-white/10 pt-4">
-                <a
-                  href={getWhatsAppLink()}
-                  className="rounded-lg bg-[#25D366] py-3 text-center text-sm font-semibold text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  WhatsApp
-                </a>
+                {company.whatsapp?.enabled !== false && (
+                  <a
+                    href={waLink}
+                    className="rounded-lg bg-[#25D366] py-3 text-center text-sm font-semibold text-white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent('whatsapp_click', location.pathname)}
+                  >
+                    {company.whatsapp?.buttonText || 'WhatsApp'}
+                  </a>
+                )}
                 <Link
-                  to="/contact"
+                  to="/projemi-anlat"
                   className="rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 py-3 text-center text-sm font-semibold text-white"
                   onClick={() => setOpen(false)}
                 >
-                  Teklif Al
+                  Projenizi Anlatın
                 </Link>
               </div>
             </div>
@@ -185,7 +193,7 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                 LitxTech
               </div>
               <p className="text-sm leading-relaxed text-slate-400">
-                {siteConfig.tagline}
+                {company.description || siteConfig.tagline}
               </p>
             </div>
             <div>
@@ -234,19 +242,28 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               <p className="mb-3 text-sm font-semibold text-white">İletişim</p>
               <ul className="space-y-2 text-sm text-slate-400">
                 <li>
-                  <a className="hover:text-white" href={`mailto:${siteConfig.email}`}>
-                    {siteConfig.email}
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-white" href={`tel:${siteConfig.phoneTel}`}>
-                    {siteConfig.phone}
+                  <a
+                    className="hover:text-white"
+                    href={`mailto:${company.email || siteConfig.email}`}
+                    onClick={() => trackEvent('email_click', location.pathname)}
+                  >
+                    {company.email || siteConfig.email}
                   </a>
                 </li>
                 <li>
                   <a
                     className="hover:text-white"
-                    href={getWhatsAppLink()}
+                    href={`tel:${company.phone_tel || siteConfig.phoneTel}`}
+                    onClick={() => trackEvent('phone_click', location.pathname)}
+                  >
+                    {company.phone || siteConfig.phone}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="hover:text-white"
+                    href={waLink}
+                    onClick={() => trackEvent('whatsapp_click', location.pathname)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

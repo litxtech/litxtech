@@ -7,85 +7,59 @@
     { "source": "/solutions/hotels", "destination": "/cozumler/otel-yonetim-sistemi", "permanent": true },
     { "source": "/solutions/restaurants", "destination": "/cozumler/restoran-yonetim-sistemi", "permanent": true },
     { "source": "/solutions/construction", "destination": "/cozumler/ozel-yazilim", "permanent": true },
-    { "source": "/solutions/pharma", "destination": "/cozumler/ozel-yazilim", "permanent": true }
+    { "source": "/solutions/pharma", "destination": "/cozumler/ozel-yazilim", "permanent": true },
+    { "source": "/admin", "destination": "https://admin.litxtech.com/dashboard", "permanent": false },
+    { "source": "/admin/login", "destination": "https://admin.litxtech.com/login", "permanent": false }
   ],
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
       "source": "/auth/callback",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/html; charset=utf-8"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate"
-        }
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
       ]
     },
     {
       "source": "/mytrabzon/callback",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/html; charset=utf-8"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate"
-        }
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
       ]
     },
     {
       "source": "/admin/(.*)",
       "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive, nosnippet"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        }
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet" },
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     },
     {
       "source": "/api/admin/(.*)",
       "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache"
-        }
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Cache-Control", "value": "no-store, no-cache" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "admin.litxtech.com" }],
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Cache-Control", "value": "no-store" }
       ]
     }
   ]

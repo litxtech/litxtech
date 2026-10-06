@@ -69,6 +69,21 @@ import { DonationPage } from './pages/DonationPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { MyTrabzonCallback } from './pages/MyTrabzonCallback'
 import { SupportPage } from './pages/SupportPage'
+import { ProjemiAnlatPage } from './pages/ProjemiAnlatPage'
+import { useEffect } from 'react'
+
+function LegacyAdminRedirect() {
+  useEffect(() => {
+    const local =
+      window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    window.location.replace(local ? '/login?admin=1' : 'https://admin.litxtech.com/login')
+  }, [])
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-200">
+      Redirecting to admin…
+    </div>
+  )
+}
 
 function App() {
   return (
@@ -77,6 +92,9 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/projemi-anlat" element={<ProjemiAnlatPage />} />
+          <Route path="/iletisim" element={<Navigate to="/contact" replace />} />
+          <Route path="/destek" element={<Navigate to="/contact" replace />} />
           <Route path="/cozumler" element={<SolutionsIndexPage />} />
           <Route path="/cozumler/:slug" element={<SolutionDetailPage />} />
           <Route path="/projeler" element={<ProjectsIndexPage />} />
@@ -97,7 +115,13 @@ function App() {
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/mytrabzon/callback" element={<MyTrabzonCallback />} />
           <Route path="/support/mytrabzon" element={<SupportPage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route
+            path="/admin"
+            element={
+              <LegacyAdminRedirect />
+            }
+          />
+          <Route path="/admin/legacy" element={<AdminPage />} />
           <Route path="/ai-builder" element={<AIBuilder />} />
           <Route path="/investment" element={<Investment />} />
           <Route path="/packages" element={<Packages />} />
