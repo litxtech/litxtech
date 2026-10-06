@@ -92,3 +92,38 @@ export async function submitLead(payload: Record<string, unknown>) {
   if (!res.ok) throw new Error(data.error || 'Lead submit failed')
   return data as { ok: boolean; reference_code: string; message: string }
 }
+
+/** Deep-merge CMS homepage JSON over static fallback (null CMS → fallback). */
+export function mergeHomepageContent<T extends Record<string, unknown>>(fallback: T, cms: unknown): T {
+  if (!cms || typeof cms !== 'object' || Array.isArray(cms)) return fallback
+  const src = cms as Record<string, unknown>
+  if (src.seed === 'use-fallback-homeContent') return fallback
+  const out: Record<string, unknown> = { ...fallback }
+  for (const key of Object.keys(src)) {
+    const fv = (fallback as Record<string, unknown>)[key]
+    const cv = src[key]
+    if (
+      fv &&
+      cv &&
+      typeof fv === 'object' &&
+      typeof cv === 'object' &&
+      !Array.isArray(fv) &&
+      !Array.isArray(cv)
+    ) {
+      out[key] = { ...(fv as object), ...(cv as object) }
+    } else if (cv !== undefined && cv !== null) {
+      out[key] = cv
+    }
+  }
+  return out as T
+}
+
+export async function fetchHomepageContent<T extends Record<string, unknown>>(fallback: T): Promise<T> {
+  try {
+    const res = await fetch('/api/public/homepage')
+    const data = await res.json()
+    return mergeHomepageContent(fallback, data?.content)
+  } catch {
+    return fallback
+  }
+}

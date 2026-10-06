@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
@@ -20,10 +20,22 @@ import { homeContent } from '@/data/homeContent'
 import { projectsData } from '@/data/projectsData'
 import { solutionsData } from '@/data/solutionsData'
 import { getWhatsAppLink, siteConfig } from '@/data/siteConfig'
+import { fetchHomepageContent } from '@/lib/publicCms'
 
 export function HomePage() {
   const featured = useMemo(() => projectsData.slice(0, 4), [])
   const [slide, setSlide] = useState(0)
+  const [content, setContent] = useState(homeContent)
+
+  useEffect(() => {
+    let alive = true
+    fetchHomepageContent(homeContent).then((c) => {
+      if (alive) setContent(c)
+    })
+    return () => {
+      alive = false
+    }
+  }, [])
 
   const next = () => setSlide((s) => (s + 1) % featured.length)
   const prev = () => setSlide((s) => (s - 1 + featured.length) % featured.length)
@@ -58,25 +70,25 @@ export function HomePage() {
               transition={{ duration: 0.55, delay: 0.05 }}
               className="mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl"
             >
-              {homeContent.hero.title}
+              {content.hero.title}
             </motion.h1>
-            <p className="mt-4 text-lg font-medium text-slate-200 md:text-xl">{homeContent.hero.subtitle}</p>
+            <p className="mt-4 text-lg font-medium text-slate-200 md:text-xl">{content.hero.subtitle}</p>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
-              {homeContent.hero.description}
+              {content.hero.description}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 to="/projeler"
                 className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/30 transition hover:opacity-95"
               >
-                {homeContent.hero.primaryCta}
+                {content.hero.primaryCta}
                 <ChevronRight className="ml-1 h-4 w-4" />
               </Link>
               <Link
                 to="/projemi-anlat"
                 className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3.5 text-sm font-semibold text-white hover:border-white/25"
               >
-                {homeContent.hero.secondaryCta}
+                {content.hero.secondaryCta}
               </Link>
               <a
                 href={getWhatsAppLink()}
@@ -85,11 +97,11 @@ export function HomePage() {
                 className="inline-flex items-center justify-center rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-6 py-3.5 text-sm font-semibold text-emerald-100 hover:bg-emerald-500/15"
               >
                 <MessageCircle className="mr-2 h-4 w-4" />
-                {homeContent.hero.tertiaryCta}
+                {content.hero.tertiaryCta}
               </a>
             </div>
             <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {homeContent.stats.map((s) => (
+              {content.stats.map((s) => (
                 <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
                   <div className="text-2xl font-bold text-white">{s.value}</div>
                   <div className="mt-1 text-xs text-slate-400">{s.label}</div>
@@ -105,12 +117,12 @@ export function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20" id="cozumler">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wide text-blue-300/90">
-            {homeContent.sections.solutions}
+            {content.sections.solutions}
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold text-white md:text-4xl">
             İşinizi büyüten çözüm kategorileri
           </h2>
-          <p className="mt-4 text-lg text-slate-400">{homeContent.sections.solutionsLead}</p>
+          <p className="mt-4 text-lg text-slate-400">{content.sections.solutionsLead}</p>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {solutionsData.map((s, i) => (
@@ -137,10 +149,10 @@ export function HomePage() {
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-wide text-blue-300/90">
-                {homeContent.sections.projects}
+                {content.sections.projects}
               </p>
               <h2 className="mt-3 font-display text-3xl font-bold text-white md:text-4xl">Referanslarımızdan seçkiler</h2>
-              <p className="mt-3 text-lg text-slate-400">{homeContent.sections.projectsLead}</p>
+              <p className="mt-3 text-lg text-slate-400">{content.sections.projectsLead}</p>
             </div>
             <Link
               to="/projeler"
@@ -233,11 +245,11 @@ export function HomePage() {
       {/* Capabilities */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.capabilities.title}</h2>
-          <p className="mt-4 text-lg text-slate-400">{homeContent.capabilities.subtitle}</p>
+          <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.capabilities.title}</h2>
+          <p className="mt-4 text-lg text-slate-400">{content.capabilities.subtitle}</p>
         </div>
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {homeContent.capabilities.items.map((item) => (
+          {content.capabilities.items.map((item) => (
             <div
               key={item}
               className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-slate-200 transition hover:border-white/20"
@@ -255,11 +267,11 @@ export function HomePage() {
       <section className="border-y border-white/10 bg-[#05070f] py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.process.title}</h2>
-            <p className="mt-4 text-lg text-slate-400">{homeContent.process.subtitle}</p>
+            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.process.title}</h2>
+            <p className="mt-4 text-lg text-slate-400">{content.process.subtitle}</p>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-5">
-            {homeContent.process.steps.map((step, idx) => (
+            {content.process.steps.map((step, idx) => (
               <div key={step.title} className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6">
                 <div className="text-sm font-semibold text-blue-300">0{idx + 1}</div>
                 <h3 className="mt-3 font-display text-lg font-bold text-white">{step.title}</h3>
@@ -274,13 +286,13 @@ export function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.why.title}</h2>
+            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.why.title}</h2>
             <p className="mt-4 text-lg text-slate-400">
               Amatör görünüm değil; ürün odaklı mühendislik, net iletişim ve ölçülebilir teslimat.
             </p>
           </div>
           <ul className="space-y-3">
-            {homeContent.why.items.map((w) => (
+            {content.why.items.map((w) => (
               <li
                 key={w}
                 className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-200"
@@ -297,10 +309,10 @@ export function HomePage() {
       <section className="border-t border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f] py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <h2 className="text-center font-display text-3xl font-bold text-white md:text-4xl">
-            {homeContent.faq.title}
+            {content.faq.title}
           </h2>
           <div className="mx-auto mt-10 max-w-3xl space-y-3">
-            {homeContent.faq.items.map((item) => (
+            {content.faq.items.map((item) => (
               <details
                 key={item.q}
                 className="group rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 open:bg-white/[0.05]"
@@ -322,14 +334,14 @@ export function HomePage() {
       <section className="border-t border-white/10 bg-gradient-to-r from-blue-600/20 via-violet-600/15 to-fuchsia-600/15">
         <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{homeContent.finalCta.title}</h2>
-            <p className="mt-4 text-lg text-slate-200">{homeContent.finalCta.subtitle}</p>
+            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">{content.finalCta.title}</h2>
+            <p className="mt-4 text-lg text-slate-200">{content.finalCta.subtitle}</p>
             <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 to="/projemi-anlat"
                 className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-slate-900"
               >
-                {homeContent.finalCta.quote}
+                {content.finalCta.quote}
               </Link>
               <a
                 href={getWhatsAppLink()}
@@ -338,14 +350,14 @@ export function HomePage() {
                 className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-emerald-500/10 px-6 py-3.5 text-sm font-semibold text-emerald-50 hover:bg-emerald-500/15"
               >
                 <MessageCircle className="mr-2 h-4 w-4" />
-                {homeContent.finalCta.whatsapp}
+                {content.finalCta.whatsapp}
               </a>
               <Link
                 to="/destek"
                 className="inline-flex items-center justify-center rounded-xl border border-white/20 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/5"
               >
                 <MonitorPlay className="mr-2 h-4 w-4" />
-                {homeContent.finalCta.demo}
+                {content.finalCta.demo}
               </Link>
             </div>
           </div>
