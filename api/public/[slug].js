@@ -43,11 +43,19 @@ const routes = {
 
 function resolveSlug(req) {
   const q = req.query?.slug
-  if (Array.isArray(q)) return q.join('/')
-  if (typeof q === 'string' && q) return q
-  const url = new URL(req.url || '/', 'http://localhost')
-  const parts = url.pathname.replace(/^\/api\/public\/?/, '').split('/').filter(Boolean)
-  return parts.join('/')
+  let key = ''
+  if (Array.isArray(q)) key = q.join('/')
+  else if (typeof q === 'string' && q) key = q
+  else {
+    const url = new URL(req.url || '/', 'http://localhost')
+    key = url.pathname.replace(/^\/api\/public\/?/, '').split('/').filter(Boolean).join('/')
+  }
+  const rest = req.query?.rest
+  if (rest && !key.includes('/')) {
+    const extra = Array.isArray(rest) ? rest.join('/') : String(rest)
+    if (extra) key = `${key}/${extra}`
+  }
+  return key
 }
 
 export default async function handler(req, res) {
