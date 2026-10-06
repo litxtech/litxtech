@@ -5,7 +5,7 @@ import { getAuthUrlParams, markPasswordRecovery } from '@/lib/authRedirect'
 
 /**
  * Catches Supabase email links that land on `/` (Site URL) with
- * `#access_token=...&type=recovery` and routes to the new-password screen.
+ * `#access_token=...&type=recovery` (or PKCE) and routes to the new-password screen.
  */
 export function AuthHashRedirect() {
   const navigate = useNavigate()
@@ -14,7 +14,7 @@ export function AuthHashRedirect() {
   useEffect(() => {
     if (!supabase) return
 
-    const { type, accessToken, code, error } = getAuthUrlParams()
+    const { type, error } = getAuthUrlParams()
     if (error) return
 
     const sendToReset = () => {
@@ -25,19 +25,11 @@ export function AuthHashRedirect() {
       }
     }
 
-    if (type === 'recovery' || (accessToken && type === 'recovery')) {
+    if (type === 'recovery') {
       sendToReset()
-      return
     }
 
-    // PKCE: recovery links may hit Site URL with ?code=
-    if (code && (type === 'recovery' || location.pathname === '/' || location.pathname === '')) {
-      // Let supabase exchange the code, then check event
-      void supabase.auth.getSession().then(({ data }) => {
-        if (data.session && type === 'recovery') sendToReset()
-      })
-    }
-
+    // PKCE / delayed recovery: client emits PASSWORD_RECOVERY after session setup
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') {
         sendToReset()
