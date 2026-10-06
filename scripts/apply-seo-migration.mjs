@@ -84,39 +84,7 @@ async function tryHttpSql() {
     if (res.ok) return true
   }
 
-  const ref = new URL(supabaseUrl).hostname.split('.')[0]
-  const regions = ['eu-central-1', 'eu-west-1', 'eu-north-1', 'us-east-1', 'us-west-1', 'ap-southeast-1']
-  const attempts = [
-    { host: `db.${ref}.supabase.co`, port: 5432, user: 'postgres' },
-    ...regions.flatMap((region) => [
-      { host: `aws-0-${region}.pooler.supabase.com`, port: 6543, user: `postgres.${ref}` },
-      { host: `aws-1-${region}.pooler.supabase.com`, port: 5432, user: `postgres.${ref}` },
-    ]),
-  ]
-  for (const attempt of attempts) {
-    const client = new pg.Client({
-      host: attempt.host,
-      port: attempt.port,
-      user: attempt.user,
-      password: serviceKey,
-      database: 'postgres',
-      ssl: { rejectUnauthorized: false },
-      connectionTimeoutMillis: 8000,
-    })
-    try {
-      await client.connect()
-      await client.query(sqlBody)
-      console.log('direct_sql applied', attempt.host, attempt.port)
-      return true
-    } catch (error) {
-      console.log('direct_sql', attempt.host, attempt.port, error.code || '', String(error.message).split('\n')[0].slice(0, 180))
-      const message = String(error.message)
-      if (/password authentication failed|Tenant or user not found|database ".+" does not exist/i.test(message)) continue
-      if (error.code === 'ENOTFOUND' || error.code === 'ENETUNREACH' || error.code === 'ETIMEDOUT' || error.code === 'ECONNREFUSED') continue
-    } finally {
-      await client.end().catch(() => {})
-    }
-  }
+  console.log('schema is missing the SEO migration, and no database URL is configured')
   return false
 }
 
