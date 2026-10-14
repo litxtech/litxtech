@@ -16,8 +16,9 @@ export const publicSearchIndex: SearchEntry[] = [
   {
     path: '/products',
     title: 'Ürünler',
-    description: 'Vora, Tamuso, Nocta, MyTrabzon, Valoria ve KBS Prime.',
+    description: 'SAFDAŞ, Vora, Tamuso, Nocta, MyTrabzon, Valoria ve KBS Prime.',
   },
+  { path: '/safdas', title: 'SAFDAŞ', description: 'Namaz vakitleri ve İslami topluluk uygulaması.' },
   { path: '/vora', title: 'Vora', description: 'LitxTech ürünü Vora.' },
   { path: '/tamuso', title: 'Tamuso', description: 'LitxTech ürünü Tamuso.' },
   { path: '/nocta', title: 'Nocta', description: 'LitxTech ürünü Nocta.' },

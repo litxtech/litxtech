@@ -52,6 +52,13 @@ import { VoraAppSupport } from './pages/VoraAppSupport'
 import { VoraAppAccountDeletion } from './pages/VoraAppAccountDeletion'
 import { VoraAppChildSafety } from './pages/VoraAppChildSafety'
 import { VoraAppSubscription } from './pages/VoraAppSubscription'
+import { SafdasAppLanding } from './pages/SafdasAppLanding'
+import { SafdasAppPrivacy } from './pages/SafdasAppPrivacy'
+import { SafdasAppTerms } from './pages/SafdasAppTerms'
+import { SafdasAppSupport } from './pages/SafdasAppSupport'
+import { SafdasAppAccountDeletion } from './pages/SafdasAppAccountDeletion'
+import { SafdasAppChildSafety } from './pages/SafdasAppChildSafety'
+import { SafdasAppSubscription } from './pages/SafdasAppSubscription'
 import { TamusoAppLanding } from './pages/TamusoAppLanding'
 import { TamusoAppPrivacy } from './pages/TamusoAppPrivacy'
 import { TamusoAppTerms } from './pages/TamusoAppTerms'
@@ -214,6 +221,13 @@ function App() {
           <Route path="/vora/hesap-silme" element={<VoraAppAccountDeletion />} />
           <Route path="/vora/child-safety" element={<VoraAppChildSafety />} />
           <Route path="/vora/abonelik" element={<VoraAppSubscription />} />
+          <Route path="/safdas" element={<SafdasAppLanding />} />
+          <Route path="/safdas/gizlilik" element={<SafdasAppPrivacy />} />
+          <Route path="/safdas/kullanim-sartlari" element={<SafdasAppTerms />} />
+          <Route path="/safdas/destek" element={<SafdasAppSupport />} />
+          <Route path="/safdas/hesap-silme" element={<SafdasAppAccountDeletion />} />
+          <Route path="/safdas/child-safety" element={<SafdasAppChildSafety />} />
+          <Route path="/safdas/abonelik" element={<SafdasAppSubscription />} />
           <Route path="/tamuso" element={<TamusoAppLanding />} />
           <Route path="/tamuso/gizlilik" element={<TamusoAppPrivacy />} />
           <Route path="/tamuso/kullanim-sartlari" element={<TamusoAppTerms />} />

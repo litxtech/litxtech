@@ -24,6 +24,14 @@ type Product = {
 
 const knownProducts: Product[] = [
   {
+    slug: 'safdas',
+    name: 'SAFDAŞ',
+    tagline: 'Prayer times, Quran, qibla, and an Islamic social community.',
+    category: 'Faith',
+    platforms: ['iOS', 'Android'],
+    internalPath: '/safdas',
+  },
+  {
     slug: 'vora',
     name: 'Vora',
     tagline: 'City channels and community messaging for the Black Sea region.',

@@ -52,6 +52,19 @@ export const projectsData: ProjectEntry[] = [
     ctaLabel: 'Teklif al',
   },
   {
+    slug: 'safdas',
+    title: 'SAFDAŞ',
+    summary: 'Namaz vakitleri, Kur’an, kıble ve İslami sosyal topluluk uygulaması.',
+    description:
+      'SAFDAŞ; namaz vakitleri, kıble pusulası, Kur’an, dua, zikir ve ibadet takibini SAF Halkaları, sosyal gönderiler ve canlı sesli odalarla birleştirir. Gizlilik, kullanım şartları, çocuk koruma, hesap silme ve destek sayfalarıyla mağaza uyumu sağlanır.',
+    internalPath: '/safdas',
+    image:
+      'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Cami ve namaz vakti atmosferi',
+    tags: ['Namaz', 'İslami yaşam', 'Topluluk'],
+    ctaLabel: 'Tanıtım sayfası',
+  },
+  {
     slug: 'vora',
     title: 'Vora',
     summary: 'Karadeniz şehirleri için anlık haberleşme ve topluluk platformu.',

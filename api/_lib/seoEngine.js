@@ -49,6 +49,7 @@ const BUILTIN_REDIRECTS = [
   { source: '/nocta/sozlesme', destination: '/nocta/kullanim-sartlari', status_code: 301, enabled: true },
   { source: '/tamuso/sozlesme', destination: '/tamuso/kullanim-sartlari', status_code: 301, enabled: true },
   { source: '/products/vora', destination: '/vora', status_code: 301, enabled: true },
+  { source: '/products/safdas', destination: '/safdas', status_code: 301, enabled: true },
   { source: '/products/tamuso', destination: '/tamuso', status_code: 301, enabled: true },
   { source: '/products/nocta', destination: '/nocta', status_code: 301, enabled: true },
   { source: '/products/mytrabzon', destination: '/mytrabzon', status_code: 301, enabled: true },
@@ -159,18 +160,18 @@ const HUBS = [
     schema: 'CollectionPage',
     changefreq: 'weekly',
     priority: '0.9',
-    outbound: ['/projeler/valoriahotel', '/projeler/vora', '/projeler/tamuso', '/cozumler', '/contact'],
+    outbound: ['/projeler/valoriahotel', '/projeler/vora', '/projeler/safdas', '/projeler/tamuso', '/cozumler', '/contact'],
   }),
   page({
     path: '/products',
     title: 'Dijital Ürünler ve Yazılım Platformları | LitxTech',
     description:
-      'LitxTech dijital ürünleri ve yazılım platformları: Vora, Tamuso, Nocta, MyTrabzon, Valoria ve KBS Prime.',
+      'LitxTech dijital ürünleri ve yazılım platformları: SAFDAŞ, Vora, Tamuso, Nocta, MyTrabzon, Valoria ve KBS Prime.',
     h1: 'Software we have actually shipped.',
     schema: 'CollectionPage',
     changefreq: 'weekly',
     priority: '0.9',
-    outbound: ['/vora', '/tamuso', '/nocta', '/mytrabzon', '/valoria-app', '/kbs-prime', '/contact'],
+    outbound: ['/safdas', '/vora', '/tamuso', '/nocta', '/mytrabzon', '/valoria-app', '/kbs-prime', '/contact'],
   }),
   page({
     path: '/contact',
@@ -333,6 +334,7 @@ const PROJECTS = [
   ['sosyal-platform', 'KBS Prime | LitxTech Projeler', 'Canlı kart ve topluluk odaklı sosyal platform deneyimi.', 'KBS Prime'],
   ['dating-app', 'Dating App | LitxTech Projeler', 'Arkadaşlık ve eşleşme senaryoları için geliştirilen ürün örneği.', 'Dating App'],
   ['vora', 'Vora | LitxTech Projeler', 'Karadeniz şehirleri için anlık haberleşme ve topluluk platformu.', 'Vora'],
+  ['safdas', 'SAFDAŞ | LitxTech Projeler', 'Namaz vakitleri, Kur’an, kıble ve İslami sosyal topluluk uygulaması.', 'SAFDAŞ'],
   ['tamuso', 'Tamuso | LitxTech Projeler', 'Canlı sesli odalar ve modern sesli sohbet platformu.', 'Tamuso'],
   ['sehir-uygulamasi', 'Şehir Uygulaması | LitxTech Projeler', 'Yerel içerik ve topluluk için şehir uygulaması örneği.', 'Şehir Uygulaması'],
 ].map(([slug, title, description, h1]) =>
@@ -348,12 +350,19 @@ const PROJECTS = [
 )
 
 const APP_PAGES = [
+  ['/safdas', 'SAFDAŞ | Namaz Vakitleri ve Topluluk | LitxTech', 'SAFDAŞ — namaz vakitleri, Kur’an, kıble ve SAF Halkaları ile İslami yaşam ve sosyal topluluk uygulaması.', 'SoftwareApplication', ['/safdas/gizlilik', '/safdas/destek', '/contact']],
   ['/vora', 'Vora | Karadeniz Topluluk Platformu | LitxTech', 'Vora — Karadeniz şehirleri için anlık haberleşme ve topluluk platformu. Gizlilik, kullanım şartları, çocuk güvenliği ve destek.', 'SoftwareApplication', ['/vora/gizlilik', '/vora/destek', '/contact']],
   ['/tamuso', 'Tamuso | Sesli Oda Platformu | LitxTech', 'Tamuso — modern sesli oda ve canlı sohbet platformu. Gizlilik, kullanım şartları, çocuk koruma politikası, hesap silme ve destek.', 'SoftwareApplication', ['/tamuso/gizlilik', '/tamuso/destek', '/contact']],
   ['/nocta', 'Nocta | LitxTech', 'Nocta — güvenli arkadaş bulma ve sosyal keşif uygulaması. Gizlilik, kullanım şartları, çocuk güvenliği politikası ve destek.', 'SoftwareApplication', ['/nocta/gizlilik', '/nocta/destek']],
   ['/mytrabzon', 'MyTrabzon | LitxTech', 'MyTrabzon şehir rehberi ve topluluk uygulaması. LitxTech tarafından geliştirilen yerel ürün.', 'SoftwareApplication', ['/support/mytrabzon', '/contact']],
   ['/valoria-app', 'Valoria | LitxTech', 'Valoria otel markası için mobil konuk deneyimi. Gizlilik, şartlar ve destek sayfalarıyla yayınlanır.', 'SoftwareApplication', ['/valoria-app-privacy', '/support/valoria-app']],
   ['/kbs-prime', 'KBS Prime | LitxTech', 'KBS Prime canlı sosyal ürünü. Gizlilik, şartlar ve destek bağlantıları ürün sayfasındadır.', 'SoftwareApplication', ['/kbs-prime-privacy', '/support/kbs-prime']],
+  ['/safdas/gizlilik', 'SAFDAŞ Gizlilik Politikası | LitxTech', 'SAFDAŞ gizlilik politikası: namaz, ibadet verileri, sosyal içerik, mesajlaşma ve kullanıcı hakları.', 'WebPage', ['/safdas']],
+  ['/safdas/kullanim-sartlari', 'SAFDAŞ Kullanım Koşulları | LitxTech', 'SAFDAŞ kullanım koşulları: namaz vakitleri, topluluk kuralları, hesap ve mağaza hükümleri.', 'WebPage', ['/safdas']],
+  ['/safdas/destek', 'SAFDAŞ Destek | LitxTech', 'SAFDAŞ uygulaması için destek ve talep bilgileri.', 'WebPage', ['/safdas', '/destek']],
+  ['/safdas/hesap-silme', 'SAFDAŞ Hesap Silme | LitxTech', 'SAFDAŞ hesabınızı uygulama içinden veya e-posta ile nasıl silebileceğiniz.', 'WebPage', ['/safdas']],
+  ['/safdas/child-safety', 'SAFDAŞ Çocuk Koruma Politikası | LitxTech', 'SAFDAŞ çocuk koruma ve güvenliği politikası: sıfır tolerans, yaş sınırı ve bildirim.', 'WebPage', ['/safdas']],
+  ['/safdas/abonelik', 'SAFDAŞ Abonelik ve Fiyatlandırma | LitxTech', 'SAFDAŞ abonelik ve fiyatlandırma bilgisi. Ücretli plan yoksa ücret tahsil edilmez.', 'WebPage', ['/safdas']],
   ['/vora/gizlilik', 'Vora Gizlilik Politikası | LitxTech', 'Vora kullanıcı güvenliği, içerik politikası, veri gizliliği ve hizmet koşulları.', 'WebPage', ['/vora']],
   ['/vora/kullanim-sartlari', 'Vora Kullanım Şartları | LitxTech', 'Vora Kullanıcı Politikası: kurallar, güvenlik, yaptırımlar, veri gizliliği ve yasal uyum.', 'WebPage', ['/vora']],
   ['/vora/destek', 'Vora Destek | LitxTech', 'Vora uygulaması için destek ve talep bilgileri.', 'WebPage', ['/vora', '/destek']],
