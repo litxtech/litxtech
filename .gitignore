@@ -115,3 +115,7 @@ temp/
 # Cloudflare Pages yerel çıktı
 .wrangler/
 
+# Cloudflare DNS token + yerel secret dosyaları (asla commit edilmez)
+.cf-dns-token
+.litx-secrets
+
