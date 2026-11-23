@@ -107,3 +107,11 @@ temp/
 
 .env.vercel.pull
 .env*.local
+
+# Cloudflare Pages yerel degiskenleri
+.dev.vars
+
+
+# Cloudflare Pages yerel çıktı
+.wrangler/
+

@@ -3,7 +3,22 @@
 
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+// Tembel başlatma: Cloudflare Workers'ta binding'ler modül yüklenirken değil,
+// istek geldiğinde okunur. Üst seviyede `new Stripe(...)` tüm siteyi düşürür.
+let stripeIstemcisi = null
+function stripe() {
+  if (!stripeIstemcisi) {
+    const anahtar =
+      (typeof globalThis !== 'undefined' && globalThis.__LITX_ENV__?.STRIPE_SECRET_KEY) ||
+      process.env.STRIPE_SECRET_KEY ||
+      ''
+    if (!anahtar) throw new Error('STRIPE_SECRET_KEY tanımlı değil')
+    stripeIstemcisi = new Stripe(anahtar, {
+      httpClient: Stripe.createFetchHttpClient ? Stripe.createFetchHttpClient() : undefined,
+    })
+  }
+  return stripeIstemcisi
+}
 
 export default async (req, res) => {
   // Enable CORS
@@ -41,7 +56,7 @@ export default async (req, res) => {
     const amountInCents = Math.round(amount * 100)
 
     // Create Stripe Checkout Session for donation
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripe().checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {

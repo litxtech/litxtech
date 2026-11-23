@@ -9,11 +9,22 @@ if (!process.env.STRIPE_SECRET_KEY) {
   console.error('Please set STRIPE_SECRET_KEY in Vercel Environment Variables')
 }
 
-const stripe = process.env.STRIPE_SECRET_KEY 
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2024-06-20',
+const stripeApiVersion = '2024-06-20'
+let stripeClient = null
+
+function getStripe() {
+  const key =
+    (typeof globalThis !== 'undefined' && globalThis.__LITX_ENV__?.STRIPE_SECRET_KEY) ||
+    process.env.STRIPE_SECRET_KEY
+  if (!key) return null
+  if (!stripeClient) {
+    stripeClient = new Stripe(key, {
+      apiVersion: stripeApiVersion,
+      httpClient: Stripe.createFetchHttpClient ? Stripe.createFetchHttpClient() : undefined,
     })
-  : null
+  }
+  return stripeClient
+}
 
 // Real Stripe Products - 18 packages with actual Product IDs
 const STRIPE_PRODUCTS = {
@@ -110,6 +121,7 @@ const STRIPE_PRODUCTS = {
 }
 
 export default async (req, res) => {
+  const stripe = getStripe()
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')

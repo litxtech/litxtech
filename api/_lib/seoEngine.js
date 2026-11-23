@@ -439,11 +439,14 @@ export function staticCatalog() {
 }
 
 export function siteOrigin() {
+  const runtime =
+    typeof globalThis !== 'undefined' && globalThis.__LITX_ENV__ ? globalThis.__LITX_ENV__ : {}
   const fromProcess =
     typeof process !== 'undefined' && process.env
       ? process.env.VITE_PUBLIC_SITE_URL || process.env.PUBLIC_SITE_URL || ''
       : ''
-  return String(fromProcess || DEFAULT_ORIGIN).replace(/\/$/, '')
+  const fromRuntime = runtime.VITE_PUBLIC_SITE_URL || runtime.PUBLIC_SITE_URL || ''
+  return String(fromRuntime || fromProcess || DEFAULT_ORIGIN).replace(/\/$/, '')
 }
 
 export function normalizePath(input) {

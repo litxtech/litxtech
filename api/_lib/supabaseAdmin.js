@@ -207,6 +207,14 @@ export async function writeAudit(supabase, entry) {
 }
 
 export function readBody(req) {
+  if (typeof req.__bodyText === 'string') {
+    if (!req.__bodyText) return Promise.resolve({})
+    try {
+      return Promise.resolve(JSON.parse(req.__bodyText))
+    } catch {
+      return Promise.reject(new Error('Invalid JSON'))
+    }
+  }
   return new Promise((resolve, reject) => {
     let data = ''
     req.on('data', (chunk) => {

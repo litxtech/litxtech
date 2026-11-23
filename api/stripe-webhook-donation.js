@@ -4,11 +4,33 @@
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+// Tembel başlatma: Cloudflare Workers binding'leri modül yüklenirken hazır
+// olmadığı için üst seviyede istemci kurmak tüm çalışanı düşürür.
+let stripeIstemcisi = null
+function stripe() {
+  if (!stripeIstemcisi) {
+    const anahtar =
+      (typeof globalThis !== 'undefined' && globalThis.__LITX_ENV__?.STRIPE_SECRET_KEY) ||
+      process.env.STRIPE_SECRET_KEY ||
+      ''
+    if (!anahtar) throw new Error('STRIPE_SECRET_KEY tanımlı değil')
+    stripeIstemcisi = new Stripe(anahtar, {
+      httpClient: Stripe.createFetchHttpClient ? Stripe.createFetchHttpClient() : undefined,
+    })
+  }
+  return stripeIstemcisi
+}
+
+let supabaseIstemcisi = null
+function supabase() {
+  if (!supabaseIstemcisi) {
+    supabaseIstemcisi = createClient(
+      process.env.SUPABASE_URL || '',
+      process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+    )
+  }
+  return supabaseIstemcisi
+}
 
 export default async (req, res) => {
   const sig = req.headers['stripe-signature']
@@ -21,7 +43,8 @@ export default async (req, res) => {
   let event
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret)
+    // Ham gövde şart: imza doğrulaması yeniden serileştirilmiş JSON ile yapılamaz.
+    event = stripe().webhooks.constructEvent(req.rawBody ?? req.body, sig, webhookSecret)
   } catch (err) {
     console.error('Webhook signature verification failed:', err.message)
     return res.status(400).send(`Webhook Error: ${err.message}`)
@@ -41,7 +64,7 @@ export default async (req, res) => {
           // Customer email'den user_id bul (eğer varsa)
           let userId = null
           if (session.customer_email) {
-            const { data: users } = await supabase.auth.admin.listUsers()
+            const { data: users } = await supabase().auth.admin.listUsers()
             const user = users?.users?.find(u => u.email === session.customer_email)
             if (user) {
               userId = user.id
@@ -49,7 +72,7 @@ export default async (req, res) => {
           }
 
           // Bağış kaydı ekle
-          const { data: donation, error: donationError } = await supabase
+          const { data: donation, error: donationError } = await supabase()
             .from('donations')
             .insert({
               user_id: userId,
@@ -75,7 +98,7 @@ export default async (req, res) => {
 
           // Eğer user_id varsa, destekçi etiketi ekle
           if (userId && donation) {
-            const { error: badgeError } = await supabase.rpc('add_supporter_badge', {
+            const { error: badgeError } = await supabase().rpc('add_supporter_badge', {
               p_user_id: userId,
               p_amount: amount
             })
@@ -83,7 +106,7 @@ export default async (req, res) => {
             if (badgeError) {
               console.error('Badge add error:', badgeError)
               // Manuel olarak eklemeyi dene
-              const { error: manualBadgeError } = await supabase
+              const { error: manualBadgeError } = await supabase()
                 .from('user_badges')
                 .upsert({
                   user_id: userId,
@@ -118,7 +141,7 @@ export default async (req, res) => {
         
         // Bağış kaydını failed olarak işaretle
         if (paymentIntent.metadata?.type === 'mytrabzon-support') {
-          await supabase
+          await supabase()
             .from('donations')
             .update({ status: 'failed' })
             .eq('stripe_payment_intent_id', paymentIntent.id)

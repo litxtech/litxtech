@@ -1,4 +1,20 @@
-// Test endpoint to get Stripe prices
+// Stripe product/price listing endpoint (Cloudflare-compatible)
+import Stripe from 'stripe'
+
+let stripeClient = null
+function getStripe() {
+  const key =
+    (typeof globalThis !== 'undefined' && globalThis.__LITX_ENV__?.STRIPE_SECRET_KEY) ||
+    process.env.STRIPE_SECRET_KEY
+  if (!key) return null
+  if (!stripeClient) {
+    stripeClient = new Stripe(key, {
+      httpClient: Stripe.createFetchHttpClient ? Stripe.createFetchHttpClient() : undefined,
+    })
+  }
+  return stripeClient
+}
+
 export default async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -14,32 +30,35 @@ export default async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
+  const stripe = getStripe()
+  if (!stripe) {
+    return res.status(500).json({ error: 'Stripe is not configured' })
+  }
+
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-    
     // Get all products and their prices
     const products = await stripe.products.list({ active: true })
     const prices = await stripe.prices.list({ active: true })
-    
-    const productPrices = products.data.map(product => {
-      const productPrices = prices.data.filter(price => price.product === product.id)
+
+    const productPrices = products.data.map((product) => {
+      const productPrices = prices.data.filter((price) => price.product === product.id)
       return {
         id: product.id,
         name: product.name,
         description: product.description,
-        prices: productPrices.map(price => ({
+        prices: productPrices.map((price) => ({
           id: price.id,
           amount: price.unit_amount / 100,
           currency: price.currency,
-          type: price.type
-        }))
+          type: price.type,
+        })),
       }
     })
 
     res.json({
       products: productPrices,
       totalProducts: products.data.length,
-      totalPrices: prices.data.length
+      totalPrices: prices.data.length,
     })
   } catch (error) {
     console.error('Error fetching Stripe data:', error)

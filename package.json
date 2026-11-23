@@ -11,6 +11,10 @@
     "server": "node server.js",
     "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
     "deploy": "npm run build && npx vercel --prod",
+    "cf:prepare": "node scripts/cf-pages-olustur.mjs && node scripts/cf-functions-olustur.mjs",
+    "cf:build": "npm run build && npm run cf:prepare",
+    "cf:dev": "npx wrangler@4 pages dev dist --port 8799 --compatibility-flags=nodejs_compat --compatibility-date=2026-11-23",
+    "cf:deploy": "npm run cf:build && npx wrangler@4 pages deploy dist --project-name litxtechweb",
     "github:deploy": "git add . && git commit -m '🚀 Auto-deploy: $(date)' && git push origin main"
   },
   "dependencies": {
