@@ -21,6 +21,7 @@ export const seoConfig = {
   sameAs: [
     'https://www.litxtech.com',
     'https://github.com/litxtech',
+    'https://www.linkedin.com/in/soner-toprak-ba4597449',
   ],
   primaryKeywords: [
     'LitxTech',

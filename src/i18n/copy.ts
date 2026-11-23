@@ -928,6 +928,8 @@ const footer: Localized<{
   sitemap: string
   rights: string
   tagline: string
+  legal: string
+  founderLinkedin: string
 }> = {
   en: {
     solutions: 'Solutions',
@@ -949,6 +951,8 @@ const footer: Localized<{
     sitemap: 'Sitemap',
     rights: 'All rights reserved.',
     tagline: 'Enterprise software, mobile products and digital platforms.',
+    legal: 'Legal',
+    founderLinkedin: 'Founder on LinkedIn',
   },
   tr: {
     solutions: 'Çözümler',
@@ -970,6 +974,8 @@ const footer: Localized<{
     sitemap: 'Site haritası',
     rights: 'Tüm hakları saklıdır.',
     tagline: 'Kurumsal yazılım, mobil ürünler ve dijital platformlar.',
+    legal: 'Yasal',
+    founderLinkedin: 'Kurucu LinkedIn’de',
   },
 }
 

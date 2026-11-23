@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, ChevronDown, Menu, Phone, Search, X, Zap } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, Linkedin, Menu, Phone, Search, X, Zap } from 'lucide-react'
 import { clsx } from 'clsx'
 import { solutionsData } from '@/data/solutionsData'
 import { siteConfig } from '@/data/siteConfig'
@@ -332,6 +332,21 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               >
                 {company.email || siteConfig.email}
               </a>
+              <div>
+                <a
+                  href="https://www.linkedin.com/in/soner-toprak-ba4597449"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-4 inline-flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-[12.5px] font-medium text-slate-300 transition hover:border-sky-400/30 hover:bg-sky-400/[0.07] hover:text-white"
+                >
+                  <span className="flex h-6 w-6 items-center justify-center rounded-md bg-sky-500/15">
+                    <Linkedin className="h-3.5 w-3.5 text-sky-300" />
+                  </span>
+                  Soner Toprak
+                  <span className="text-slate-600">·</span>
+                  <span className="text-slate-400 group-hover:text-sky-200">{t.footer.founderLinkedin}</span>
+                </a>
+              </div>
             </div>
 
             <div>
@@ -453,8 +468,20 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <div className="mt-12 flex flex-col gap-4 border-t border-white/[0.07] pt-7 text-[12px] text-slate-500 md:flex-row md:items-center md:justify-between">
-            <p>© {new Date().getFullYear()} LitxTech. {t.footer.rights}</p>
+          <div className="mt-12 flex flex-col gap-5 border-t border-white/[0.07] pt-7 text-[12px] text-slate-500 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <p>© {new Date().getFullYear()} LitxTech. {t.footer.rights}</p>
+              <a
+                href="https://www.linkedin.com/in/soner-toprak-ba4597449"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Soner Toprak — LinkedIn"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11.5px] font-medium text-slate-400 transition hover:border-sky-400/30 hover:bg-sky-400/[0.08] hover:text-sky-200"
+              >
+                <Linkedin className="h-3 w-3" />
+                LinkedIn
+              </a>
+            </div>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link className="transition hover:text-slate-300" to="/privacy-policy">
                 {t.footer.privacy}
@@ -464,6 +491,9 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               </Link>
               <Link className="transition hover:text-slate-300" to="/commercial-agreement">
                 {t.footer.commercial}
+              </Link>
+              <Link className="transition hover:text-slate-300" to="/legal">
+                {t.footer.legal}
               </Link>
               <a className="transition hover:text-slate-300" href="/sitemap.xml">
                 {t.footer.sitemap}
