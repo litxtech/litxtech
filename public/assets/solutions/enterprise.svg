@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Custom enterprise software dashboard with modules, pipeline and records">
+  <defs>
+    <linearGradient id="e-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#060911"/>
+      <stop offset="0.5" stop-color="#070c16"/>
+      <stop offset="1" stop-color="#080e18"/>
+    </linearGradient>
+    <radialGradient id="e-indigo" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="e-cyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="e-frame" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#080d16"/>
+    </linearGradient>
+    <linearGradient id="e-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="e-chart" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#818cf8" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#818cf8" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="e-win"><rect x="120" y="92" width="960" height="566" rx="22"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#e-bg)"/>
+  <ellipse cx="900" cy="130" rx="440" ry="320" fill="url(#e-indigo)"/>
+  <ellipse cx="260" cy="660" rx="420" ry="300" fill="url(#e-cyan)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200"/>
+    <path d="M150 0V750M300 0V750M450 0V750M600 0V750M750 0V750M900 0V750M1050 0V750"/>
+  </g>
+
+  <rect x="112" y="84" width="976" height="582" rx="24" fill="#000" opacity="0.5"/>
+  <rect x="120" y="92" width="960" height="566" rx="22" fill="url(#e-frame)" stroke="#ffffff" stroke-opacity="0.11"/>
+
+  <g clip-path="url(#e-win)">
+    <rect x="120" y="92" width="960" height="50" fill="#ffffff" fill-opacity="0.022"/>
+    <path d="M120 142h960" stroke="#ffffff" stroke-opacity="0.07"/>
+    <g>
+      <circle cx="150" cy="117" r="4" fill="#ef5f5f" opacity="0.8"/>
+      <circle cx="166" cy="117" r="4" fill="#e7b04a" opacity="0.8"/>
+      <circle cx="182" cy="117" r="4" fill="#4fbf7a" opacity="0.8"/>
+    </g>
+    <rect x="212" y="106" width="220" height="22" rx="11" fill="#ffffff" fill-opacity="0.045"/>
+    <circle cx="226" cy="117" r="3.6" fill="none" stroke="#7b84a0" stroke-width="1.2"/>
+    <text x="238" y="120.5" fill="#7b84a0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Search records, clients, orders…</text>
+    <g>
+      <rect x="890" y="106" width="70" height="22" rx="11" fill="#22d3ee" fill-opacity="0.12"/>
+      <circle cx="904" cy="117" r="3" fill="#22d3ee"/>
+      <text x="912" y="120.5" fill="#67e8f9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7">SYNCED</text>
+      <circle cx="1044" cy="117" r="12" fill="#2a3346"/>
+      <circle cx="1044" cy="113" r="3.8" fill="#cbd5e1"/>
+      <path d="M1037 124c1.6-3 4-4.4 7-4.4s5.4 1.4 7 4.4z" fill="#cbd5e1" opacity="0.7"/>
+    </g>
+
+    <!-- sidebar -->
+    <rect x="120" y="142" width="180" height="516" fill="#ffffff" fill-opacity="0.014"/>
+    <path d="M300 142v516" stroke="#ffffff" stroke-opacity="0.06"/>
+    <g>
+      <rect x="142" y="164" width="26" height="26" rx="8" fill="url(#e-accent)"/>
+      <path d="M149 171h12v4h-12zM149 179h8v4h-8z" fill="#0b1020" opacity="0.75"/>
+      <text x="178" y="182" fill="#f1f4fa" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="10" font-weight="600">Workspace</text>
+    </g>
+    <g font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8.5">
+      <rect x="134" y="210" width="152" height="28" rx="9" fill="#818cf8" fill-opacity="0.14"/>
+      <rect x="134" y="210" width="3" height="28" rx="1.5" fill="#818cf8"/>
+      <rect x="150" y="218" width="9" height="9" rx="2" fill="none" stroke="#a5b4fc" stroke-width="1.3"/>
+      <text x="168" y="228" fill="#c7d2fe">Dashboard</text>
+
+      <rect x="150" y="253" width="9" height="9" rx="2" fill="none" stroke="#6b7488" stroke-width="1.3"/>
+      <text x="168" y="262" fill="#8b93a7">Records</text>
+
+      <path d="M152 288h5v9h-5zM154 285h1v3" stroke="#6b7488" fill="none" stroke-width="1.2"/>
+      <text x="168" y="296" fill="#8b93a7">Inventory</text>
+
+      <circle cx="155" cy="322" r="4.6" fill="none" stroke="#6b7488" stroke-width="1.3"/>
+      <text x="168" y="326" fill="#8b93a7">Finance</text>
+
+      <rect x="150" y="350" width="9" height="9" rx="2" fill="none" stroke="#6b7488" stroke-width="1.3"/>
+      <path d="M152 355l2 2 4-4" stroke="#6b7488" fill="none" stroke-width="1.2"/>
+      <text x="168" y="359" fill="#8b93a7">Projects</text>
+
+      <circle cx="150" cy="380" r="3" fill="none" stroke="#6b7488" stroke-width="1.2"/>
+      <circle cx="158" cy="380" r="3" fill="none" stroke="#6b7488" stroke-width="1.2"/>
+      <text x="168" y="384" fill="#8b93a7">Team</text>
+    </g>
+    <rect x="134" y="558" width="152" height="76" rx="12" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+    <text x="148" y="578" fill="#8b93a7" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" letter-spacing="1.2">AUTOMATION</text>
+    <text x="148" y="598" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">128</text>
+    <text x="148" y="612" fill="#8b93a7" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7">workflows running</text>
+    <circle cx="264" cy="600" r="10" fill="#22d3ee" fill-opacity="0.14"/>
+    <path d="M264 594v6l4 3" stroke="#67e8f9" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+
+    <!-- KPI -->
+    <g>
+      <rect x="320" y="166" width="236" height="84" rx="14" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+      <text x="338" y="190" fill="#8b93a7" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">Pipeline value</text>
+      <text x="338" y="218" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">€1.28M</text>
+      <rect x="338" y="230" width="196" height="4" rx="2" fill="#ffffff" fill-opacity="0.09"/>
+      <rect x="338" y="230" width="152" height="4" rx="2" fill="#818cf8"/>
+    </g>
+    <g>
+      <rect x="572" y="166" width="236" height="84" rx="14" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+      <text x="590" y="190" fill="#8b93a7" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">Open tickets</text>
+      <text x="590" y="218" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">24</text>
+      <rect x="590" y="230" width="196" height="4" rx="2" fill="#ffffff" fill-opacity="0.09"/>
+      <rect x="590" y="230" width="72" height="4" rx="2" fill="#22d3ee"/>
+    </g>
+    <g>
+      <rect x="824" y="166" width="232" height="84" rx="14" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+      <text x="842" y="190" fill="#8b93a7" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">On-time delivery</text>
+      <text x="842" y="218" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">97.4%</text>
+      <rect x="842" y="230" width="194" height="4" rx="2" fill="#ffffff" fill-opacity="0.09"/>
+      <rect x="842" y="230" width="188" height="4" rx="2" fill="#4ade80"/>
+    </g>
+
+    <!-- chart -->
+    <rect x="320" y="266" width="488" height="186" rx="14" fill="#ffffff" fill-opacity="0.025" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="338" y="290" fill="#eef1f8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="10" font-weight="600">Throughput</text>
+    <text x="338" y="304" fill="#6b7488" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Records processed per hour</text>
+    <g stroke="#ffffff" stroke-opacity="0.055">
+      <path d="M338 330h452M338 362h452M338 394h452M338 426h452"/>
+    </g>
+    <path d="M338 414c26-6 40-26 66-32s42 12 68-2 40-40 66-44 42 14 68 4 40-20 68-24 34 6 52 2v108H338z" fill="url(#e-chart)"/>
+    <path d="M338 414c26-6 40-26 66-32s42 12 68-2 40-40 66-44 42 14 68 4 40-20 68-24 34 6 52 2" fill="none" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round"/>
+    <g fill="#0b1020" stroke="#a5b4fc" stroke-width="1.5">
+      <circle cx="472" cy="380" r="3"/>
+      <circle cx="674" cy="342" r="3"/>
+    </g>
+    <g fill="#6b7488" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.5">
+      <text x="338" y="444">08:00</text><text x="438" y="444">11:00</text><text x="538" y="444">14:00</text>
+      <text x="638" y="444">17:00</text><text x="738" y="444">20:00</text>
+    </g>
+
+    <!-- pipeline -->
+    <rect x="824" y="266" width="232" height="186" rx="14" fill="#ffffff" fill-opacity="0.025" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="842" y="290" fill="#eef1f8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="10" font-weight="600">Pipeline</text>
+    <g font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7">
+      <text x="842" y="308" fill="#6b7488">Qualified</text>
+      <rect x="842" y="314" width="196" height="6" rx="3" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="842" y="314" width="160" height="6" rx="3" fill="#818cf8"/>
+      <text x="842" y="338" fill="#6b7488">Proposal</text>
+      <rect x="842" y="344" width="196" height="6" rx="3" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="842" y="344" width="112" height="6" rx="3" fill="#22d3ee"/>
+      <text x="842" y="368" fill="#6b7488">Negotiation</text>
+      <rect x="842" y="374" width="196" height="6" rx="3" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="842" y="374" width="74" height="6" rx="3" fill="#a78bfa"/>
+      <text x="842" y="398" fill="#6b7488">Won</text>
+      <rect x="842" y="404" width="196" height="6" rx="3" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="842" y="404" width="132" height="6" rx="3" fill="#4ade80"/>
+      <text x="842" y="430" fill="#6b7488">Renewal</text>
+      <rect x="842" y="436" width="196" height="6" rx="3" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="842" y="436" width="92" height="6" rx="3" fill="#fbbf24"/>
+    </g>
+
+    <!-- records table -->
+    <rect x="320" y="468" width="736" height="168" rx="14" fill="#ffffff" fill-opacity="0.025" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="338" y="492" fill="#eef1f8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="10" font-weight="600">Recent records</text>
+    <g fill="#6b7488" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7">
+      <text x="338" y="512">ACCOUNT</text>
+      <text x="576" y="512">OWNER</text>
+      <text x="716" y="512">STAGE</text>
+      <text x="860" y="512">VALUE</text>
+      <text x="980" y="512">UPDATED</text>
+    </g>
+    <path d="M338 518h700" stroke="#ffffff" stroke-opacity="0.06"/>
+    <g font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">
+      <g>
+        <rect x="338" y="528" width="14" height="14" rx="4" fill="#818cf8" fill-opacity="0.18"/>
+        <text x="362" y="539" fill="#d8dee9">Northwind Group</text>
+        <text x="576" y="539" fill="#9aa3b8">D. Kaya</text>
+        <rect x="716" y="529" width="54" height="15" rx="7.5" fill="#818cf8" fill-opacity="0.14"/>
+        <text x="743" y="539" fill="#c7d2fe" text-anchor="middle">Proposal</text>
+        <text x="860" y="539" fill="#9aa3b8">€240K</text>
+        <text x="980" y="539" fill="#6b7488">2h ago</text>
+      </g>
+      <g>
+        <rect x="338" y="558" width="14" height="14" rx="4" fill="#22d3ee" fill-opacity="0.18"/>
+        <text x="362" y="569" fill="#d8dee9">Aster Retail</text>
+        <text x="576" y="569" fill="#9aa3b8">S. Demir</text>
+        <rect x="716" y="559" width="42" height="15" rx="7.5" fill="#22d3ee" fill-opacity="0.14"/>
+        <text x="737" y="569" fill="#67e8f9" text-anchor="middle">Won</text>
+        <text x="860" y="569" fill="#9aa3b8">€96K</text>
+        <text x="980" y="569" fill="#6b7488">5h ago</text>
+      </g>
+      <g>
+        <rect x="338" y="588" width="14" height="14" rx="4" fill="#a78bfa" fill-opacity="0.18"/>
+        <text x="362" y="599" fill="#d8dee9">Delta Logistics</text>
+        <text x="576" y="599" fill="#9aa3b8">M. Acar</text>
+        <rect x="716" y="589" width="66" height="15" rx="7.5" fill="#fbbf24" fill-opacity="0.14"/>
+        <text x="749" y="599" fill="#fcd34d" text-anchor="middle">Negotiation</text>
+        <text x="860" y="599" fill="#9aa3b8">€182K</text>
+        <text x="980" y="599" fill="#6b7488">1d ago</text>
+      </g>
+      <g>
+        <rect x="338" y="618" width="14" height="14" rx="4" fill="#4ade80" fill-opacity="0.18"/>
+        <text x="362" y="629" fill="#d8dee9">Helio Energy</text>
+        <text x="576" y="629" fill="#9aa3b8">E. Yıldız</text>
+        <rect x="716" y="619" width="54" height="15" rx="7.5" fill="#4ade80" fill-opacity="0.14"/>
+        <text x="743" y="629" fill="#86efac" text-anchor="middle">Renewal</text>
+        <text x="860" y="629" fill="#9aa3b8">€64K</text>
+        <text x="980" y="629" fill="#6b7488">2d ago</text>
+      </g>
+    </g>
+  </g>
+</svg>

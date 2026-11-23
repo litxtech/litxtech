@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="KBS Prime social platform feed interface">
+  <defs>
+    <linearGradient id="k-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#080913"/>
+      <stop offset="0.5" stop-color="#0b0b18"/>
+      <stop offset="1" stop-color="#0a0f1c"/>
+    </linearGradient>
+    <radialGradient id="k-violet" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="k-blue" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="k-frame" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#12142a"/>
+      <stop offset="1" stop-color="#0a0c18"/>
+    </linearGradient>
+    <linearGradient id="k-accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="k-media" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b2a6b"/>
+      <stop offset="0.55" stop-color="#243a72"/>
+      <stop offset="1" stop-color="#152a4a"/>
+    </linearGradient>
+    <linearGradient id="k-glass" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.015"/>
+    </linearGradient>
+    <clipPath id="k-win"><rect x="140" y="96" width="920" height="560" rx="22"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#k-bg)"/>
+  <ellipse cx="980" cy="120" rx="440" ry="320" fill="url(#k-violet)"/>
+  <ellipse cx="180" cy="660" rx="420" ry="300" fill="url(#k-blue)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.032" stroke-width="1">
+    <path d="M0 120H1200M0 260H1200M0 400H1200M0 540H1200M0 680H1200"/>
+    <path d="M120 0V750M280 0V750M440 0V750M600 0V750M760 0V750M920 0V750M1080 0V750"/>
+  </g>
+
+  <!-- window -->
+  <rect x="132" y="88" width="936" height="576" rx="24" fill="#000" opacity="0.5"/>
+  <rect x="140" y="96" width="920" height="560" rx="22" fill="url(#k-frame)" stroke="#ffffff" stroke-opacity="0.11"/>
+
+  <g clip-path="url(#k-win)">
+    <!-- top bar -->
+    <rect x="140" y="96" width="920" height="52" fill="#ffffff" fill-opacity="0.022"/>
+    <path d="M140 148h920" stroke="#ffffff" stroke-opacity="0.07"/>
+    <g>
+      <circle cx="172" cy="122" r="4" fill="#ef5f5f" opacity="0.85"/>
+      <circle cx="188" cy="122" r="4" fill="#e7b04a" opacity="0.85"/>
+      <circle cx="204" cy="122" r="4" fill="#4fbf7a" opacity="0.85"/>
+    </g>
+    <rect x="248" y="110" width="344" height="24" rx="12" fill="#ffffff" fill-opacity="0.045"/>
+    <circle cx="266" cy="122" r="4.4" fill="none" stroke="#7e86a0" stroke-width="1.3"/>
+    <path d="M269.5 125.5l3 3" stroke="#7e86a0" stroke-width="1.3" stroke-linecap="round"/>
+    <rect x="284" y="118.5" width="120" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.13"/>
+    <circle cx="1024" cy="122" r="13" fill="url(#k-accent)" opacity="0.9"/>
+    <circle cx="1024" cy="119" r="4" fill="#0b0c18" opacity="0.55"/>
+    <path d="M1017 129c1.8-3.4 4.4-5 7-5s5.2 1.6 7 5z" fill="#0b0c18" opacity="0.55"/>
+
+    <!-- left rail -->
+    <rect x="140" y="148" width="76" height="508" fill="#ffffff" fill-opacity="0.014"/>
+    <path d="M216 148v508" stroke="#ffffff" stroke-opacity="0.06"/>
+    <rect x="164" y="172" width="28" height="28" rx="9" fill="url(#k-accent)"/>
+    <path d="M172 186h12M178 180v12" stroke="#ffffff" stroke-opacity="0.85" stroke-width="1.6" stroke-linecap="round"/>
+    <g>
+      <rect x="162" y="228" width="32" height="32" rx="10" fill="#ffffff" fill-opacity="0.08"/>
+      <path d="M172 240h12M172 248h12" stroke="#c9cee4" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+      <rect x="248" y="0" width="0" height="0"/>
+    </g>
+    <g stroke="#767e99" stroke-width="1.3" fill="none" stroke-linecap="round">
+      <circle cx="178" cy="290" r="6"/>
+      <path d="M169 306c1.6-4 4.8-6 9-6s7.4 2 9 6"/>
+      <path d="M170 352h16M170 360h16M170 344h9"/>
+      <circle cx="178" cy="410" r="7"/><path d="M178 403v-4"/>
+      <rect x="171" y="448" width="14" height="14" rx="4"/>
+    </g>
+    <circle cx="178" cy="236" r="4" fill="#a78bfa"/>
+
+    <!-- feed header -->
+    <text x="244" y="184" fill="#f2f4fb" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="600">Community feed</text>
+    <g>
+      <rect x="244" y="196" width="60" height="20" rx="10" fill="url(#k-accent)" fill-opacity="0.2"/>
+      <text x="274" y="209.5" fill="#c4b5fd" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle">FOR YOU</text>
+      <rect x="312" y="196" width="70" height="20" rx="10" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="347" y="209.5" fill="#8b93ad" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">LIVE</text>
+    </g>
+
+    <!-- composer -->
+    <rect x="244" y="232" width="404" height="62" rx="14" fill="url(#k-glass)" stroke="#ffffff" stroke-opacity="0.08"/>
+    <circle cx="272" cy="263" r="13" fill="#2b2f4d"/>
+    <circle cx="272" cy="259" r="4.2" fill="#a78bfa" opacity="0.9"/>
+    <path d="M264 270c1.8-3.4 4.6-5 8-5s6.2 1.6 8 5z" fill="#a78bfa" opacity="0.6"/>
+    <rect x="296" y="252" width="150" height="8" rx="4" fill="#ffffff" fill-opacity="0.14"/>
+    <rect x="296" y="266" width="96" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.08"/>
+    <rect x="580" y="248" width="52" height="26" rx="13" fill="url(#k-accent)"/>
+    <text x="606" y="265" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle">Post</text>
+
+    <!-- post 1 -->
+    <rect x="244" y="310" width="404" height="228" rx="16" fill="#ffffff" fill-opacity="0.028" stroke="#ffffff" stroke-opacity="0.07"/>
+    <circle cx="272" cy="338" r="14" fill="#3a2c66"/>
+    <circle cx="272" cy="334" r="4.4" fill="#c4b5fd"/>
+    <path d="M263 345c1.8-3.4 4.6-5 9-5s7.2 1.6 9 5z" fill="#c4b5fd" opacity="0.6"/>
+    <text x="296" y="334" fill="#eef0f8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9.5" font-weight="600">Live card · Community</text>
+    <text x="296" y="346" fill="#767e99" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">2 hours ago</text>
+    <g fill="#ffffff">
+      <rect x="264" y="360" width="330" height="6.5" rx="3.2" fill-opacity="0.13"/>
+      <rect x="264" y="374" width="286" height="6.5" rx="3.2" fill-opacity="0.09"/>
+    </g>
+    <rect x="264" y="392" width="364" height="96" rx="12" fill="url(#k-media)"/>
+    <g opacity="0.5">
+      <circle cx="336" cy="440" r="26" fill="#8b5cf6" fill-opacity="0.35"/>
+      <circle cx="392" cy="440" r="26" fill="#3b82f6" fill-opacity="0.3"/>
+      <circle cx="448" cy="440" r="26" fill="#22d3ee" fill-opacity="0.22"/>
+    </g>
+    <rect x="276" y="404" width="64" height="16" rx="8" fill="#0b0c18" fill-opacity="0.6"/>
+    <circle cx="286" cy="412" r="3" fill="#ef4444"/>
+    <text x="294" y="415" fill="#f3f5fa" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" letter-spacing="0.6">LIVE</text>
+    <g>
+      <rect x="264" y="500" width="58" height="22" rx="11" fill="#ffffff" fill-opacity="0.05"/>
+      <path d="M276 511c0-2.6 1.8-4.4 4.4-4.4s4.4 1.8 4.4 4.4c0 3-4.4 6-4.4 6s-4.4-3-4.4-6z" fill="none" stroke="#f472b6" stroke-width="1.2"/>
+      <text x="292" y="515" fill="#9aa1b8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">2.4k</text>
+      <rect x="330" y="500" width="58" height="22" rx="11" fill="#ffffff" fill-opacity="0.05"/>
+      <path d="M342 506h9v7h-9z" fill="none" stroke="#7dd3fc" stroke-width="1.2"/>
+      <text x="358" y="515" fill="#9aa1b8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">318</text>
+    </g>
+
+    <!-- post 2 -->
+    <rect x="244" y="552" width="404" height="72" rx="16" fill="#ffffff" fill-opacity="0.022" stroke="#ffffff" stroke-opacity="0.06"/>
+    <circle cx="272" cy="580" r="14" fill="#25405f"/>
+    <circle cx="272" cy="576" r="4.4" fill="#7dd3fc"/>
+    <path d="M263 587c1.8-3.4 4.6-5 9-5s7.2 1.6 9 5z" fill="#7dd3fc" opacity="0.6"/>
+    <rect x="296" y="570" width="128" height="8" rx="4" fill="#ffffff" fill-opacity="0.14"/>
+    <rect x="296" y="584" width="210" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.08"/>
+    <rect x="296" y="598" width="164" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.06"/>
+
+    <!-- right column -->
+    <path d="M676 148v508" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="700" y="184" fill="#f2f4fb" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Live now</text>
+
+    <rect x="700" y="200" width="332" height="128" rx="16" fill="url(#k-glass)" stroke="#ffffff" stroke-opacity="0.09"/>
+    <rect x="700" y="200" width="332" height="128" rx="16" fill="url(#k-media)" fill-opacity="0.55"/>
+    <rect x="716" y="216" width="56" height="18" rx="9" fill="#0b0c18" fill-opacity="0.7"/>
+    <circle cx="726" cy="225" r="3" fill="#ef4444"/>
+    <text x="734" y="228" fill="#fff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">LIVE</text>
+    <g>
+      <circle cx="742" cy="292" r="16" fill="#8b5cf6" fill-opacity="0.45"/>
+      <circle cx="772" cy="292" r="16" fill="#3b82f6" fill-opacity="0.4"/>
+      <circle cx="802" cy="292" r="16" fill="#22d3ee" fill-opacity="0.3"/>
+      <g fill="#e9ecf8" opacity="0.75">
+        <circle cx="742" cy="288" r="4.6"/><path d="M734 301c1.6-3.2 4.4-4.8 8-4.8s6.4 1.6 8 4.8z"/>
+        <circle cx="772" cy="288" r="4.6"/><path d="M764 301c1.6-3.2 4.4-4.8 8-4.8s6.4 1.6 8 4.8z"/>
+        <circle cx="802" cy="288" r="4.6"/><path d="M794 301c1.6-3.2 4.4-4.8 8-4.8s6.4 1.6 8 4.8z"/>
+      </g>
+    </g>
+    <text x="852" y="284" fill="#e9ecf8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9" font-weight="600">+1.2k listening</text>
+    <text x="852" y="298" fill="#98a0b8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Open room</text>
+    <rect x="716" y="314" width="300" height="0.8" fill="#ffffff" fill-opacity="0.1"/>
+
+    <text x="700" y="366" fill="#f2f4fb" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Suggested</text>
+    <g>
+      <rect x="700" y="380" width="332" height="56" rx="13" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.06"/>
+      <circle cx="730" cy="408" r="14" fill="#3a2c66"/>
+      <rect x="752" y="398" width="98" height="7.5" rx="3.7" fill="#ffffff" fill-opacity="0.14"/>
+      <rect x="752" y="412" width="72" height="6.5" rx="3.2" fill="#ffffff" fill-opacity="0.075"/>
+      <rect x="948" y="398" width="68" height="21" rx="10.5" fill="#ffffff" fill-opacity="0.07"/>
+      <text x="982" y="412" fill="#c4b5fd" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" text-anchor="middle">Follow</text>
+
+      <rect x="700" y="446" width="332" height="56" rx="13" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.06"/>
+      <circle cx="730" cy="474" r="14" fill="#25405f"/>
+      <rect x="752" y="464" width="84" height="7.5" rx="3.7" fill="#ffffff" fill-opacity="0.14"/>
+      <rect x="752" y="478" width="64" height="6.5" rx="3.2" fill="#ffffff" fill-opacity="0.075"/>
+      <rect x="948" y="464" width="68" height="21" rx="10.5" fill="#ffffff" fill-opacity="0.07"/>
+      <text x="982" y="478" fill="#c4b5fd" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" text-anchor="middle">Follow</text>
+
+      <rect x="700" y="512" width="332" height="56" rx="13" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.06"/>
+      <circle cx="730" cy="540" r="14" fill="#1f3d3a"/>
+      <rect x="752" y="530" width="110" height="7.5" rx="3.7" fill="#ffffff" fill-opacity="0.14"/>
+      <rect x="752" y="544" width="58" height="6.5" rx="3.2" fill="#ffffff" fill-opacity="0.075"/>
+      <rect x="948" y="530" width="68" height="21" rx="10.5" fill="#ffffff" fill-opacity="0.07"/>
+      <text x="982" y="544" fill="#c4b5fd" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" text-anchor="middle">Follow</text>
+    </g>
+
+    <rect x="700" y="586" width="332" height="54" rx="14" fill="url(#k-accent)" fill-opacity="0.16" stroke="#a78bfa" stroke-opacity="0.25"/>
+    <text x="716" y="609" fill="#ddd6fe" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9" font-weight="600">Create your own community</text>
+    <text x="716" y="624" fill="#a5a2cc" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Groups, live cards and messaging</text>
+  </g>
+
+  <g>
+    <rect x="52" y="470" width="220" height="72" rx="16" fill="#0b0d19" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="86" cy="506" r="17" fill="#2b2350"/>
+    <path d="M79 512c2-5 5.4-7.6 9-7.6s6.4 1.8 9 7.6" fill="none" stroke="#a78bfa" stroke-width="1.4"/>
+    <circle cx="88" cy="500" r="4" fill="#a78bfa"/>
+    <text x="114" y="502" fill="#f0f2fa" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">+2.4k</text>
+    <text x="114" y="518" fill="#818aa4" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8.5" letter-spacing="0.6">NEW MEMBERS</text>
+  </g>
+
+  <g>
+    <rect x="948" y="60" width="196" height="40" rx="20" fill="#0b0d19" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="970" cy="80" r="4" fill="#4ade80"/>
+    <text x="982" y="84" fill="#dfe3f0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9.5">Realtime sync</text>
+  </g>
+</svg>

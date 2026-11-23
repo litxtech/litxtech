@@ -2,7 +2,6 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Check, MessageCircle, MonitorPlay, Phone } from 'lucide-react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
-import { DashboardMockup } from '@/components/marketing/DashboardMockup'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { getSolutionBySlug } from '@/data/solutionsData'
@@ -70,7 +69,27 @@ export function SolutionDetailPage() {
               </a>
             </div>
           </div>
-          <DashboardMockup />
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="relative mx-auto w-full max-w-xl"
+          >
+            <div className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-sky-500/20 via-violet-500/12 to-cyan-400/15 blur-3xl" />
+            <div className="relative overflow-hidden rounded-2xl border border-white/[0.12] bg-[#080c15]/85 shadow-2xl shadow-black/70">
+              <img
+                src={solution.image}
+                alt={`${text.title} — ${
+                  language === 'tr' ? 'arayüz görünümü' : 'interface preview'
+                }`}
+                width={1200}
+                height={750}
+                loading="eager"
+                decoding="async"
+                className="aspect-[16/10] w-full object-cover"
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
 

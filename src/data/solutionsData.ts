@@ -19,6 +19,8 @@ export type SolutionEntry = {
   icon: SolutionIcon
   /** Decorative gradient for cards / hero accents */
   accent: 'blue' | 'violet' | 'emerald' | 'rose' | 'amber' | 'cyan'
+  /** Product visual shown in the solution hero */
+  image: string
   text: Record<Lang, SolutionText>
 }
 
@@ -39,6 +41,7 @@ export const solutionsData: SolutionEntry[] = [
     slug: 'otel-yonetim-sistemi',
     icon: Hotel,
     accent: 'blue',
+    image: '/assets/solutions/hotel-pms.svg',
     text: {
       en: {
         title: 'Hotel Management Systems',
@@ -130,6 +133,7 @@ export const solutionsData: SolutionEntry[] = [
     slug: 'restoran-yonetim-sistemi',
     icon: UtensilsCrossed,
     accent: 'amber',
+    image: '/assets/solutions/restaurant-pos.svg',
     text: {
       en: {
         title: 'Restaurant Management Systems',
@@ -223,6 +227,7 @@ export const solutionsData: SolutionEntry[] = [
     slug: 'sosyal-medya-uygulamasi',
     icon: Share2,
     accent: 'violet',
+    image: '/assets/projects/kbs-prime.svg',
     text: {
       en: {
         title: 'Social & Community Applications',
@@ -300,6 +305,7 @@ export const solutionsData: SolutionEntry[] = [
     slug: 'arkadaslik-uygulamasi',
     icon: HeartHandshake,
     accent: 'rose',
+    image: '/assets/projects/dating.svg',
     text: {
       en: {
         title: 'Dating & Matching Applications',
@@ -379,6 +385,7 @@ export const solutionsData: SolutionEntry[] = [
     slug: 'sehire-ozel-uygulamalar',
     icon: MapPinned,
     accent: 'emerald',
+    image: '/assets/projects/mytrabzon.svg',
     text: {
       en: {
         title: 'City Mobile Applications',
@@ -456,6 +463,7 @@ export const solutionsData: SolutionEntry[] = [
     slug: 'ozel-yazilim',
     icon: Building2,
     accent: 'cyan',
+    image: '/assets/solutions/enterprise.svg',
     text: {
       en: {
         title: 'Custom Enterprise Software',

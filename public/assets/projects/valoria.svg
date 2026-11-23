@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Valoria Hotel guest mobile app interface">
+  <defs>
+    <linearGradient id="v-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#080a11"/>
+      <stop offset="0.55" stop-color="#0d1019"/>
+      <stop offset="1" stop-color="#12141c"/>
+    </linearGradient>
+    <radialGradient id="v-gold" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#d8b26a" stop-opacity="0.5"/>
+      <stop offset="0.55" stop-color="#b8893c" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#b8893c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="v-cool" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#4f7dff" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#4f7dff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="v-screen" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#141a27"/>
+      <stop offset="1" stop-color="#0a0e17"/>
+    </linearGradient>
+    <linearGradient id="v-hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a3550"/>
+      <stop offset="0.5" stop-color="#3d3a4a"/>
+      <stop offset="1" stop-color="#241f28"/>
+    </linearGradient>
+    <linearGradient id="v-goldbar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e2c286"/>
+      <stop offset="1" stop-color="#c19a52"/>
+    </linearGradient>
+    <linearGradient id="v-glass" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.09"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <clipPath id="v-clip">
+      <rect x="482" y="67" width="236" height="616" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#v-bg)"/>
+  <ellipse cx="860" cy="150" rx="470" ry="330" fill="url(#v-gold)"/>
+  <ellipse cx="240" cy="640" rx="420" ry="300" fill="url(#v-cool)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.035" stroke-width="1">
+    <path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200"/>
+    <path d="M150 0V750M300 0V750M450 0V750M600 0V750M750 0V750M900 0V750M1050 0V750"/>
+  </g>
+
+  <!-- ambient rings -->
+  <g fill="none" stroke="#d8b26a" stroke-opacity="0.14">
+    <circle cx="600" cy="375" r="250"/>
+    <circle cx="600" cy="375" r="310" stroke-opacity="0.07"/>
+  </g>
+
+  <!-- phone shadow -->
+  <rect x="470" y="62" width="260" height="646" rx="40" fill="#000000" opacity="0.55"/>
+  <rect x="470" y="55" width="260" height="640" rx="40" fill="#0b0f18" stroke="#ffffff" stroke-opacity="0.14" stroke-width="1.5"/>
+  <rect x="478" y="63" width="244" height="624" rx="33" fill="none" stroke="#ffffff" stroke-opacity="0.05"/>
+
+  <rect x="482" y="67" width="236" height="616" rx="28" fill="url(#v-screen)"/>
+
+  <g clip-path="url(#v-clip)">
+    <!-- status bar -->
+    <g fill="#e6e8ef" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9" font-weight="600">
+      <text x="500" y="90">9:41</text>
+      <text x="686" y="90" text-anchor="end" opacity="0.75">5G</text>
+    </g>
+    <rect x="676" y="84" width="18" height="8" rx="2.4" fill="none" stroke="#e6e8ef" stroke-opacity="0.6"/>
+    <rect x="678" y="86" width="12" height="4" rx="1.2" fill="#e6e8ef" opacity="0.8"/>
+    <rect x="630" y="84" width="20" height="8" rx="2.4" fill="none" stroke="#e6e8ef" stroke-opacity="0.45"/>
+    <rect x="632" y="86" width="14" height="4" rx="1.2" fill="#8ea0bd"/>
+    <rect x="520" y="79" width="60" height="18" rx="9" fill="#05070c"/>
+
+    <!-- header -->
+    <text x="502" y="128" fill="#f3e6cc" font-family="Georgia, 'Times New Roman', serif" font-size="19" letter-spacing="1.6">VALORIA</text>
+    <text x="502" y="143" fill="#8d8577" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" letter-spacing="2.6">HOTEL &amp; SUITES</text>
+    <circle cx="700" cy="128" r="12" fill="url(#v-glass)" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="700" cy="125" r="3.4" fill="none" stroke="#d8b26a" stroke-width="1.2"/>
+    <path d="M696 132h8" stroke="#d8b26a" stroke-width="1.2" stroke-linecap="round"/>
+
+    <!-- hero card -->
+    <rect x="498" y="158" width="204" height="150" rx="16" fill="url(#v-hero)"/>
+    <g opacity="0.85">
+      <path d="M498 250c40-26 74-16 104-34s64-12 100 12v80H498z" fill="#1a1f2e" opacity="0.55"/>
+      <path d="M544 308v-52a14 14 0 0 1 14-14h40a14 14 0 0 1 14 14v52z" fill="#0e1220" opacity="0.7"/>
+      <path d="M606 242a12 12 0 0 1 12 12v54h-24v-54a12 12 0 0 1 12-12z" fill="#161b29" opacity="0.8"/>
+    </g>
+    <rect x="498" y="158" width="204" height="150" rx="16" fill="none" stroke="#ffffff" stroke-opacity="0.13"/>
+    <rect x="512" y="172" width="58" height="15" rx="7.5" fill="#0a0d14" opacity="0.7"/>
+    <text x="541" y="182.5" fill="#e5cfa4" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" letter-spacing="1" text-anchor="middle">SUITE 402</text>
+    <text x="512" y="222" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600">Welcome back, Elena</text>
+    <text x="512" y="237" fill="#b9bfcd" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">Your suite is ready · check-in 14:00</text>
+    <rect x="512" y="252" width="86" height="24" rx="8" fill="url(#v-goldbar)"/>
+    <text x="555" y="267.5" fill="#171207" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="middle">Open key</text>
+    <rect x="606" y="252" width="72" height="24" rx="8" fill="none" stroke="#ffffff" stroke-opacity="0.24"/>
+    <text x="642" y="267.5" fill="#e7e9f0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">Concierge</text>
+
+    <!-- quick actions -->
+    <g>
+      <rect x="498" y="322" width="62" height="56" rx="12" fill="url(#v-glass)" stroke="#ffffff" stroke-opacity="0.08"/>
+      <rect x="569" y="322" width="62" height="56" rx="12" fill="url(#v-glass)" stroke="#ffffff" stroke-opacity="0.08"/>
+      <rect x="640" y="322" width="62" height="56" rx="12" fill="url(#v-glass)" stroke="#ffffff" stroke-opacity="0.08"/>
+      <g stroke="#e5cfa4" stroke-width="1.3" fill="none" stroke-linecap="round">
+        <path d="M523 341h12v10h-12zM524 341v-3h10v3"/>
+        <circle cx="600" cy="344" r="5"/><path d="M591 356c1.6-4 4.8-6 9-6s7.4 2 9 6"/>
+        <path d="M665 350c0-5 6-5 6-10a6 6 0 1 0-12 0c0 5 6 5 6 10z"/><circle cx="671" cy="343" r="1.4" fill="#e5cfa4" stroke="none"/>
+      </g>
+      <g fill="#8e96a8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.4" letter-spacing="0.4">
+        <text x="529" y="371" text-anchor="middle">ROOM</text>
+        <text x="600" y="371" text-anchor="middle">STAFF</text>
+        <text x="671" y="371" text-anchor="middle">SERVICES</text>
+      </g>
+    </g>
+
+    <!-- chat -->
+    <text x="498" y="400" fill="#7d8497" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" letter-spacing="1.8">GUEST CHAT</text>
+    <rect x="498" y="410" width="148" height="34" rx="11" fill="#ffffff" fill-opacity="0.05"/>
+    <text x="508" y="425" fill="#d5d9e2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Dinner at the rooftop?</text>
+    <text x="508" y="437" fill="#7c8496" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.5">Table reserved · 20:30</text>
+    <rect x="556" y="452" width="146" height="34" rx="11" fill="url(#v-goldbar)" fill-opacity="0.92"/>
+    <text x="566" y="467" fill="#1a1408" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">Your table is confirmed</text>
+    <text x="566" y="479" fill="#4a3c1e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.5">Rooftop · 20:30 · 2 guests</text>
+
+    <!-- bottom nav -->
+    <rect x="482" y="630" width="236" height="53" fill="#060910" opacity="0.9"/>
+    <rect x="482" y="630" width="236" height="1" fill="#ffffff" fill-opacity="0.07"/>
+    <g stroke="#8b93a5" stroke-width="1.3" fill="none" stroke-linecap="round">
+      <path d="M525 651l-4 4 4 4 4-4z"/>
+      <path d="M593 653h-8l-2 6h12zM589 653v-2"/>
+      <path d="M646 650h8v8h-8z"/>
+      <circle cx="680" cy="654" r="4"/><path d="M680 650v-2.5"/>
+    </g>
+    <circle cx="525" cy="656" r="13" fill="#d8b26a" fill-opacity="0.12"/>
+    <rect x="521" y="652" width="8" height="8" rx="2" fill="none" stroke="#e5cfa4" stroke-width="1.3"/>
+    <circle cx="525" cy="670" r="2" fill="#e5cfa4"/>
+  </g>
+
+  <!-- floating cards -->
+  <g>
+    <rect x="118" y="196" width="212" height="92" rx="16" fill="#0c111b" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="154" cy="228" r="17" fill="#1d2637"/>
+    <circle cx="154" cy="223" r="5.4" fill="#c9a86a" opacity="0.8"/>
+    <path d="M143 240c2.6-6.4 6.6-9 11-9s8.4 2.6 11 9z" fill="#c9a86a" opacity="0.55"/>
+    <text x="182" y="226" fill="#eef0f6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600">Front desk</text>
+    <text x="182" y="241" fill="#7d8598" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9">Online now · replies in 2 min</text>
+    <rect x="182" y="252" width="64" height="16" rx="8" fill="#ffffff" fill-opacity="0.06"/>
+    <text x="192" y="263" fill="#d8b26a" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" letter-spacing="0.8">CONCIERGE</text>
+  </g>
+
+  <g>
+    <rect x="856" y="470" width="226" height="104" rx="16" fill="#0c111b" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="878" y="500" fill="#7d8598" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" letter-spacing="1.6">OCCUPANCY TODAY</text>
+    <text x="878" y="534" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="26" font-weight="700">92%</text>
+    <g>
+      <rect x="952" y="524" width="108" height="5" rx="2.5" fill="#ffffff" fill-opacity="0.1"/>
+      <rect x="952" y="524" width="99" height="5" rx="2.5" fill="#d8b26a"/>
+    </g>
+    <g fill="#7d8598" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">
+      <text x="952" y="546">Rooms 46 / 50</text>
+    </g>
+    <g>
+      <rect x="878" y="552" width="52" height="6" rx="3" fill="#ffffff" fill-opacity="0.06"/>
+      <rect x="938" y="552" width="36" height="6" rx="3" fill="#ffffff" fill-opacity="0.06"/>
+    </g>
+  </g>
+
+  <g>
+    <rect x="880" y="118" width="176" height="42" rx="21" fill="#0c111b" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="903" cy="139" r="8" fill="#d8b26a" fill-opacity="0.25"/>
+    <path d="M899.5 139l2.6 2.6 4.6-4.6" fill="none" stroke="#e5cfa4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="920" y="143" fill="#e9ecf3" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="10" font-weight="500">Mobile check-in</text>
+  </g>
+</svg>

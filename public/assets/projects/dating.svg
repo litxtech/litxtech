@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Dating and matching app profile cards interface">
+  <defs>
+    <linearGradient id="d-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0710"/>
+      <stop offset="0.55" stop-color="#0d0813"/>
+      <stop offset="1" stop-color="#120a14"/>
+    </linearGradient>
+    <radialGradient id="d-rose" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fb7185" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#fb7185" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="d-violet" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#a855f7" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="d-a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b1f2e"/>
+      <stop offset="0.5" stop-color="#4a2440"/>
+      <stop offset="1" stop-color="#261a3a"/>
+    </linearGradient>
+    <linearGradient id="d-b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e2a45"/>
+      <stop offset="0.55" stop-color="#243a52"/>
+      <stop offset="1" stop-color="#2b2246"/>
+    </linearGradient>
+    <linearGradient id="d-heart" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#e879f9"/>
+    </linearGradient>
+    <linearGradient id="d-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <clipPath id="d-clip-a"><rect x="336" y="112" width="280" height="440" rx="26"/></clipPath>
+    <clipPath id="d-clip-b"><rect x="588" y="176" width="280" height="440" rx="26"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#d-bg)"/>
+  <ellipse cx="760" cy="200" rx="440" ry="330" fill="url(#d-rose)"/>
+  <ellipse cx="320" cy="620" rx="420" ry="300" fill="url(#d-violet)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200"/>
+    <path d="M150 0V750M300 0V750M450 0V750M600 0V750M750 0V750M900 0V750M1050 0V750"/>
+  </g>
+
+  <!-- back cards -->
+  <g opacity="0.55">
+    <rect x="270" y="150" width="250" height="400" rx="24" fill="#1a1220" stroke="#ffffff" stroke-opacity="0.08" transform="rotate(-7 395 350)"/>
+    <rect x="690" y="150" width="250" height="400" rx="24" fill="#141a2a" stroke="#ffffff" stroke-opacity="0.08" transform="rotate(7 815 350)"/>
+  </g>
+
+  <!-- card B (behind, right) -->
+  <g>
+    <rect x="580" y="168" width="296" height="456" rx="28" fill="#000" opacity="0.45"/>
+    <rect x="588" y="176" width="280" height="440" rx="26" fill="url(#d-b)"/>
+    <g clip-path="url(#d-clip-b)">
+      <circle cx="728" cy="330" r="86" fill="#ffffff" fill-opacity="0.05"/>
+      <circle cx="728" cy="318" r="46" fill="#93a7c9" fill-opacity="0.3"/>
+      <path d="M650 470c14-58 44-86 78-86s64 28 78 86z" fill="#93a7c9" fill-opacity="0.22"/>
+      <path d="M0 540h280v76H0z" fill="#0a0d15" fill-opacity="0.55"/>
+      <text x="612" y="560" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Mira, 27</text>
+      <text x="612" y="578" fill="#b8c2d8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9">Designer · 3 km away</text>
+      <g>
+        <rect x="612" y="588" width="52" height="17" rx="8.5" fill="#ffffff" fill-opacity="0.12"/>
+        <text x="638" y="600" fill="#e2e8f7" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">Design</text>
+        <rect x="672" y="588" width="46" height="17" rx="8.5" fill="#ffffff" fill-opacity="0.12"/>
+        <text x="695" y="600" fill="#e2e8f7" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">Travel</text>
+      </g>
+      <circle cx="714" cy="612" r="13" fill="url(#d-grad)"/>
+      <path d="M714 606.5c1.6-2.6 5.4-2.2 5.4.8 0 2.4-5.4 5.4-5.4 5.4s-5.4-3-5.4-5.4c0-3 3.8-3.4 5.4-.8z" fill="#ffffff" fill-opacity="0.92"/>
+    </g>
+    <rect x="588" y="176" width="280" height="440" rx="26" fill="none" stroke="#ffffff" stroke-opacity="0.12"/>
+  </g>
+
+  <!-- card A (front, left) -->
+  <g>
+    <rect x="328" y="104" width="296" height="456" rx="28" fill="#000" opacity="0.55"/>
+    <rect x="336" y="112" width="280" height="440" rx="26" fill="url(#d-a)"/>
+    <g clip-path="url(#d-clip-a)">
+      <circle cx="476" cy="266" r="92" fill="#ffffff" fill-opacity="0.05"/>
+      <circle cx="476" cy="252" r="48" fill="#f0b9b0" fill-opacity="0.34"/>
+      <path d="M396 408c14-60 44-88 80-88s66 28 80 88z" fill="#f0b9b0" fill-opacity="0.24"/>
+      <circle cx="476" cy="252" r="48" fill="none" stroke="#fb7185" stroke-opacity="0.3"/>
+
+      <rect x="352" y="132" width="62" height="20" rx="10" fill="#0a0710" fill-opacity="0.6"/>
+      <circle cx="363" cy="142" r="3" fill="#4ade80"/>
+      <text x="371" y="145.5" fill="#e8e4f0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" letter-spacing="0.6">ONLINE</text>
+
+      <path d="M0 476h280v76H0z" fill="#0c0812" fill-opacity="0.72"/>
+      <text x="360" y="504" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="600">Selin, 26</text>
+      <text x="360" y="522" fill="#c8bcd0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9.5">Product designer · 2 km away</text>
+      <g>
+        <rect x="360" y="532" width="56" height="17" rx="8.5" fill="#ffffff" fill-opacity="0.13"/>
+        <text x="388" y="544" fill="#eee6f3" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">Music</text>
+        <rect x="424" y="532" width="48" height="17" rx="8.5" fill="#ffffff" fill-opacity="0.13"/>
+        <text x="448" y="544" fill="#eee6f3" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">Coffee</text>
+        <rect x="480" y="532" width="44" height="17" rx="8.5" fill="#ffffff" fill-opacity="0.13"/>
+        <text x="502" y="544" fill="#eee6f3" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">Art</text>
+      </g>
+    </g>
+    <rect x="336" y="112" width="280" height="440" rx="26" fill="none" stroke="#fb7185" stroke-opacity="0.25"/>
+
+    <!-- action buttons -->
+    <g>
+      <circle cx="410" cy="606" r="27" fill="#0e0b14" stroke="#ffffff" stroke-opacity="0.16"/>
+      <path d="M401 597l18 18M419 597l-18 18" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="476" cy="606" r="34" fill="url(#d-grad)"/>
+      <path d="M476 590c4-6.6 13.4-5.6 13.4 2 0 6-13.4 13.4-13.4 13.4s-13.4-7.4-13.4-13.4c0-7.6 9.4-8.6 13.4-2z" fill="#ffffff" fill-opacity="0.95"/>
+      <circle cx="542" cy="606" r="27" fill="#0e0b14" stroke="#ffffff" stroke-opacity="0.16"/>
+      <path d="M533 604l14-6-4 14-4-6z" fill="none" stroke="#93c5fd" stroke-width="1.8" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- match pill -->
+  <g>
+    <rect x="858" y="126" width="234" height="86" rx="18" fill="#0d0912" stroke="#fb7185" stroke-opacity="0.28"/>
+    <circle cx="896" cy="160" r="18" fill="url(#d-heart)" opacity="0.25"/>
+    <path d="M896 153.5c2.2-3.6 7.4-3 7.4 1.1 0 3.3-7.4 7.4-7.4 7.4s-7.4-4.1-7.4-7.4c0-4.1 5.2-4.7 7.4-1.1z" fill="#fda4af"/>
+    <text x="926" y="158" fill="#fff1f5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700">It's a match</text>
+    <text x="926" y="174" fill="#b08e9e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9">You and Selin liked each other</text>
+    <rect x="926" y="184" width="70" height="18" rx="9" fill="url(#d-gradient)" fill-opacity="0"/>
+  </g>
+
+  <!-- chat bubble -->
+  <g>
+    <rect x="90" y="330" width="212" height="96" rx="18" fill="#0d0912" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="120" cy="360" r="14" fill="#3b2233"/>
+    <circle cx="120" cy="356" r="4.2" fill="#f0b9b0" opacity="0.85"/>
+    <path d="M112 367c1.8-3.2 4.6-4.8 8-4.8s6.2 1.6 8 4.8z" fill="#f0b9b0" opacity="0.55"/>
+    <text x="144" y="357" fill="#efe6f2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9.5" font-weight="600">Selin</text>
+    <text x="144" y="369" fill="#8d7d96" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Active now</text>
+    <rect x="108" y="382" width="150" height="14" rx="7" fill="#ffffff" fill-opacity="0.07"/>
+    <rect x="108" y="402" width="104" height="14" rx="7" fill="url(#d-grad)" fill-opacity="0.5"/>
+  </g>
+
+  <g>
+    <rect x="906" y="470" width="196" height="74" rx="16" fill="#0d0912" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="928" y="498" fill="#8c7d95" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" letter-spacing="1.4">MATCH QUALITY</text>
+    <text x="928" y="526" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">94%</text>
+    <g>
+      <rect x="1002" y="512" width="78" height="5" rx="2.5" fill="#ffffff" fill-opacity="0.1"/>
+      <rect x="1002" y="512" width="73" height="5" rx="2.5" fill="url(#d-heart)"/>
+    </g>
+  </g>
+</svg>

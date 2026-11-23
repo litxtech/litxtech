@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Restaurant POS and kitchen display system with menu grid and order ticket">
+  <defs>
+    <linearGradient id="r-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e0807"/>
+      <stop offset="0.5" stop-color="#110a08"/>
+      <stop offset="1" stop-color="#0c0a0e"/>
+    </linearGradient>
+    <radialGradient id="r-orange" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fb923c" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#fb923c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="r-red" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f43f5e" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#f43f5e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="r-frame" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#1a1310"/>
+      <stop offset="1" stop-color="#0d0a09"/>
+    </linearGradient>
+    <linearGradient id="r-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+    <linearGradient id="r-tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b2417"/>
+      <stop offset="1" stop-color="#241a20"/>
+    </linearGradient>
+    <linearGradient id="r-tile2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#233326"/>
+      <stop offset="1" stop-color="#18202a"/>
+    </linearGradient>
+    <linearGradient id="r-tile3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#33202c"/>
+      <stop offset="1" stop-color="#241824"/>
+    </linearGradient>
+    <clipPath id="r-win"><rect x="120" y="92" width="960" height="566" rx="22"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#r-bg)"/>
+  <ellipse cx="300" cy="150" rx="440" ry="320" fill="url(#r-orange)"/>
+  <ellipse cx="980" cy="650" rx="420" ry="300" fill="url(#r-red)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200"/>
+    <path d="M150 0V750M300 0V750M450 0V750M600 0V750M750 0V750M900 0V750M1050 0V750"/>
+  </g>
+
+  <rect x="112" y="84" width="976" height="582" rx="24" fill="#000" opacity="0.55"/>
+  <rect x="120" y="92" width="960" height="566" rx="22" fill="url(#r-frame)" stroke="#ffffff" stroke-opacity="0.11"/>
+
+  <g clip-path="url(#r-win)">
+    <!-- top bar -->
+    <rect x="120" y="92" width="960" height="52" fill="#ffffff" fill-opacity="0.025"/>
+    <path d="M120 144h960" stroke="#ffffff" stroke-opacity="0.07"/>
+    <g>
+      <rect x="142" y="106" width="26" height="26" rx="8" fill="url(#r-accent)"/>
+      <path d="M149 122c0-5 6-5 6-10M159 122c0-5 6-5 6-10" stroke="#1b0d06" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <text x="180" y="117" fill="#f7efe9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="10.5" font-weight="600">Table 12</text>
+      <text x="180" y="129" fill="#8c7a6e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Dine-in · 4 guests · opened 19:12</text>
+    </g>
+    <g>
+      <rect x="766" y="107" width="72" height="22" rx="11" fill="#f97316" fill-opacity="0.16"/>
+      <circle cx="780" cy="118" r="3" fill="#fb923c"/>
+      <text x="788" y="121.5" fill="#fdba74" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" font-weight="600">OPEN</text>
+      <rect x="848" y="107" width="80" height="22" rx="11" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="888" y="121.5" fill="#a99a8f" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">Split bill</text>
+      <circle cx="1044" cy="118" r="12" fill="#2f251f"/>
+      <circle cx="1044" cy="114" r="3.8" fill="#e7d3c2"/>
+      <path d="M1037 125c1.6-3 4-4.4 7-4.4s5.4 1.4 7 4.4z" fill="#e7d3c2" opacity="0.7"/>
+    </g>
+
+    <!-- left: categories + menu -->
+    <rect x="120" y="144" width="600" height="514" fill="#ffffff" fill-opacity="0.01"/>
+    <path d="M720 144v514" stroke="#ffffff" stroke-opacity="0.07"/>
+
+    <g font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">
+      <rect x="144" y="164" width="88" height="24" rx="12" fill="url(#r-accent)"/>
+      <text x="188" y="179.5" fill="#1b0d06" font-weight="700" text-anchor="middle">All items</text>
+      <rect x="240" y="164" width="74" height="24" rx="12" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="277" y="179.5" fill="#a99a8f" text-anchor="middle">Starters</text>
+      <rect x="322" y="164" width="74" height="24" rx="12" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="359" y="179.5" fill="#a99a8f" text-anchor="middle">Mains</text>
+      <rect x="404" y="164" width="66" height="24" rx="12" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="437" y="179.5" fill="#a99a8f" text-anchor="middle">Grill</text>
+      <rect x="478" y="164" width="60" height="24" rx="12" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="508" y="179.5" fill="#a99a8f" text-anchor="middle">Drinks</text>
+      <rect x="546" y="164" width="64" height="24" rx="12" fill="#ffffff" fill-opacity="0.05"/>
+      <text x="578" y="179.5" fill="#a99a8f" text-anchor="middle">Dessert</text>
+    </g>
+
+    <!-- menu tiles -->
+    <g>
+      <rect x="144" y="204" width="132" height="112" rx="14" fill="url(#r-tile)"/>
+      <g opacity="0.75">
+        <ellipse cx="210" cy="258" rx="40" ry="30" fill="#5a3a22"/>
+        <ellipse cx="210" cy="252" rx="28" ry="19" fill="#8a5b31"/>
+        <ellipse cx="200" cy="248" rx="9" ry="6" fill="#c98a4b"/>
+        <circle cx="220" cy="256" r="6" fill="#4c7a3a"/>
+      </g>
+      <text x="156" y="298" fill="#f2e8e0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="500">Grilled sea bass</text>
+      <text x="156" y="308" fill="#fb923c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">€18.50</text>
+      <rect x="248" y="300" width="16" height="12" rx="4" fill="#ffffff" fill-opacity="0.07"/>
+
+      <rect x="288" y="204" width="132" height="112" rx="14" fill="url(#r-tile2)"/>
+      <g opacity="0.7">
+        <circle cx="354" cy="252" r="26" fill="#3d5c34"/>
+        <circle cx="354" cy="252" r="18" fill="#6f8f3f"/>
+        <circle cx="346" cy="246" r="6" fill="#a8c45c"/>
+        <circle cx="362" cy="258" r="5" fill="#c9d879"/>
+      </g>
+      <text x="300" y="298" fill="#f2e8e0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="500">Garden salad</text>
+      <text x="300" y="308" fill="#fb923c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">€9.00</text>
+
+      <rect x="432" y="204" width="132" height="112" rx="14" fill="url(#r-tile3)"/>
+      <g opacity="0.7">
+        <ellipse cx="498" cy="256" rx="34" ry="24" fill="#5c2b33"/>
+        <ellipse cx="498" cy="252" rx="24" ry="16" fill="#8f4750"/>
+        <path d="M484 246c8-5 20-5 28 0" stroke="#c98088" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+      <text x="444" y="298" fill="#f2e8e0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="500">Beef ragù</text>
+      <text x="444" y="308" fill="#fb923c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">€16.00</text>
+
+      <rect x="576" y="204" width="120" height="112" rx="14" fill="url(#r-tile)"/>
+      <g opacity="0.7">
+        <rect x="616" y="234" width="40" height="48" rx="7" fill="#4a2f1e"/>
+        <rect x="620" y="230" width="32" height="10" rx="4" fill="#c98a4b"/>
+        <path d="M624 248h24M624 256h18" stroke="#e3b68a" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+      </g>
+      <text x="588" y="298" fill="#f2e8e0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="500">Cold brew</text>
+      <text x="588" y="308" fill="#fb923c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">€4.50</text>
+
+      <!-- second row -->
+      <rect x="144" y="328" width="132" height="112" rx="14" fill="url(#r-tile3)"/>
+      <g opacity="0.7">
+        <circle cx="210" cy="380" r="30" fill="#e8a86b"/>
+        <circle cx="210" cy="380" r="22" fill="#f3c48d"/>
+        <circle cx="202" cy="374" r="5" fill="#fff3e2"/>
+        <circle cx="218" cy="386" r="4" fill="#c9722f"/>
+      </g>
+      <text x="156" y="422" fill="#f2e8e0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="500">Burnt cheesecake</text>
+      <text x="156" y="432" fill="#fb923c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">€7.50</text>
+
+      <rect x="288" y="328" width="132" height="112" rx="14" fill="url(#r-tile2)"/>
+      <g opacity="0.68">
+        <rect x="326" y="360" width="56" height="34" rx="8" fill="#6f8f3f"/>
+        <path d="M334 376h40M334 384h28" stroke="#dbe9b0" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="370" cy="368" r="5" fill="#c9d879"/>
+      </g>
+      <text x="300" y="422" fill="#f2e8e0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="500">Mezze board</text>
+      <text x="300" y="432" fill="#fb923c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">€14.00</text>
+
+      <rect x="432" y="328" width="132" height="112" rx="14" fill="url(#r-tile)"/>
+      <g opacity="0.7">
+        <ellipse cx="498" cy="380" rx="34" ry="22" fill="#6b3a24"/>
+        <ellipse cx="498" cy="376" rx="24" ry="14" fill="#9d5a34"/>
+        <path d="M482 372c10-4 22-4 32 0" stroke="#d99a6c" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+      <text x="444" y="422" fill="#f2e8e0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="500">Lamb shank</text>
+      <text x="444" y="432" fill="#fb923c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">€24.00</text>
+
+      <rect x="576" y="328" width="120" height="112" rx="14" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="4 4"/>
+      <path d="M636 376v20M626 386h20" stroke="#8c7a6e" stroke-width="1.6" stroke-linecap="round"/>
+      <text x="636" y="422" fill="#8c7a6e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">Custom item</text>
+    </g>
+
+    <!-- order ticket -->
+    <text x="744" y="176" fill="#f7efe9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="11" font-weight="600">Order · Table 12</text>
+    <text x="744" y="190" fill="#8c7a6e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">4 items · 2 guests waiting</text>
+
+    <g font-family="Inter, Segoe UI, Arial, sans-serif">
+      <g>
+        <rect x="744" y="202" width="312" height="44" rx="10" fill="#ffffff" fill-opacity="0.03"/>
+        <text x="756" y="219" fill="#efe4dc" font-size="8" font-weight="500">2 × Grilled sea bass</text>
+        <text x="756" y="232" fill="#8c7a6e" font-size="6.8">no lemon · extra herbs</text>
+        <text x="1040" y="220" fill="#fb923c" font-size="8.5" font-weight="600" text-anchor="end">€37.00</text>
+      </g>
+      <g>
+        <rect x="744" y="254" width="312" height="44" rx="10" fill="#ffffff" fill-opacity="0.03"/>
+        <text x="756" y="271" fill="#efe4dc" font-size="8" font-weight="500">1 × Mezze board</text>
+        <text x="756" y="284" fill="#8c7a6e" font-size="6.8">to share</text>
+        <text x="1040" y="272" fill="#fb923c" font-size="8.5" font-weight="600" text-anchor="end">€14.00</text>
+      </g>
+      <g>
+        <rect x="744" y="306" width="312" height="44" rx="10" fill="#ffffff" fill-opacity="0.03"/>
+        <text x="756" y="323" fill="#efe4dc" font-size="8" font-weight="500">1 × Burnt cheesecake</text>
+        <text x="756" y="336" fill="#8c7a6e" font-size="6.8">dessert · serve last</text>
+        <text x="1040" y="324" fill="#fb923c" font-size="8.5" font-weight="600" text-anchor="end">€7.50</text>
+      </g>
+      <g>
+        <rect x="744" y="358" width="312" height="40" rx="10" fill="#ffffff" fill-opacity="0.025"/>
+        <text x="756" y="374" fill="#efe4dc" font-size="8" font-weight="500">2 × Cold brew</text>
+        <text x="1040" y="375" fill="#fb923c" font-size="8.5" font-weight="600" text-anchor="end">€9.00</text>
+      </g>
+
+      <path d="M744 412h312" stroke="#ffffff" stroke-opacity="0.1"/>
+      <text x="756" y="432" fill="#8c7a6e" font-size="7.5">Subtotal</text>
+      <text x="1040" y="432" fill="#cfc3b9" font-size="7.5" text-anchor="end">€67.50</text>
+      <text x="756" y="452" fill="#8c7a6e" font-size="7.5">Table service</text>
+      <text x="1040" y="452" fill="#cfc3b9" font-size="7.5" text-anchor="end">€6.75</text>
+      <text x="756" y="476" fill="#f7efe9" font-size="9" font-weight="600">Total</text>
+      <text x="1040" y="476" fill="#ffffff" font-size="14" font-weight="700" text-anchor="end">€74.25</text>
+    </g>
+
+    <rect x="744" y="496" width="312" height="40" rx="12" fill="url(#r-accent)"/>
+    <text x="900" y="521" fill="#1b0d06" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" text-anchor="middle">Send to kitchen</text>
+
+    <g>
+      <rect x="744" y="548" width="150" height="34" rx="10" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.06"/>
+      <text x="760" y="570" fill="#a99a8f" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Print bill</text>
+      <rect x="906" y="548" width="150" height="34" rx="10" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.06"/>
+      <text x="922" y="570" fill="#a99a8f" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Take payment</text>
+    </g>
+
+    <!-- KDS strip -->
+    <rect x="744" y="596" width="312" height="48" rx="10" fill="#ffffff" fill-opacity="0.025" stroke="#ffffff" stroke-opacity="0.06"/>
+    <circle cx="766" cy="620" r="6" fill="#fb923c" fill-opacity="0.25"/>
+    <circle cx="766" cy="620" r="2.6" fill="#fb923c"/>
+    <text x="782" y="616" fill="#efe4dc" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="600">Kitchen · 3 tickets in prep</text>
+    <text x="782" y="629" fill="#8c7a6e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.8">Avg. prep time 12m 40s</text>
+    <g>
+      <rect x="962" y="608" width="76" height="24" rx="12" fill="#22c55e" fill-opacity="0.14"/>
+      <text x="1000" y="623.5" fill="#86efac" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">On time</text>
+    </g>
+  </g>
+</svg>

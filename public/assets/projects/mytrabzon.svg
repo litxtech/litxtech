@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Trabzon Live city guide mobile app with places and events">
+  <defs>
+    <linearGradient id="m-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0805"/>
+      <stop offset="0.5" stop-color="#0d0b07"/>
+      <stop offset="1" stop-color="#0b0e12"/>
+    </linearGradient>
+    <radialGradient id="m-amber" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f59e0b" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="m-teal" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#2dd4bf" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="m-screen" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#16130e"/>
+      <stop offset="1" stop-color="#0a0c10"/>
+    </linearGradient>
+    <linearGradient id="m-hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a2a12"/>
+      <stop offset="0.5" stop-color="#4a3a1c"/>
+      <stop offset="1" stop-color="#152a33"/>
+    </linearGradient>
+    <linearGradient id="m-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="m-sea" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d3b46"/>
+      <stop offset="1" stop-color="#0a2230"/>
+    </linearGradient>
+    <linearGradient id="m-glass" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.09"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <clipPath id="m-clip"><rect x="392" y="67" width="236" height="616" rx="28"/></clipPath>
+    <clipPath id="m-map"><rect x="690" y="410" width="392" height="192" rx="18"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#m-bg)"/>
+  <ellipse cx="980" cy="180" rx="430" ry="320" fill="url(#m-amber)"/>
+  <ellipse cx="320" cy="650" rx="420" ry="300" fill="url(#m-teal)"/>
+
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200"/>
+    <path d="M150 0V750M300 0V750M450 0V750M600 0V750M750 0V750M900 0V750M1050 0V750"/>
+  </g>
+  <g fill="none" stroke="#fbbf24" stroke-opacity="0.06">
+    <circle cx="600" cy="375" r="280"/>
+    <circle cx="600" cy="375" r="335"/>
+  </g>
+
+  <!-- phone -->
+  <rect x="380" y="62" width="260" height="646" rx="40" fill="#000" opacity="0.55"/>
+  <rect x="380" y="55" width="260" height="640" rx="40" fill="#0a0c10" stroke="#ffffff" stroke-opacity="0.13" stroke-width="1.5"/>
+  <rect x="392" y="67" width="236" height="616" rx="28" fill="url(#m-screen)"/>
+
+  <g clip-path="url(#m-clip)">
+    <text x="410" y="90" fill="#f2e9dc" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="9" font-weight="600">9:41</text>
+    <rect x="586" y="84" width="18" height="8" rx="2.4" fill="none" stroke="#f2e9dc" stroke-opacity="0.5"/>
+    <rect x="588" y="86" width="12" height="4" rx="1.2" fill="#f2e9dc" opacity="0.8"/>
+    <rect x="430" y="79" width="60" height="18" rx="9" fill="#080a0d"/>
+
+    <!-- header -->
+    <text x="412" y="126" fill="#fff8ec" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">Trabzon Live</text>
+    <text x="412" y="140" fill="#8d7a5e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" letter-spacing="2">CITY GUIDE · LOCAL</text>
+    <circle cx="610" cy="124" r="12" fill="url(#m-glass)" stroke="#ffffff" stroke-opacity="0.08"/>
+    <circle cx="610" cy="121" r="3.2" fill="none" stroke="#fbbf24" stroke-width="1.2"/>
+    <path d="M605 129h10" stroke="#fbbf24" stroke-width="1.2" stroke-linecap="round"/>
+
+    <!-- search -->
+    <rect x="408" y="152" width="204" height="30" rx="15" fill="#ffffff" fill-opacity="0.05"/>
+    <circle cx="426" cy="167" r="4" fill="none" stroke="#b9a58a" stroke-width="1.2"/>
+    <path d="M429 170l2.6 2.6" stroke="#b9a58a" stroke-width="1.2" stroke-linecap="round"/>
+    <text x="440" y="170.5" fill="#8d7f6c" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">Places, events, food…</text>
+
+    <!-- chips -->
+    <g font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7">
+      <rect x="408" y="192" width="46" height="22" rx="11" fill="#fbbf24"/>
+      <text x="431" y="206.5" fill="#1c1405" font-weight="700" text-anchor="middle">Explore</text>
+      <rect x="460" y="192" width="42" height="22" rx="11" fill="#ffffff" fill-opacity="0.06"/>
+      <text x="481" y="206.5" fill="#c0ad92" text-anchor="middle">Eat</text>
+      <rect x="508" y="192" width="48" height="22" rx="11" fill="#ffffff" fill-opacity="0.06"/>
+      <text x="532" y="206.5" fill="#c0ad92" text-anchor="middle">Events</text>
+      <rect x="562" y="192" width="50" height="22" rx="11" fill="#ffffff" fill-opacity="0.06"/>
+      <text x="587" y="206.5" fill="#c0ad92" text-anchor="middle">Stay</text>
+    </g>
+
+    <!-- featured place -->
+    <rect x="408" y="226" width="204" height="140" rx="16" fill="url(#m-hero)"/>
+    <g opacity="0.75">
+      <path d="M408 320c34-26 60-16 90-36s64-14 114 14v68H408z" fill="#0a2530" opacity="0.65"/>
+      <path d="M452 366v-34a10 10 0 0 1 10-10h20a10 10 0 0 1 10 10v34z" fill="#0a1a22" opacity="0.8"/>
+      <path d="M510 366v-50a8 8 0 0 1 8-8h18a8 8 0 0 1 8 8v50z" fill="#0c2430" opacity="0.85"/>
+      <path d="M566 366v-28a9 9 0 0 1 9-9h16a9 9 0 0 1 9 9v28z" fill="#0a1a22" opacity="0.8"/>
+      <circle cx="500" cy="252" r="13" fill="#fbbf24" fill-opacity="0.2"/>
+    </g>
+    <rect x="408" y="226" width="204" height="140" rx="16" fill="none" stroke="#fbbf24" stroke-opacity="0.18"/>
+    <rect x="422" y="240" width="76" height="16" rx="8" fill="#0a0a08" fill-opacity="0.65"/>
+    <path d="M431 248l3 3 5-6" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="442" y="251.5" fill="#fde9bf" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.6" letter-spacing="0.8">MUST SEE</text>
+    <text x="422" y="316" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Uzungöl morning walk</text>
+    <text x="422" y="330" fill="#c7b391" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">Lake views · 45 min from the city</text>
+    <g>
+      <rect x="422" y="340" width="64" height="18" rx="9" fill="url(#m-accent)"/>
+      <text x="454" y="352" fill="#1c1405" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" font-weight="700" text-anchor="middle">Open guide</text>
+      <rect x="494" y="340" width="52" height="18" rx="9" fill="#ffffff" fill-opacity="0.1"/>
+      <text x="520" y="352" fill="#e7dcc9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.6" text-anchor="middle">Save</text>
+    </g>
+
+    <!-- list -->
+    <text x="408" y="388" fill="#8d7a5e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" letter-spacing="1.8">TODAY IN THE CITY</text>
+    <g>
+      <rect x="408" y="396" width="204" height="52" rx="12" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.06"/>
+      <rect x="418" y="404" width="36" height="36" rx="9" fill="#3a2a12"/>
+      <text x="436" y="419" fill="#fcd34d" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="middle">21</text>
+      <text x="436" y="431" fill="#c9ab6d" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="5.6" letter-spacing="0.6" text-anchor="middle">NOV</text>
+      <rect x="464" y="410" width="94" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.14"/>
+      <rect x="464" y="423" width="66" height="6" rx="3" fill="#ffffff" fill-opacity="0.08"/>
+      <rect x="464" y="435" width="42" height="6" rx="3" fill="#fbbf24" fill-opacity="0.35"/>
+    </g>
+    <g>
+      <rect x="408" y="456" width="204" height="52" rx="12" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.06"/>
+      <rect x="418" y="464" width="36" height="36" rx="9" fill="#0d3b46"/>
+      <path d="M430 492c3-8 8-12 8-12s5 4 8 12z" fill="#2dd4bf" fill-opacity="0.45"/>
+      <rect x="464" y="470" width="80" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.14"/>
+      <rect x="464" y="483" width="102" height="6" rx="3" fill="#ffffff" fill-opacity="0.08"/>
+      <rect x="464" y="495" width="50" height="6" rx="3" fill="#2dd4bf" fill-opacity="0.3"/>
+    </g>
+    <g>
+      <rect x="408" y="516" width="204" height="52" rx="12" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.06"/>
+      <rect x="418" y="524" width="36" height="36" rx="9" fill="#33223a"/>
+      <circle cx="436" cy="542" r="7" fill="none" stroke="#e9a8d0" stroke-width="1.3"/>
+      <rect x="464" y="530" width="88" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.14"/>
+      <rect x="464" y="543" width="70" height="6" rx="3" fill="#ffffff" fill-opacity="0.08"/>
+    </g>
+
+    <!-- bottom nav -->
+    <rect x="392" y="630" width="236" height="53" fill="#080a0d" opacity="0.94"/>
+    <rect x="392" y="630" width="236" height="1" fill="#ffffff" fill-opacity="0.06"/>
+    <g stroke="#8a7a63" stroke-width="1.3" fill="none" stroke-linecap="round">
+      <path d="M435 650l-5 5 5 5 5-5z"/>
+      <circle cx="496" cy="655" r="5"/><path d="M496 650c3 0 5 2.2 5 5 0 3.6-5 8-5 8s-5-4.4-5-8c0-2.8 2-5 5-5z"/>
+      <path d="M553 651h10v10h-10z"/>
+      <circle cx="608" cy="652" r="3"/><circle cx="608" cy="661" r="3"/>
+    </g>
+    <circle cx="435" cy="666" r="2" fill="#fbbf24"/>
+    <path d="M435 655l-4 4 4 4 4-4z" fill="none" stroke="#fbbf24" stroke-width="1.4"/>
+  </g>
+
+  <!-- weather chip -->
+  <g>
+    <rect x="908" y="112" width="180" height="46" rx="23" fill="#0b0d10" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="932" cy="135" r="9" fill="#fbbf24" fill-opacity="0.2"/>
+    <circle cx="932" cy="135" r="4" fill="#fbbf24"/>
+    <text x="950" y="132" fill="#f6efe2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="10" font-weight="600">18°C · Trabzon</text>
+    <text x="950" y="145" fill="#8d8071" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5">Clear sky · light breeze</text>
+  </g>
+
+  <!-- map card -->
+  <rect x="682" y="402" width="408" height="208" rx="22" fill="#000" opacity="0.4"/>
+  <rect x="690" y="410" width="392" height="192" rx="18" fill="url(#m-sea)" stroke="#ffffff" stroke-opacity="0.1"/>
+  <g clip-path="url(#m-map)">
+    <g stroke="#fcd34d" stroke-opacity="0.1" fill="none" stroke-width="1">
+      <path d="M690 450h392M690 490h392M690 530h392M690 570h392"/>
+      <path d="M750 410v192M820 410v192M890 410v192M960 410v192M1030 410v192"/>
+    </g>
+    <path d="M690 560c54-22 88-4 128-24s78-20 118-6 70-6 146-16v88H690z" fill="#0c3b44" opacity="0.6"/>
+    <path d="M690 566c54-22 88-2 128-22s78-18 118-4 70-4 146-14" stroke="#2dd4bf" stroke-opacity="0.4" fill="none" stroke-width="1.6"/>
+    <g stroke="#fcd34d" stroke-opacity="0.28" fill="none" stroke-width="2">
+      <path d="M716 578c30-52 74-46 104-84s58-42 104-46"/>
+      <path d="M790 592c10-44 52-56 84-92s46-44 96-52"/>
+    </g>
+    <g>
+      <circle cx="852" cy="492" r="16" fill="#fbbf24" fill-opacity="0.16"/>
+      <path d="M852 480c5.6 0 10 4.4 10 9.8 0 7-10 16.2-10 16.2s-10-9.2-10-16.2c0-5.4 4.4-9.8 10-9.8z" fill="#fbbf24"/>
+      <circle cx="852" cy="489" r="3.6" fill="#0a1a22"/>
+      <circle cx="944" cy="540" r="12" fill="#2dd4bf" fill-opacity="0.18"/>
+      <path d="M944 531c4.4 0 8 3.6 8 8 0 5.6-8 12.6-8 12.6s-8-7-8-12.6c0-4.4 3.6-8 8-8z" fill="#2dd4bf"/>
+      <circle cx="944" cy="539" r="2.8" fill="#0a1a22"/>
+      <circle cx="1018" cy="470" r="9" fill="#e9a8d0" fill-opacity="0.2"/>
+      <path d="M1018 463c3.6 0 6.6 3 6.6 6.6 0 4.6-6.6 10.4-6.6 10.4s-6.6-5.8-6.6-10.4c0-3.6 3-6.6 6.6-6.6z" fill="#e9a8d0"/>
+    </g>
+    <rect x="706" y="426" width="112" height="26" rx="13" fill="#050d12" fill-opacity="0.85"/>
+    <circle cx="722" cy="439" r="3.2" fill="#fbbf24"/>
+    <text x="732" y="442.5" fill="#e9e2d4" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">3 stops nearby</text>
+  </g>
+  <rect x="690" y="410" width="392" height="192" rx="18" fill="none" stroke="#ffffff" stroke-opacity="0.1"/>
+
+  <!-- stats top left -->
+  <g>
+    <rect x="86" y="150" width="228" height="112" rx="18" fill="#0b0d10" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="108" y="178" fill="#8d7a5e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7.5" letter-spacing="1.6">CITY DIRECTORY</text>
+    <text x="108" y="208" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">1.4K</text>
+    <text x="108" y="224" fill="#8d8071" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="8">places &amp; local businesses</text>
+    <g>
+      <rect x="108" y="236" width="184" height="5" rx="2.5" fill="#ffffff" fill-opacity="0.1"/>
+      <rect x="108" y="236" width="142" height="5" rx="2.5" fill="url(#m-accent)"/>
+    </g>
+  </g>
+
+  <g>
+    <rect x="86" y="470" width="200" height="92" rx="18" fill="#0b0d10" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="108" y="498" fill="#8d7a5e" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="7" letter-spacing="1.4">EVENTS THIS WEEK</text>
+    <text x="108" y="526" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">14 events</text>
+    <g>
+      <rect x="108" y="538" width="40" height="14" rx="7" fill="#fbbf24" fill-opacity="0.18"/>
+      <text x="128" y="548" fill="#fcd34d" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.4" text-anchor="middle">MUSIC</text>
+      <rect x="154" y="538" width="44" height="14" rx="7" fill="#2dd4bf" fill-opacity="0.16"/>
+      <text x="176" y="548" fill="#5eead4" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="6.4" text-anchor="middle">NATURE</text>
+    </g>
+  </g>
+</svg>
