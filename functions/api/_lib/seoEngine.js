@@ -275,13 +275,15 @@ const EN_PAGES = {
     h1: 'Investment',
   },
   '/privacy-policy': {
-    title: 'Privacy Policy | LitxTech',
-    description: 'How LitxTech collects, uses, stores and protects personal data across its website and products.',
+    title: 'Privacy Policy | LitxTech LLC',
+    description:
+      'How LitxTech LLC collects, uses, shares, retains and protects personal data across its website, applications, software sales and client software projects.',
     h1: 'Privacy Policy',
   },
   '/terms-of-service': {
-    title: 'Terms of Service | LitxTech',
-    description: 'The terms that govern the use of the LitxTech website, products and professional services.',
+    title: 'Terms of Service | LitxTech LLC',
+    description:
+      'The terms governing the LitxTech website, published applications, software sales and licences, subscriptions and custom software development projects.',
     h1: 'Terms of Service',
   },
   '/refund-policy': {
