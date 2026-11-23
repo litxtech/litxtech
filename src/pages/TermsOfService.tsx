@@ -10,7 +10,7 @@ export function TermsOfService() {
     <LegalPage
       doc={doc}
       path="/terms-of-service"
-      seoTitle={language === 'tr' ? 'Kullanım Şartları | LitxTech' : 'Terms of Service | LitxTech'}
+      seoTitle={language === 'tr' ? 'Kullanım Şartları | LitxTech LLC' : 'Terms of Service | LitxTech LLC'}
       seoDescription={
         language === 'tr'
           ? 'LitxTech web sitesi, uygulamalar, yazılım satışı ve lisansları ile kuruma özel yazılım projelerini kapsayan kullanım şartları.'

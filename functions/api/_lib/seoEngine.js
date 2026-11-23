@@ -659,8 +659,8 @@ const APP_PAGES = [
 )
 
 const LEGAL = [
-  ['/privacy-policy', 'Gizlilik Politikası | LitxTech'],
-  ['/terms-of-service', 'Kullanım Şartları | LitxTech'],
+  ['/privacy-policy', 'Gizlilik Politikası | LitxTech LLC'],
+  ['/terms-of-service', 'Kullanım Şartları | LitxTech LLC'],
   ['/refund-policy', 'İade Politikası | LitxTech'],
   ['/data-security-policy', 'Veri Güvenliği | LitxTech'],
   ['/commercial-agreement', 'Ticari Sözleşme | LitxTech'],

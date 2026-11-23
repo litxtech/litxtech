@@ -10,7 +10,7 @@ export function PrivacyPolicy() {
     <LegalPage
       doc={doc}
       path="/privacy-policy"
-      seoTitle={language === 'tr' ? 'Gizlilik Politikası | LitxTech' : 'Privacy Policy | LitxTech'}
+      seoTitle={language === 'tr' ? 'Gizlilik Politikası | LitxTech LLC' : 'Privacy Policy | LitxTech LLC'}
       seoDescription={
         language === 'tr'
           ? 'LitxTech LLC; web sitesi, uygulamalar, yazılım satışları ve yazılım projelerinde kişisel verileri nasıl toplar, kullanır, paylaşır ve korur.'
