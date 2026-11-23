@@ -31,6 +31,7 @@ export const adminApi = {
     }),
   logout: () => request<{ ok: boolean }>('/api/admin/session', { method: 'DELETE' }),
   dashboard: () => request<any>('/api/admin/dashboard'),
+  live: (limit = 12) => request<any>(`/api/admin/live?limit=${limit}`),
   leads: (params?: { status?: string; q?: string }) => {
     const qs = new URLSearchParams()
     if (params?.status) qs.set('status', params.status)
@@ -53,6 +54,11 @@ export const adminApi = {
     request<{ application: any }>('/api/admin/applications', {
       method: 'PUT',
       body: JSON.stringify(body),
+    }),
+  deleteApplication: (id: string) =>
+    request<{ ok: boolean }>('/api/admin/applications', {
+      method: 'DELETE',
+      body: JSON.stringify({ id }),
     }),
   homepage: () => request<{ homepage: any }>('/api/admin/homepage'),
   updateHomepage: (body: Record<string, unknown>) =>

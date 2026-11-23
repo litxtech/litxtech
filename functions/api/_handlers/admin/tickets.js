@@ -73,7 +73,7 @@ export default async function handler(req, res) {
         .eq('id', body.id)
         .select('*')
         .single()
-      if (error) return json(res, 500, { error: 'Update failed' })
+      if (error) return json(res, 500, { error: 'Update failed: ' + (error.message || 'unknown database error') })
       if (body.reply) {
         await supabase.from('support_messages').insert({
           ticket_id: body.id,

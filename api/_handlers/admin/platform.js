@@ -103,17 +103,39 @@ async function search(req, res, supabase) {
 async function users(req, res, supabase, id) {
   if (req.method === 'PATCH' && id) {
     const body = await readBody(req)
-    const { error } = await supabase
-      .from('user_presence')
-      .update({ blocked: !!body.blocked, is_active: body.is_active !== false })
-      .eq('user_id', id)
+    const patch = {}
+    if (body.is_active !== undefined) patch.is_active = body.is_active !== false
+    if (body.blocked !== undefined) patch.is_active = !body.blocked
+    if (body.role !== undefined) patch.role = body.role
+    if (!Object.keys(patch).length) return json(res, 400, { error: 'Nothing to update' })
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(patch)
+      .eq('id', id)
+      .select('id, email, full_name, is_active')
+      .maybeSingle()
     if (error) return json(res, 400, { error: error.message })
-    return json(res, 200, { ok: true })
+    return json(res, 200, { ok: true, user: data })
   }
-  const { data, error } = await supabase.from('user_presence').select('*').order('last_seen', { ascending: false }).limit(200)
-  if (error) return json(res, 200, { users: [] })
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id, username, full_name, display_name, email, avatar_url, is_active, is_verified, role, created_at, last_seen')
+    .order('created_at', { ascending: false })
+    .limit(200)
+  if (error) return json(res, 500, { error: error.message })
+
+  const { data: presence } = await supabase.from('user_presence').select('user_id, is_online, last_seen')
+  const online = new Map((presence || []).map((row) => [row.user_id, row]))
+
   return json(res, 200, {
-    users: (data || []).map((row) => ({ ...row, id: row.user_id })),
+    users: (data || []).map((row) => ({
+      ...row,
+      name: row.full_name || row.display_name || row.username || row.email,
+      status: online.get(row.id)?.is_online ? 'online' : 'offline',
+      last_seen: row.last_seen || online.get(row.id)?.last_seen || null,
+      blocked: row.is_active === false,
+    })),
   })
 }
 
@@ -398,6 +420,8 @@ async function listTable(res, supabase, table, key) {
 async function crud(req, res, supabase, admin, table, id) {
   if (req.method === 'POST') {
     const body = await readBody(req)
+    delete body.id
+    delete body.created_at
     const { data, error } = await supabase.from(table).insert(body).select('*').single()
     if (error) return json(res, 400, { error: error.message })
     await writeAudit(supabase, { actor_id: admin.id, actor_email: admin.email, action: 'CONTENT_CREATED', resource: table, resource_id: data.id })
@@ -406,6 +430,7 @@ async function crud(req, res, supabase, admin, table, id) {
   if ((req.method === 'PATCH' || req.method === 'PUT') && id) {
     const body = await readBody(req)
     delete body.id
+    delete body.created_at
     const { data, error } = await supabase.from(table).update({ ...body, updated_at: new Date().toISOString() }).eq('id', id).select('*').single()
     if (error) return json(res, 400, { error: error.message })
     return json(res, 200, { item: data })

@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         })
         .select('*')
         .single()
-      if (error) return json(res, 500, { error: 'Create failed' })
+      if (error) return json(res, 500, { error: 'Create failed: ' + (error.message || 'unknown database error') })
       await writeAudit(supabase, {
         actor_id: admin.id,
         actor_email: admin.email,
@@ -53,13 +53,18 @@ export default async function handler(req, res) {
       const body = await readBody(req)
       if (!body.id) return json(res, 400, { error: 'id required' })
       const { id, ...rest } = body
+      delete rest.created_at
+      const patch = { updated_at: new Date().toISOString() }
+      for (const key of ['category', 'question', 'answer', 'sort_order', 'published']) {
+        if (rest[key] !== undefined) patch[key] = rest[key]
+      }
       const { data, error } = await supabase
         .from('cms_faqs')
-        .update({ ...rest, updated_at: new Date().toISOString() })
+        .update(patch)
         .eq('id', id)
         .select('*')
         .single()
-      if (error) return json(res, 500, { error: 'Update failed' })
+      if (error) return json(res, 500, { error: 'Update failed: ' + (error.message || 'unknown database error') })
       return json(res, 200, { faq: data })
     }
 
@@ -79,7 +84,7 @@ export default async function handler(req, res) {
     }
 
     return json(res, 405, { error: 'Method not allowed' })
-  } catch {
-    return json(res, 500, { error: 'Server error' })
+  } catch (e) {
+    return json(res, 500, { error: e?.message || 'Server error' })
   }
 }

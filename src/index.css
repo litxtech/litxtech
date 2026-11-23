@@ -492,3 +492,51 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ==================================================================
+   LitxTech Admin — motion & dock utilities
+   ================================================================== */
+@keyframes ltx-ping {
+  0% { transform: scale(1); opacity: 0.55; }
+  70%, 100% { transform: scale(2.1); opacity: 0; }
+}
+@keyframes ltx-dock-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes ltx-toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ltx-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ltx-sheen {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.ltx-live-ping { animation: ltx-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.ltx-dock-in { animation: ltx-dock-in 0.22s cubic-bezier(0.16, 1, 0.3, 1); }
+.ltx-toast-in { animation: ltx-toast-in 0.26s cubic-bezier(0.16, 1, 0.3, 1); }
+.ltx-admin-main > * { animation: ltx-fade-up 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
+.ltx-live-bubble::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  padding: 1px;
+  background: linear-gradient(130deg, rgba(34, 211, 238, 0.75), rgba(99, 102, 241, 0.45), rgba(34, 211, 238, 0.15));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  background-size: 200% 100%;
+  animation: ltx-sheen 6s linear infinite;
+}
+.ltx-scroll { scrollbar-width: thin; scrollbar-color: rgba(148, 163, 184, 0.25) transparent; }
+.ltx-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.ltx-scroll::-webkit-scrollbar-track { background: transparent; }
+.ltx-scroll::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.22); border: none; border-radius: 999px; }
+.ltx-scroll::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.4); }

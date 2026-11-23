@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         .eq('id', body.id)
         .select('*')
         .single()
-      if (error) return json(res, 500, { error: 'Update failed' })
+      if (error) return json(res, 500, { error: 'Update failed: ' + (error.message || 'unknown database error') })
       await writeAudit(supabase, {
         actor_id: admin.id,
         actor_email: admin.email,

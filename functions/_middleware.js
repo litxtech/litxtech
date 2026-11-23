@@ -33,14 +33,6 @@ export async function onRequest(context) {
   if (host.startsWith('admin.')) return next()
 
   const pathname = url.pathname
-  const langParam = url.searchParams.get('lang')
-  const cookieLang = (request.headers.get('cookie') || '').match(/(?:^|;\s*)litxtech_lang=([^;]+)/)
-  const lang =
-    langParam === 'tr' || langParam === 'en'
-      ? langParam
-      : cookieLang && decodeURIComponent(cookieLang[1]) === 'tr'
-        ? 'tr'
-        : 'en'
 
   // 2b) vercel.json rewrite'ları: /robots.txt → /api/robots, /sitemap.xml → /api/sitemap
   // (Pages `_redirects` statik → Function rewrite'ını desteklemediği için burada)
@@ -65,7 +57,6 @@ export async function onRequest(context) {
     try {
       const metaUrl = new URL('/api/public/seo', url.origin)
       metaUrl.searchParams.set('path', pathname)
-      metaUrl.searchParams.set('lang', lang)
       const metaRes = await runHandler(seoHandler, {
         request: new Request(metaUrl.toString(), { method: 'GET', headers: request.headers }),
         env,
@@ -91,7 +82,7 @@ export async function onRequest(context) {
             meta.status === 404 ? 'no-store' : 'public, max-age=120',
           )
           return new Response(
-            html.replace(/<html[^>]*>/, `<html lang="${meta.lang || lang}" data-seo-path="${pathname}">`),
+            html.replace(/<html[^>]*>/, `<html lang="tr" data-seo-path="${pathname}">`),
             { status: meta.status || 200, headers },
           )
         }
@@ -101,7 +92,7 @@ export async function onRequest(context) {
     }
 
     // 2b) Yerel SEO motoruyla enjeksiyon (SPA fallback)
-    const sonuc = injectDocument(shell, normalizePath(pathname), { lang })
+    const sonuc = injectDocument(shell, normalizePath(pathname), {})
     if (sonuc.passthrough) return next()
     if (sonuc.redirect) {
       return Response.redirect(

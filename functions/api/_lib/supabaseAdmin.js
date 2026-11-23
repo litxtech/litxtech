@@ -187,19 +187,26 @@ export function isSuperAdmin(admin) {
   return admin?.role === 'SUPER_ADMIN' || admin?.role === 'super_admin'
 }
 
+/**
+ * Audit sink. Writes to `system_logs` (admin_user_id / action / resource_type /
+ * resource_id / details). Never throws: auditing must not break a mutation.
+ */
 export async function writeAudit(supabase, entry) {
   try {
-    await supabase.from('audit_logs').insert({
-      actor_id: entry.actor_id || null,
-      actor_email: entry.actor_email || null,
-      action: entry.action,
-      resource: entry.resource || null,
-      resource_id: entry.resource_id || null,
-      old_value: entry.old_value || null,
-      new_value: entry.new_value || null,
+    await supabase.from('system_logs').insert({
+      admin_user_id: entry.actor_id || null,
+      action: entry.action || 'UNKNOWN',
+      resource_type: entry.resource || null,
+      resource_id: entry.resource_id != null ? String(entry.resource_id) : null,
+      details: {
+        actor_email: entry.actor_email || null,
+        old_value: entry.old_value ?? null,
+        new_value: entry.new_value ?? null,
+        result: entry.result || 'OK',
+        ip_address: entry.ip_address || null,
+      },
       ip_address: entry.ip_address || null,
       user_agent: entry.user_agent || null,
-      result: entry.result || 'OK',
     })
   } catch {
     // non-fatal

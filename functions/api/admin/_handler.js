@@ -6,6 +6,7 @@ import dashboard from '../_handlers/admin/dashboard.js'
 import faqs from '../_handlers/admin/faqs.js'
 import homepage from '../_handlers/admin/homepage.js'
 import leads from '../_handlers/admin/leads.js'
+import live from '../_handlers/admin/live.js'
 import messages from '../_handlers/admin/messages.js'
 import platform from '../_handlers/admin/platform.js'
 import session from '../_handlers/admin/auth/session.js'
@@ -19,6 +20,7 @@ const routes = {
   faqs,
   homepage,
   leads,
+  live,
   messages,
   settings,
   tickets,

@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       if (status) patch.last_contact_at = new Date().toISOString()
 
       const { data, error } = await supabase.from('leads').update(patch).eq('id', id).select('*').single()
-      if (error) return json(res, 500, { error: 'Update failed' })
+      if (error) return json(res, 500, { error: 'Update failed: ' + (error.message || 'unknown database error') })
 
       if (status && status !== existing.status) {
         await supabase.from('lead_events').insert({
