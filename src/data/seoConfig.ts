@@ -4,11 +4,11 @@ export const seoConfig = {
   legalName: 'LitxTech LLC',
   alternateNames: ['Litx', 'Litx Tech', 'LitxTechnology', 'LitxTech Yazılım'],
   origin: 'https://www.litxtech.com',
-  locale: 'tr_TR',
-  language: 'tr',
-  defaultTitle: 'LitxTech | Yazılım ve Dijital Ürün Geliştirme Şirketi',
+  locale: 'en_US',
+  language: 'en',
+  defaultTitle: 'LitxTech | Software & Digital Product Studio',
   defaultDescription:
-    'LitxTech, modern web ve mobil uygulamalar, özel yazılım çözümleri, dijital ürünler ve teknoloji platformları geliştiren bir yazılım şirketidir.',
+    'LitxTech is a software company building modern web and mobile applications, custom software, digital products and technology platforms.',
   ogImagePath: '/og-litxtech.jpg',
   twitterHandle: '@litxtech',
   email: 'support@litxtech.com',
@@ -25,12 +25,12 @@ export const seoConfig = {
   primaryKeywords: [
     'LitxTech',
     'Litx',
-    'yazılım şirketi',
-    'mobil uygulama geliştirme',
-    'özel yazılım',
+    'software company',
+    'mobile app development',
+    'custom software',
     'SaaS',
-    'otel yönetim sistemi',
-    'restoran yazılımı',
+    'hotel management system',
+    'restaurant software',
   ],
 } as const
 

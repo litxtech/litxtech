@@ -3,7 +3,19 @@
 export const BRAND = 'LitxTech'
 export const BRAND_DESCRIPTION =
   'LitxTech, modern web ve mobil uygulamalar, özel yazılım çözümleri, dijital ürünler ve teknoloji platformları geliştiren bir yazılım şirketidir.'
+export const BRAND_DESCRIPTION_EN =
+  'LitxTech is a software company building modern web and mobile applications, custom software, digital products and technology platforms.'
 export const CONTENT_REVISION = '2026-10-06'
+
+/** English is the default site language; Turkish is opt-in via ?lang=tr or cookie. */
+export function resolveLang(value) {
+  const raw = typeof value === 'string' ? value.trim().toLowerCase() : ''
+  return raw === 'tr' ? 'tr' : 'en'
+}
+
+export function brandDescription(lang) {
+  return lang === 'tr' ? BRAND_DESCRIPTION : BRAND_DESCRIPTION_EN
+}
 const DEFAULT_ORIGIN = 'https://www.litxtech.com'
 
 const PRIVATE_PREFIXES = [
@@ -57,7 +69,7 @@ const BUILTIN_REDIRECTS = [
   { source: '/products/kbs-prime', destination: '/kbs-prime', status_code: 301, enabled: true },
 ]
 
-export function expandDescription(description, title) {
+export function expandDescription(description, title, lang = 'en') {
   const name = String(title || 'LitxTech').split('|')[0].trim() || 'LitxTech'
   const text = String(description || '').replace(/\s+/g, ' ').trim()
   if (text.length >= 120 && text.length <= 160) return text
@@ -66,8 +78,16 @@ export function expandDescription(description, title) {
     return `${cut}.`
   }
   const lead = text ? text.replace(/\.+$/, '') : name
-  let combined = `${lead}. ${name} sayfası LitxTech resmi sitesinde yayımlanır ve güncel bilgiyi içerir.`
-  if (combined.length < 120) combined += ' İletişim ve destek bağlantıları bu sayfadadır.'
+  let combined =
+    lang === 'tr'
+      ? `${lead}. ${name} sayfası LitxTech resmi sitesinde yayımlanır ve güncel bilgiyi içerir.`
+      : `${lead}. The ${name} page is published on the official LitxTech website with current information.`
+  if (combined.length < 120) {
+    combined +=
+      lang === 'tr'
+        ? ' İletişim ve destek bağlantıları bu sayfadadır.'
+        : ' Contact and support links are available on this page.'
+  }
   if (combined.length > 160) {
     combined = `${combined.slice(0, 150).replace(/\s+\S*$/, '').replace(/[.,;:\s]+$/, '')}.`
   }
@@ -87,8 +107,253 @@ function page(row) {
     h1: '',
     ...row,
   }
-  next.description = expandDescription(next.description, next.h1 || next.title)
+  next.description = expandDescription(next.description, next.h1 || next.title, next.lang || 'tr')
   return next
+}
+
+/* ------------------------------------------------------------------ */
+/* English overlay — used whenever the active language is English.      */
+/* Turkish stays the source catalog; app/legal pages stay Turkish.      */
+/* ------------------------------------------------------------------ */
+
+const EN_PAGES = {
+  '/': {
+    title: 'LitxTech | Software & Digital Product Studio',
+    description: BRAND_DESCRIPTION_EN,
+    h1: 'We build software that moves businesses forward.',
+  },
+  '/about': {
+    title: 'About | LitxTech',
+    description:
+      'LitxTech is a software company building modern web and mobile applications, custom software and digital products. Services, products and contact details.',
+    h1: 'LitxTech — the team that turns software into business',
+  },
+  '/cozumler': {
+    title: 'Software Development | LitxTech',
+    description:
+      'LitxTech software solutions: hotel and restaurant systems, mobile apps, social platforms and custom enterprise software. Explore scope and request a quote.',
+    h1: 'Solution areas built around your business',
+  },
+  '/cozumler/otel-yonetim-sistemi': {
+    title: 'Hotel Management System | LitxTech',
+    description:
+      'Software that unifies reservations, guests, rooms, payments and reporting for hotel operations in a single panel, built and supported by LitxTech.',
+    h1: 'Hotel Management Systems',
+  },
+  '/cozumler/restoran-yonetim-sistemi': {
+    title: 'Restaurant Management System | LitxTech',
+    description:
+      'Restaurant software that brings orders, menus, kitchen display, POS, staff and accounting together in one system, built end to end by LitxTech.',
+    h1: 'Restaurant Management Systems',
+  },
+  '/cozumler/sosyal-medya-uygulamasi': {
+    title: 'Social & Community Application | LitxTech',
+    description:
+      'We build social platforms and community apps with messaging, notifications, feeds and moderation, from architecture to store release.',
+    h1: 'Social & Community Applications',
+  },
+  '/cozumler/arkadaslik-uygulamasi': {
+    title: 'Dating & Matching Application | LitxTech',
+    description:
+      'Modern dating and matching products with profiles, matching logic, chat infrastructure and premium membership models, delivered by LitxTech.',
+    h1: 'Dating & Matching Applications',
+  },
+  '/cozumler/sehire-ozel-uygulamalar': {
+    title: 'City Mobile Application | LitxTech',
+    description:
+      'City apps that combine news, events, places, local businesses and announcements into one mobile experience, designed and built by LitxTech.',
+    h1: 'City Mobile Applications',
+  },
+  '/cozumler/ozel-yazilim': {
+    title: 'Custom Enterprise Software | LitxTech',
+    description:
+      'Custom admin panels, CRM, tracking systems, integrations and automation for your company, engineered around your exact operations and workflows.',
+    h1: 'Custom Enterprise Software',
+  },
+  '/projeler': {
+    title: 'Projects & Case Studies | LitxTech',
+    description:
+      'LitxTech projects: hotel software, social platforms, mobile applications and city products. Explore the work and the solutions behind it.',
+    h1: 'Selected work from our portfolio',
+  },
+  '/projeler/valoriahotel': {
+    title: 'Valoria Hotel | LitxTech Projects',
+    description: 'A mobile guest experience focused on communication for hotels and hospitality businesses.',
+    h1: 'Valoria Hotel',
+  },
+  '/projeler/sosyal-platform': {
+    title: 'KBS Prime | LitxTech Projects',
+    description: 'A live-card and community-focused social platform experience built by LitxTech.',
+    h1: 'KBS Prime',
+  },
+  '/projeler/dating-app': {
+    title: 'Dating App | LitxTech Projects',
+    description: 'A product example built for dating and matching scenarios, from profiles to chat.',
+    h1: 'Dating App',
+  },
+  '/projeler/vora': {
+    title: 'Vora | LitxTech Projects',
+    description: 'An instant news and community platform for Black Sea cities, built and operated by LitxTech.',
+    h1: 'Vora',
+  },
+  '/projeler/safdas': {
+    title: 'SAFDAŞ | LitxTech Projects',
+    description: 'Prayer times, Quran, qibla and an Islamic social community app built by LitxTech.',
+    h1: 'SAFDAŞ',
+  },
+  '/projeler/tamuso': {
+    title: 'Tamuso | LitxTech Projects',
+    description: 'Live audio rooms and a modern voice chat platform for speakers and listeners.',
+    h1: 'Tamuso',
+  },
+  '/projeler/sehir-uygulamasi': {
+    title: 'City App | LitxTech Projects',
+    description: 'A city application example for local content and community engagement.',
+    h1: 'City App',
+  },
+  '/products': {
+    title: 'Digital Products & Software Platforms | LitxTech',
+    description:
+      'LitxTech digital products and software platforms: SAFDAŞ, Vora, Tamuso, Nocta, MyTrabzon, Valoria and KBS Prime.',
+    h1: 'Software we have actually shipped.',
+  },
+  '/contact': {
+    title: 'Contact | LitxTech',
+    description:
+      'Contact LitxTech about a project, support request or partnership. Use the form, phone, email or WhatsApp and we will reply within one business day.',
+    h1: 'Contact',
+  },
+  '/destek': {
+    title: 'Support Center | LitxTech',
+    description:
+      'LitxTech support center: frequently asked questions, project requests and direct contact channels for your products and software projects.',
+    h1: 'How can we help you?',
+  },
+  '/sss': {
+    title: 'Frequently Asked Questions | LitxTech',
+    description:
+      'LitxTech frequently asked questions about mobile applications, web software, custom software, release and support processes.',
+    h1: 'Frequently asked questions',
+  },
+  '/projemi-anlat': {
+    title: 'Tell us about your project | LitxTech',
+    description:
+      'Describe your idea. LitxTech defines scope and a proposal together with you for web, mobile and custom software projects in a few short steps.',
+    h1: 'Tell us about your project',
+  },
+  '/packages': {
+    title: 'Packages | LitxTech',
+    description:
+      'LitxTech web and software packages with fixed scope: LITE, PRO and ULTRA. Review what is included and describe your project.',
+    h1: 'Software packages',
+  },
+  '/search': {
+    title: 'Site search | LitxTech',
+    description:
+      'Search the official LitxTech website at https://www.litxtech.com — products, services, solutions and contact details.',
+    h1: 'Search the LitxTech site',
+  },
+  '/feed': {
+    title: 'Feed | LitxTech',
+    description: 'Product, engineering and company updates from the LitxTech team.',
+    h1: 'LitxTech Feed',
+  },
+  '/blog': {
+    title: 'Blog | LitxTech',
+    description:
+      'Articles on software, mobile applications and digital products published on the LitxTech blog. Draft content is never listed.',
+    h1: 'Blog',
+  },
+  '/ai-builder': {
+    title: 'AI Builder | LitxTech',
+    description: 'Describe your application idea with LitxTech AI Builder and start the software development process.',
+    h1: 'AI Builder',
+  },
+  '/investment': {
+    title: 'Investment | LitxTech',
+    description: 'Growth and partnership opportunities with LitxTech. Get in touch about strategic collaboration.',
+    h1: 'Investment',
+  },
+  '/privacy-policy': {
+    title: 'Privacy Policy | LitxTech',
+    description: 'How LitxTech collects, uses, stores and protects personal data across its website and products.',
+    h1: 'Privacy Policy',
+  },
+  '/terms-of-service': {
+    title: 'Terms of Service | LitxTech',
+    description: 'The terms that govern the use of the LitxTech website, products and professional services.',
+    h1: 'Terms of Service',
+  },
+  '/refund-policy': {
+    title: 'Refund Policy | LitxTech',
+    description: 'Refund and cancellation terms for LitxTech projects, packages and subscriptions.',
+    h1: 'Refund Policy',
+  },
+  '/data-security-policy': {
+    title: 'Data Security | LitxTech',
+    description: 'How LitxTech protects data with access control, encryption, monitoring and incident response.',
+    h1: 'Data Security',
+  },
+  '/commercial-agreement': {
+    title: 'Commercial Agreement | LitxTech',
+    description: 'Commercial terms for LitxTech engagements: scope, delivery, payment and ownership of work.',
+    h1: 'Commercial Agreement',
+  },
+  '/subprocessors': {
+    title: 'Subprocessors | LitxTech',
+    description: 'The third-party subprocessors LitxTech uses to deliver and operate its services.',
+    h1: 'Subprocessors',
+  },
+  '/account-deletion-policy': {
+    title: 'Account Deletion Policy | LitxTech',
+    description: 'How to request deletion of your LitxTech account and what happens to your data afterwards.',
+    h1: 'Account Deletion Policy',
+  },
+  '/child-safety-policy': {
+    title: 'Child Safety Policy | LitxTech',
+    description: 'LitxTech child safety standards, zero-tolerance rules and how to report a concern.',
+    h1: 'Child Safety Policy',
+  },
+  '/community-policy': {
+    title: 'Community Policy | LitxTech',
+    description: 'Community rules for LitxTech products: acceptable use, moderation and enforcement.',
+    h1: 'Community Policy',
+  },
+  '/legal': {
+    title: 'Legal Documents | LitxTech',
+    description: 'Every legal document published by LitxTech in one place: privacy, terms, security and policies.',
+    h1: 'Legal Documents',
+  },
+}
+
+const EN_LABELS = {
+  cozumler: 'Solutions',
+  projeler: 'Projects',
+  products: 'Products',
+  services: 'Services',
+  about: 'About',
+  contact: 'Contact',
+  destek: 'Support',
+  sss: 'FAQ',
+  blog: 'Blog',
+  feed: 'Feed',
+  search: 'Search',
+  sayfa: 'Pages',
+  'case-studies': 'Case studies',
+  packages: 'Packages',
+}
+
+/** Applies the English overlay to a catalog row when the request is English. */
+export function localizedPage(row, lang = 'en') {
+  if (lang === 'tr') return row
+  const overlay = EN_PAGES[row.path]
+  if (!overlay) return row
+  return {
+    ...row,
+    title: overlay.title,
+    description: overlay.description,
+    h1: overlay.h1 || row.h1,
+  }
 }
 
 const HUBS = [
@@ -492,10 +757,11 @@ function socialUrls(social) {
   return Object.values(social).filter((url) => typeof url === 'string' && /^https:\/\//i.test(url))
 }
 
-export function organizationNode(company = {}) {
+export function organizationNode(company = {}, lang = 'en') {
   const origin = siteOrigin()
   const name = clean(company.company_name) || BRAND
-  const description = clean(company.description) || BRAND_DESCRIPTION
+  const description =
+    lang === 'tr' ? clean(company.description) || BRAND_DESCRIPTION : BRAND_DESCRIPTION_EN
   const node = {
     '@type': 'Organization',
     '@id': `${origin}/#organization`,
@@ -532,15 +798,16 @@ export function organizationNode(company = {}) {
   return node
 }
 
-export function websiteNode(company = {}) {
+export function websiteNode(company = {}, lang = 'en') {
   const origin = siteOrigin()
   return {
     '@type': 'WebSite',
     '@id': `${origin}/#website`,
     url: `${origin}/`,
     name: clean(company.company_name) || BRAND,
-    description: clean(company.description) || BRAND_DESCRIPTION,
-    inLanguage: 'tr',
+    description:
+      lang === 'tr' ? clean(company.description) || BRAND_DESCRIPTION : BRAND_DESCRIPTION_EN,
+    inLanguage: lang,
     publisher: { '@id': `${origin}/#organization` },
     potentialAction: {
       '@type': 'SearchAction',
@@ -554,40 +821,42 @@ export function websiteNode(company = {}) {
 }
 
 export function buildJsonLd(pageRow, ctx = {}) {
+  const lang = resolveLang(ctx.lang)
+  const row = localizedPage(pageRow, lang)
   const origin = siteOrigin()
-  const graph = [organizationNode(ctx.company || {}), websiteNode(ctx.company || {})]
-  const pageUrl = absoluteUrl(pageRow.path)
-  const type = pageRow.schema || 'WebPage'
+  const graph = [organizationNode(ctx.company || {}, lang), websiteNode(ctx.company || {}, lang)]
+  const pageUrl = absoluteUrl(row.path)
+  const type = row.schema || 'WebPage'
   if (type !== 'Organization' && type !== 'WebSite') {
     const webPage = {
       '@type': type === 'FAQPage' || type === 'ContactPage' || type === 'AboutPage' || type === 'CollectionPage' ? ['WebPage', type] : type,
       '@id': `${pageUrl}#webpage`,
       url: pageUrl,
-      name: pageRow.title,
-      description: pageRow.description,
+      name: row.title,
+      description: row.description,
       isPartOf: { '@id': `${origin}/#website` },
       about: { '@id': `${origin}/#organization` },
-      inLanguage: 'tr',
+      inLanguage: lang,
     }
     if (type === 'Service') {
       graph.push({
         '@type': 'Service',
-        name: pageRow.h1 || pageRow.title,
-        description: pageRow.description,
+        name: row.h1 || row.title,
+        description: row.description,
         url: pageUrl,
         provider: { '@id': `${origin}/#organization` },
       })
     } else if (type === 'SoftwareApplication') {
       graph.push({
         '@type': 'SoftwareApplication',
-        name: pageRow.h1 || pageRow.title,
-        description: pageRow.description,
+        name: row.h1 || row.title,
+        description: row.description,
         url: pageUrl,
         applicationCategory: 'BusinessApplication',
         publisher: { '@id': `${origin}/#organization` },
-        offers: pageRow.offers || undefined,
+        offers: row.offers || undefined,
       })
-    } else if (type === 'FAQPage' && Array.isArray(ctx.faqs) && ctx.faqs.length && pageRow.path === '/sss') {
+    } else if (type === 'FAQPage' && Array.isArray(ctx.faqs) && ctx.faqs.length && row.path === '/sss') {
       webPage.mainEntity = ctx.faqs.slice(0, 12).map((faq) => ({
         '@type': 'Question',
         name: faq.question,
@@ -596,19 +865,20 @@ export function buildJsonLd(pageRow, ctx = {}) {
     } else if (type === 'Article') {
       graph.push({
         '@type': 'Article',
-        headline: pageRow.h1 || pageRow.title,
-        description: pageRow.description,
+        headline: row.h1 || row.title,
+        description: row.description,
         mainEntityOfPage: pageUrl,
-        author: pageRow.author ? { '@type': 'Organization', name: pageRow.author } : { '@id': `${origin}/#organization` },
+        author: row.author ? { '@type': 'Organization', name: row.author } : { '@id': `${origin}/#organization` },
         publisher: { '@id': `${origin}/#organization` },
-        datePublished: pageRow.published || pageRow.updated,
-        dateModified: pageRow.updated,
+        datePublished: row.published || row.updated,
+        dateModified: row.updated,
+        inLanguage: lang,
       })
     }
     graph.push(webPage)
   }
-  if (pageRow.path !== '/') {
-    const crumbs = breadcrumbsFor(pageRow)
+  if (row.path !== '/') {
+    const crumbs = breadcrumbsFor(row, lang)
     graph.push({
       '@type': 'BreadcrumbList',
       itemListElement: crumbs.map((crumb, index) => ({
@@ -635,29 +905,37 @@ const LABELS = {
   feed: 'Feed',
 }
 
-export function breadcrumbsFor(pageRow) {
+export function breadcrumbsFor(pageRow, lang = 'en') {
   const parts = normalizePath(pageRow.path).split('/').filter(Boolean)
-  const crumbs = [{ name: 'Ana Sayfa', path: '/' }]
+  const crumbs = [{ name: lang === 'tr' ? 'Ana Sayfa' : 'Home', path: '/' }]
   let acc = ''
   parts.forEach((part, index) => {
     acc += `/${part}`
     const last = index === parts.length - 1
     crumbs.push({
-      name: last ? pageRow.h1 || pageRow.title.split('|')[0].trim() : LABELS[part] || part,
+      name: last
+        ? pageRow.h1 || pageRow.title.split('|')[0].trim()
+        : (lang === 'tr' ? LABELS[part] : EN_LABELS[part]) || LABELS[part] || part,
       path: acc,
     })
   })
   return crumbs
 }
 
-function applyOverride(base, row) {
+function applyOverride(base, row, lang = 'en') {
   const next = { ...base }
-  if (clean(row.title)) next.title = clean(row.title)
-  if (clean(row.description)) next.description = clean(row.description)
-  if (clean(row.h1)) next.h1 = clean(row.h1)
+  // Admin-authored rows are Turkish unless they declare their language, so an
+  // English request keeps the English overlay instead of the Turkish copy.
+  const rowLang = clean(row.lang) ? resolveLang(row.lang) : ''
+  const copyOverrides = rowLang ? rowLang === lang : lang === 'tr'
+  if (copyOverrides) {
+    if (clean(row.title)) next.title = clean(row.title)
+    if (clean(row.description)) next.description = clean(row.description)
+    if (clean(row.h1)) next.h1 = clean(row.h1)
+    if (clean(row.og_title)) next.ogTitle = clean(row.og_title)
+    if (clean(row.og_description)) next.ogDescription = clean(row.og_description)
+  }
   if (clean(row.canonical)) next.canonical = clean(row.canonical)
-  if (clean(row.og_title)) next.ogTitle = clean(row.og_title)
-  if (clean(row.og_description)) next.ogDescription = clean(row.og_description)
   if (clean(row.og_image)) next.ogImage = clean(row.og_image)
   if (clean(row.schema_type)) next.schema = clean(row.schema_type)
   if (clean(row.focus_topic)) next.focusTopic = clean(row.focus_topic)
@@ -673,7 +951,7 @@ function applyOverride(base, row) {
   }
   if (row.include_in_sitemap === false) next.sitemap = false
   if (row.updated_at) next.updated = String(row.updated_at).slice(0, 10)
-  next.description = expandDescription(next.description, next.h1 || next.title)
+  next.description = expandDescription(next.description, next.h1 || next.title, lang)
   next.override = true
   return next
 }
@@ -685,6 +963,7 @@ function robotsFor(pageRow) {
 }
 
 export function mergeCatalog(ctx = {}) {
+  const lang = resolveLang(ctx.lang)
   const map = new Map(staticCatalog().map((row) => [row.path, { ...row }]))
   const posts = Array.isArray(ctx.posts) ? ctx.posts : []
   if (posts.length) {
@@ -797,7 +1076,9 @@ export function mergeCatalog(ctx = {}) {
       path,
       page({
         path,
-        title: clean(project.seo_title) || `${project.name || project.slug} | LitxTech Projeler`,
+        title:
+          clean(project.seo_title) ||
+          `${project.name || project.slug} | LitxTech ${lang === 'tr' ? 'Projeler' : 'Projects'}`,
         description: clean(project.seo_description) || clean(project.summary) || clean(project.name),
         h1: project.name || project.slug,
         schema: 'Article',
@@ -840,7 +1121,10 @@ export function mergeCatalog(ctx = {}) {
   for (const row of ctx.pages || []) {
     const path = normalizePath(row.path)
     const base = map.get(path) || page({ path, title: row.title || path, description: row.description || '', h1: row.title || path })
-    map.set(path, applyOverride(base, row))
+    map.set(path, applyOverride(base, row, lang))
+  }
+  if (lang !== 'tr') {
+    for (const [path, row] of map) map.set(path, localizedPage(row, lang))
   }
   return [...map.values()]
 }
@@ -964,15 +1248,19 @@ export function buildSitemapXml(ctx = {}) {
 
 export function renderHeadBlock(pageRow, ctx = {}) {
   const settings = ctx.settings || {}
-  const title = pageRow.title
-  const description = pageRow.description
-  const url = pageRow.canonical || absoluteUrl(pageRow.path)
-  const imagePath = pageRow.ogImage || settings.default_og_image || '/og-litxtech.jpg'
+  const lang = resolveLang(ctx.lang)
+  const row = localizedPage(pageRow, lang)
+  const isTr = lang === 'tr'
+  const title = row.title
+  const description = row.description
+  const url = row.canonical || absoluteUrl(row.path)
+  const trUrl = `${url}${url.includes('?') ? '&' : '?'}lang=tr`
+  const imagePath = row.ogImage || settings.default_og_image || '/og-litxtech.jpg'
   const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath)
-  const robots = robotsFor(pageRow)
-  const ogTitle = pageRow.ogTitle || title
-  const ogDescription = pageRow.ogDescription || description
-  const json = JSON.stringify(buildJsonLd(pageRow, ctx))
+  const robots = robotsFor(row)
+  const ogTitle = row.ogTitle || title
+  const ogDescription = row.ogDescription || description
+  const json = JSON.stringify(buildJsonLd(row, { ...ctx, lang }))
   const tags = [
     `<title>${escapeHtml(title)}</title>`,
     `<meta name="description" content="${escapeHtml(description)}" />`,
@@ -980,13 +1268,15 @@ export function renderHeadBlock(pageRow, ctx = {}) {
     `<meta name="googlebot" content="${escapeHtml(robots)}" />`,
     `<meta name="author" content="${escapeHtml(clean(ctx.company?.legal_name) || BRAND)}" />`,
     `<meta name="application-name" content="${BRAND}" />`,
-    `<meta name="theme-color" content="#070a12" />`,
+    `<meta name="theme-color" content="#06080f" />`,
     `<link rel="canonical" href="${escapeHtml(url)}" />`,
-    `<link rel="alternate" hreflang="tr" href="${escapeHtml(url)}" />`,
+    `<link rel="alternate" hreflang="en" href="${escapeHtml(url)}" />`,
+    `<link rel="alternate" hreflang="tr" href="${escapeHtml(trUrl)}" />`,
     `<link rel="alternate" hreflang="x-default" href="${escapeHtml(url)}" />`,
-    `<meta property="og:type" content="${pageRow.schema === 'Article' ? 'article' : 'website'}" />`,
+    `<meta property="og:type" content="${row.schema === 'Article' ? 'article' : 'website'}" />`,
     `<meta property="og:site_name" content="${BRAND}" />`,
-    `<meta property="og:locale" content="tr_TR" />`,
+    `<meta property="og:locale" content="${isTr ? 'tr_TR' : 'en_US'}" />`,
+    `<meta property="og:locale:alternate" content="${isTr ? 'en_US' : 'tr_TR'}" />`,
     `<meta property="og:title" content="${escapeHtml(ogTitle)}" />`,
     `<meta property="og:description" content="${escapeHtml(ogDescription)}" />`,
     `<meta property="og:url" content="${escapeHtml(url)}" />`,
@@ -1018,6 +1308,7 @@ export function injectDocument(html, pathname, ctx = {}) {
       headers: { Location: resolved.redirect.destination },
     }
   }
+  const lang = resolveLang(ctx.lang)
   const pageRow = resolved.page
   const block = renderHeadBlock(pageRow, ctx)
   const next = String(html).includes('<!-- litx-seo:start -->')
@@ -1025,35 +1316,36 @@ export function injectDocument(html, pathname, ctx = {}) {
     : html.replace(/<title>[\s\S]*?<\/title>/, block)
   const status = resolved.status || 200
   return {
-    html: next.replace(/<html[^>]*>/, `<html lang="tr" data-seo-path="${escapeHtml(pageRow.path)}">`),
+    html: next.replace(/<html[^>]*>/, `<html lang="${lang}" data-seo-path="${escapeHtml(pageRow.path)}">`),
     status,
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
       'X-Robots-Tag': robotsFor(pageRow),
       'Cache-Control': status === 404 ? 'no-store' : 'public, max-age=120',
     },
-    page: publicPage(pageRow),
+    page: publicPage(pageRow, lang),
   }
 }
 
-export function publicPage(pageRow) {
+export function publicPage(pageRow, lang = 'en') {
+  const row = localizedPage(pageRow, lang)
   return {
-    path: pageRow.path,
-    title: pageRow.title,
-    description: pageRow.description,
-    h1: pageRow.h1,
-    canonical: pageRow.canonical || absoluteUrl(pageRow.path),
-    robots: robotsFor(pageRow),
-    index: !!pageRow.index,
-    follow: pageRow.follow !== false,
-    sitemap: !!pageRow.sitemap,
-    schema: pageRow.schema,
-    ogTitle: pageRow.ogTitle || pageRow.title,
-    ogDescription: pageRow.ogDescription || pageRow.description,
-    ogImage: pageRow.ogImage || '',
-    updated: pageRow.updated,
-    override: !!pageRow.override,
-    breadcrumbs: breadcrumbsFor(pageRow),
+    path: row.path,
+    title: row.title,
+    description: row.description,
+    h1: row.h1,
+    canonical: row.canonical || absoluteUrl(row.path),
+    robots: robotsFor(row),
+    index: !!row.index,
+    follow: row.follow !== false,
+    sitemap: !!row.sitemap,
+    schema: row.schema,
+    ogTitle: row.ogTitle || row.title,
+    ogDescription: row.ogDescription || row.description,
+    ogImage: row.ogImage || '',
+    updated: row.updated,
+    override: !!row.override,
+    breadcrumbs: breadcrumbsFor(row, lang),
   }
 }
 

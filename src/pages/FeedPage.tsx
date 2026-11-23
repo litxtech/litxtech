@@ -36,7 +36,7 @@ export function FeedPage() {
 
   return (
     <MarketingChrome>
-      <SeoHead title={`${e.feedTitle} | LitxTech`} description={e.feedLead} path="/feed" />
+      <SeoHead title={`${e.feedTitle} | Product notes`} description={e.feedLead} path="/feed" />
 
       <section className="relative overflow-hidden border-b border-white/[0.07]">
         <div className="pointer-events-none absolute inset-0 ltx-aurora" />

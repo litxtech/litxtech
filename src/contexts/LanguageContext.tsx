@@ -39,6 +39,13 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = htmlLang[language]
+    // A cookie lets the edge middleware render the matching <head> on the
+    // first HTML response, so the tab title never shows the other language.
+    try {
+      document.cookie = `litxtech_lang=${language}; path=/; max-age=31536000; SameSite=Lax`
+    } catch {
+      /* ignore */
+    }
     try {
       window.localStorage.setItem(STORAGE_KEY, language)
     } catch {

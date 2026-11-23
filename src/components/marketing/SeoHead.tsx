@@ -70,7 +70,7 @@ export function SeoHead({
     const url = absoluteUrl(path)
     const imageUrl = absoluteUrl(image)
 
-    const summary = expandDescription(description, title)
+    const summary = expandDescription(description, title, language)
     document.title = title
     document.documentElement.lang = htmlLang[language]
 
@@ -79,7 +79,7 @@ export function SeoHead({
     upsertMeta('name', 'googlebot', robots)
     upsertMeta('name', 'author', seoConfig.legalName)
     upsertMeta('name', 'application-name', seoConfig.siteName)
-    upsertMeta('name', 'theme-color', '#070a12')
+    upsertMeta('name', 'theme-color', '#06080f')
 
     upsertMeta('property', 'og:type', type)
     upsertMeta('property', 'og:site_name', seoConfig.siteName)
@@ -96,8 +96,10 @@ export function SeoHead({
     upsertMeta('name', 'twitter:image', imageUrl)
 
     upsertLink('canonical', url)
-    upsertLink('alternate', url, { hreflang: htmlLang[language] })
+    upsertLink('alternate', url, { hreflang: 'en' })
+    upsertLink('alternate', `${url}${url.includes('?') ? '&' : '?'}lang=tr`, { hreflang: 'tr' })
     upsertLink('alternate', url, { hreflang: 'x-default' })
+    upsertMeta('property', 'og:locale:alternate', ogLocale[language === 'tr' ? 'en' : 'tr'])
 
     const verification = import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as string | undefined
     if (verification) {

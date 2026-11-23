@@ -24,7 +24,7 @@ export function SearchPage() {
   return (
     <MarketingChrome>
       <SeoHead
-        title={query ? `${query} · ${e.searchTitle} | LitxTech` : `${e.searchTitle} | LitxTech`}
+        title={query ? `${query} · ${e.searchTitle}` : `${e.searchTitle} | LitxTech site`}
         description={e.searchLead}
         path={query ? `/search?q=${encodeURIComponent(query)}` : '/search'}
         robots={query ? 'noindex, follow' : 'index, follow'}

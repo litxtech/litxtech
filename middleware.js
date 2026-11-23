@@ -1,7 +1,18 @@
-import { injectDocument, normalizePath } from './api/_lib/seoEngine.js'
+import { injectDocument, normalizePath, resolveLang } from './api/_lib/seoEngine.js'
 
 export const config = {
   matcher: ['/((?!api/|assets/).*)'],
+}
+
+function detectLang(request, url) {
+  const explicit = url.searchParams.get('lang')
+  if (explicit) return resolveLang(explicit)
+  const cookie = request.headers.get('cookie') || ''
+  const match = cookie.match(/(?:^|;\s*)litxtech_lang=([^;]+)/)
+  if (match) return resolveLang(decodeURIComponent(match[1]))
+  const accept = request.headers.get('accept-language') || ''
+  if (/^tr\b/i.test(accept)) return 'tr'
+  return 'en'
 }
 
 export default async function middleware(request) {
@@ -10,14 +21,17 @@ export default async function middleware(request) {
   if (host.startsWith('admin.')) return
   const pathname = url.pathname
   if (pathname.startsWith('/api') || pathname.startsWith('/assets') || pathname.includes('.')) return
+  const lang = detectLang(request, url)
 
   try {
     const shellRes = await fetch(new URL('/index.html', request.url))
     if (!shellRes.ok) return
     const shell = await shellRes.text()
-    let ctx = {}
+    let ctx = { lang }
     try {
-      const metaRes = await fetch(new URL(`/api/public/seo?path=${encodeURIComponent(pathname)}`, request.url))
+      const metaRes = await fetch(
+        new URL(`/api/public/seo?path=${encodeURIComponent(pathname)}&lang=${lang}`, request.url),
+      )
       if (metaRes.ok) {
         const meta = await metaRes.json()
         if (meta.redirect?.destination) {
@@ -32,14 +46,17 @@ export default async function middleware(request) {
           headers.set('Content-Type', 'text/html; charset=utf-8')
           headers.set('X-Robots-Tag', meta.page?.robots || 'index, follow')
           headers.set('Cache-Control', meta.status === 404 ? 'no-store' : 'public, max-age=120')
-          return new Response(html.replace(/<html[^>]*>/, `<html lang="tr" data-seo-path="${pathname}">`), {
-            status: meta.status || 200,
-            headers,
-          })
+          return new Response(
+            html.replace(
+              /<html[^>]*>/,
+              `<html lang="${meta.lang || lang}" data-seo-path="${pathname}">`,
+            ),
+            { status: meta.status || 200, headers },
+          )
         }
       }
     } catch {
-      ctx = {}
+      ctx = { lang }
     }
     const result = injectDocument(shell, normalizePath(pathname), ctx)
     if (result.passthrough) return
