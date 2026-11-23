@@ -1,191 +1,119 @@
 import { Link } from 'react-router-dom'
-import { Check, Zap, Rocket, Crown, Star } from 'lucide-react'
+import { Check, Crown, Rocket, Sparkles, Star, Zap } from 'lucide-react'
+import { MarketingChrome } from '@/components/marketing/MarketingChrome'
+import { SeoHead } from '@/components/marketing/SeoHead'
+import { useLanguage } from '@/contexts/LanguageContext'
+
+const icons = [Zap, Rocket, Crown]
+const tones = [
+  'from-sky-400 to-cyan-400',
+  'from-violet-400 to-fuchsia-400',
+  'from-amber-400 to-orange-400',
+]
 
 export function Packages() {
-      const packages = [
-        {
-          name: "LITE",
-          price: "$1,199",
-          period: "/project",
-          description: "Perfect for startups and small businesses",
-          features: [
-            "1-page responsive website",
-            "Mobile-optimized design",
-            "Basic SEO setup",
-            "3-day delivery",
-            "1 revision included",
-            "Hosting setup"
-          ],
-          popular: false,
-          requestPath: '/projemi-anlat?plan=LITE&project_type=web',
-          icon: <Zap className="w-8 h-8" />
-        },
-        {
-          name: "PRO",
-          price: "$2,359",
-          period: "/project",
-          description: "Ideal for growing businesses with automation needs",
-          features: [
-            "3-page responsive website",
-            "Custom dashboard",
-            "API integrations",
-            "User authentication",
-            "Database setup",
-            "5-day delivery",
-            "3 revisions included",
-            "Priority support"
-          ],
-          popular: true,
-          requestPath: '/projemi-anlat?plan=PRO&project_type=web',
-          icon: <Rocket className="w-8 h-8" />
-        },
-        {
-          name: "ULTRA",
-          price: "$4,980",
-          period: "/project",
-          description: "Complete system with advanced features",
-          features: [
-            "Unlimited pages",
-            "Admin panel",
-            "Payment integration (Stripe)",
-            "Email automation",
-            "User management",
-            "Advanced analytics",
-            "7-day delivery",
-            "Unlimited revisions",
-            "Dedicated support",
-            "Source code included"
-          ],
-          popular: false,
-          requestPath: '/projemi-anlat?plan=ULTRA&project_type=custom',
-          icon: <Crown className="w-8 h-8" />
-        }
-      ]
+  const { t } = useLanguage()
+  const p = t.packages
 
   return (
-    <div className="min-h-screen relative">
-      {/* Animated Background */}
-      <div className="animated-bg"></div>
-      <div className="particles"></div>
+    <MarketingChrome>
+      <SeoHead title={p.metaTitle} description={p.metaDescription} path="/packages" />
 
-      <div className="max-w-7xl mx-auto px-4 py-20">
-        <div className="text-center mb-16 fade-in">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Software Packages
-            </span>
-          </h1>
-              <p className="text-xl text-gray-700 dark:text-gray-200 max-w-3xl mx-auto mb-8">
-                Choose the perfect package for your business needs. All packages include modern tech stack and professional design.
-              </p>
-          <div className="flex items-center justify-center space-x-2 text-yellow-400">
-            <Star className="w-5 h-5" />
-            <span className="text-lg font-semibold">Most Popular: PRO Package</span>
-            <Star className="w-5 h-5" />
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="pointer-events-none absolute inset-0 ltx-grid-lines opacity-60" />
+        <div className="ltx-container-wide relative py-16 sm:py-20 lg:py-24">
+          <div className="max-w-3xl">
+            <p className="ltx-eyebrow">{p.eyebrow}</p>
+            <h1 className="ltx-h1 mt-4 text-balance">{p.title}</h1>
+            <p className="ltx-lead mt-5">{p.lead}</p>
           </div>
+          <p className="mt-7 inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1.5 text-[12px] font-medium text-amber-200">
+            <Star className="h-3.5 w-3.5" />
+            {p.popularNote}
+          </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {packages.map((pkg) => (
-            <div 
-              key={pkg.name} 
-              className={`glass-card p-8 tilt-card group relative ${
-                pkg.popular ? 'ring-2 ring-purple-500 scale-105' : ''
-              }`}
-            >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full text-sm font-semibold neon-purple">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              
-              <div className="text-center mb-8">
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center ${
-                  pkg.name === 'LITE' ? 'bg-gradient-to-r from-blue-400 to-cyan-400' :
-                  pkg.name === 'PRO' ? 'bg-gradient-to-r from-purple-400 to-pink-400' :
-                  'bg-gradient-to-r from-yellow-400 to-orange-400'
-                } group-hover:scale-110 transition-transform duration-300`}>
-                  {pkg.icon}
-                </div>
-                <h2 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">{pkg.name}</h2>
-                    <p className="text-gray-700 dark:text-gray-200 mb-4">{pkg.description}</p>
-                <div className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
-                  {pkg.price}
-                  <span className="text-lg text-gray-400">{pkg.period}</span>
-                </div>
-              </div>
-              
-              <ul className="space-y-4 mb-8">
-                {pkg.features.map((feature, index) => (
-                  <li key={index} className="flex items-start space-x-3">
-                    <div className="w-5 h-5 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                        <span className="text-gray-700 dark:text-gray-200">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              <Link
-                to={pkg.requestPath}
-                className={`block w-full py-4 px-6 rounded-xl font-semibold text-center transition-all duration-300 ${
-                  pkg.popular
-                    ? 'glow-button neon-purple'
-                    : 'glass-card text-white hover:bg-white/10'
+      </section>
+
+      <section className="ltx-container-wide ltx-section">
+        <div className="grid gap-5 lg:grid-cols-3">
+          {p.tiers.map((tier, index) => {
+            const Icon = icons[index] ?? Sparkles
+            const popular = index === 1
+            return (
+              <div
+                key={tier.name}
+                className={`relative flex flex-col rounded-[1.25rem] border p-7 ${
+                  popular
+                    ? 'border-sky-400/35 bg-gradient-to-b from-sky-500/[0.08] to-white/[0.02] shadow-[0_30px_80px_-40px_rgba(59,130,246,0.8)]'
+                    : 'border-white/[0.08] bg-white/[0.02]'
                 }`}
               >
-                {pkg.popular ? 'Talep Gönder' : 'Planı Seç'}
-              </Link>
-            </div>
-          ))}
+                {popular && (
+                  <span className="absolute -top-3 left-7 rounded-full bg-gradient-to-r from-sky-500 to-violet-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+                    {p.popularBadge}
+                  </span>
+                )}
+
+                <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tones[index]} shadow-lg`}>
+                  <Icon className="h-6 w-6 text-slate-950" strokeWidth={2.4} />
+                </div>
+
+                <h2 className="mt-5 font-display text-2xl font-semibold tracking-tight text-white">
+                  {tier.name}
+                </h2>
+                <p className="mt-1.5 text-[13px] text-slate-400">{tier.description}</p>
+
+                <div className="mt-5 flex items-baseline gap-1">
+                  <span className="font-display text-4xl font-semibold text-white">{tier.price}</span>
+                  <span className="text-[13px] text-slate-500">{tier.period}</span>
+                </div>
+
+                <ul className="mt-6 flex-1 space-y-2.5">
+                  {tier.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2.5 text-[13px] text-slate-300">
+                      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-400/10 ring-1 ring-emerald-400/25">
+                        <Check className="h-2.5 w-2.5 text-emerald-300" strokeWidth={3.5} />
+                      </span>
+                      <span className="leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  to={`/projemi-anlat?plan=${tier.name}&project_type=${index === 2 ? 'custom' : 'web'}`}
+                  className={`mt-7 w-full ${popular ? 'ltx-btn-primary' : 'ltx-btn-secondary'}`}
+                >
+                  {popular ? p.request : p.choose}
+                </Link>
+              </div>
+            )
+          })}
         </div>
 
-        {/* Additional Info */}
-        <div className="mt-16 glass-card p-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-4 text-white">What's Included in Every Package?</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <Zap className="w-6 h-6 text-white" />
+        <div className="ltx-card mt-14 p-8">
+          <h3 className="text-center font-display text-xl font-semibold text-white">{p.includedTitle}</h3>
+          <div className="mt-8 grid gap-6 sm:grid-cols-3">
+            {p.included.map((item) => (
+              <div key={item.title} className="text-center">
+                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400/20 to-violet-500/15 ring-1 ring-white/10">
+                  <Sparkles className="h-5 w-5 text-sky-300" />
                 </div>
-                <h4 className="font-semibold text-white mb-2">Modern Tech Stack</h4>
-                    <p className="text-gray-200 text-sm">React, TypeScript, Supabase, Tailwind CSS</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3">
-                      <Rocket className="w-6 h-6 text-white" />
-                    </div>
-                    <h4 className="font-semibold text-white mb-2">Fast Delivery</h4>
-                    <p className="text-gray-200 text-sm">Quick turnaround times with quality assurance</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3">
-                      <Crown className="w-6 h-6 text-white" />
-                    </div>
-                    <h4 className="font-semibold text-white mb-2">Professional Support</h4>
-                    <p className="text-gray-200 text-sm">Dedicated support and maintenance included</p>
+                <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-slate-500">{item.body}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <h3 className="text-3xl font-bold mb-6 text-white">Need Something Custom?</h3>
-              <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
-                We also offer custom software solutions tailored to your specific business needs.
-              </p>
-          <Link
-            to="/projemi-anlat?plan=CUSTOM"
-            className="glow-button text-lg px-8 py-4 neon-blue"
-          >
-            Özel Teklif İste
+        <div className="mt-14 text-center">
+          <h3 className="font-display text-2xl font-semibold text-white">{p.customTitle}</h3>
+          <p className="mx-auto mt-3 max-w-xl text-[14px] text-slate-400">{p.customLead}</p>
+          <Link to="/projemi-anlat?plan=CUSTOM" className="ltx-btn-primary mt-6">
+            {p.customCta}
           </Link>
         </div>
-      </div>
-    </div>
+      </section>
+    </MarketingChrome>
   )
 }

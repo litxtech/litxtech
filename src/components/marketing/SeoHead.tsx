@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { absoluteUrl, organizationJsonLd, seoConfig, websiteJsonLd } from '@/data/seoConfig'
 import { expandDescription } from '@/lib/metaText'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { useLanguage } from '@/contexts/LanguageContext'
+import { htmlLang, ogLocale } from '@/i18n/copy'
 
 type SeoHeadProps = {
   title: string
@@ -61,6 +63,7 @@ export function SeoHead({
   jsonLd,
 }: SeoHeadProps) {
   const company = useCompanySettings()
+  const { language } = useLanguage()
   const jsonLdKey = jsonLd ? JSON.stringify(jsonLd) : ''
 
   useEffect(() => {
@@ -69,7 +72,7 @@ export function SeoHead({
 
     const summary = expandDescription(description, title)
     document.title = title
-    document.documentElement.lang = seoConfig.language
+    document.documentElement.lang = htmlLang[language]
 
     upsertMeta('name', 'description', summary)
     upsertMeta('name', 'robots', robots)
@@ -80,12 +83,12 @@ export function SeoHead({
 
     upsertMeta('property', 'og:type', type)
     upsertMeta('property', 'og:site_name', seoConfig.siteName)
-    upsertMeta('property', 'og:locale', seoConfig.locale)
+    upsertMeta('property', 'og:locale', ogLocale[language])
     upsertMeta('property', 'og:title', title)
     upsertMeta('property', 'og:description', summary)
     upsertMeta('property', 'og:url', url)
     upsertMeta('property', 'og:image', imageUrl)
-    upsertMeta('property', 'og:image:alt', `${seoConfig.siteName} – yazılım şirketi`)
+    upsertMeta('property', 'og:image:alt', `${seoConfig.siteName} — software studio`)
 
     upsertMeta('name', 'twitter:card', 'summary_large_image')
     upsertMeta('name', 'twitter:title', title)
@@ -93,7 +96,7 @@ export function SeoHead({
     upsertMeta('name', 'twitter:image', imageUrl)
 
     upsertLink('canonical', url)
-    upsertLink('alternate', url, { hreflang: 'tr' })
+    upsertLink('alternate', url, { hreflang: htmlLang[language] })
     upsertLink('alternate', url, { hreflang: 'x-default' })
 
     const verification = import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as string | undefined
@@ -114,7 +117,7 @@ export function SeoHead({
       const pageLd = document.getElementById('ld-page')
       if (pageLd) pageLd.remove()
     }
-  }, [title, description, path, robots, image, type, jsonLdKey, company])
+  }, [title, description, path, robots, image, type, jsonLdKey, company, language])
 
   return null
 }

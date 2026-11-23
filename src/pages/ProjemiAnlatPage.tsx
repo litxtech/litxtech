@@ -1,34 +1,19 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { submitLead, trackEvent } from '@/lib/publicCms'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { getWhatsAppUrl } from '@/lib/publicCms'
-
-const projectTypes = [
-  { id: 'mobile', label: 'Mobil uygulama' },
-  { id: 'web', label: 'Web uygulaması' },
-  { id: 'social', label: 'Sosyal platform' },
-  { id: 'saas', label: 'SaaS' },
-  { id: 'hotel', label: 'Otel sistemi' },
-  { id: 'restaurant', label: 'Restoran / işletme' },
-  { id: 'custom', label: 'Özel yazılım' },
-  { id: 'ai', label: 'Yapay zeka' },
-  { id: 'other', label: 'Diğer' },
-]
-
-const customerTypes = [
-  { id: 'business', label: 'İşletme sahibiyim' },
-  { id: 'entrepreneur', label: 'Bir fikrim var' },
-  { id: 'company', label: 'Şirketim için yazılım' },
-  { id: 'startup', label: 'Startup' },
-  { id: 'individual', label: 'Bireysel' },
-  { id: 'other', label: 'Diğer' },
-]
 
 export function ProjemiAnlatPage() {
   const settings = useCompanySettings()
+  const { t } = useLanguage()
+  const c = t.lead
+  const projectTypes = c.projectTypes
+  const customerTypes = c.customerTypes
   const [searchParams] = useSearchParams()
   const [step, setStep] = useState(1)
   const [busy, setBusy] = useState(false)
@@ -51,26 +36,27 @@ export function ProjemiAnlatPage() {
   useEffect(() => {
     const plan = searchParams.get('plan')
     const projectType = searchParams.get('project_type')
-    if (projectType && projectTypes.some((t) => t.id === projectType)) {
+    if (projectType && projectTypes.some((item) => item.id === projectType)) {
       setForm((f) => ({ ...f, project_type: projectType }))
     }
     if (plan) {
       setForm((f) => ({
         ...f,
         budget_range: plan,
-        project_description: f.project_description || `Paket talebi: ${plan}`,
+        project_description: f.project_description || `Package request: ${plan}`,
       }))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
   const wa = useMemo(() => getWhatsAppUrl(settings), [settings])
 
   const next = async () => {
     setError('')
-    if (step === 1 && !form.project_type) return setError('Lütfen bir proje tipi seçin.')
-    if (step === 2 && !form.customer_type) return setError('Lütfen müşteri tipini seçin.')
+    if (step === 1 && !form.project_type) return setError(c.errProjectType)
+    if (step === 2 && !form.customer_type) return setError(c.errCustomerType)
     if (step === 3 && form.project_description.trim().length < 20) {
-      return setError('Lütfen projenizi en az birkaç cümle ile anlatın.')
+      return setError(c.errDescription)
     }
     if (step === 1) trackEvent('lead_started', '/projemi-anlat', { project_type: form.project_type })
     setStep((s) => Math.min(5, s + 1))
@@ -79,7 +65,7 @@ export function ProjemiAnlatPage() {
   const submit = async () => {
     setError('')
     if (!form.name.trim() || !form.email.trim()) {
-      setError('Ad ve e-posta zorunludur.')
+      setError(c.errContact)
       return
     }
     setBusy(true)
@@ -92,52 +78,60 @@ export function ProjemiAnlatPage() {
       setRefCode(result.reference_code)
       setStep(5)
     } catch (e: any) {
-      setError(e.message || 'Gönderilemedi')
+      setError(e.message || c.errSend)
     } finally {
       setBusy(false)
     }
   }
 
+  const optionClass = (active: boolean) =>
+    `rounded-xl border px-4 py-3 text-left text-[13.5px] transition ${
+      active
+        ? 'border-sky-400/60 bg-sky-500/10 text-white'
+        : 'border-white/[0.08] bg-white/[0.02] text-slate-300 hover:border-white/20'
+    }`
+
   return (
     <MarketingChrome>
-      <SeoHead
-        title="Projenizi Anlatın | LitxTech"
-        description="Fikrinizi çalışan bir dijital ürüne dönüştürelim. Proje talebinizi birkaç adımda iletin."
-        path="/projemi-anlat"
-      />
-      <section className="mx-auto max-w-3xl px-4 py-16 md:px-6">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">Lead</p>
-        <h1 className="mt-3 text-4xl font-bold text-white md:text-5xl">
-          Fikrinizi çalışan bir dijital ürüne dönüştürelim.
-        </h1>
-        <p className="mt-4 text-lg text-slate-300">
-          Birkaç kısa adımda projenizi anlatın. Ekibimiz ihtiyaçlarınızı inceleyerek sizinle iletişime
-          geçer.
-        </p>
+      <SeoHead title={c.metaTitle} description={c.metaDescription} path="/projemi-anlat" />
 
-        <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container relative py-16 sm:py-20">
+          <p className="ltx-eyebrow">{c.eyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{c.title}</h1>
+          <p className="ltx-lead mt-5 max-w-2xl">{c.lead}</p>
+        </div>
+      </section>
+
+      <section className="ltx-container py-14">
+        <div className="ltx-card mx-auto max-w-3xl p-6 md:p-8">
           {step < 5 && (
-            <p className="mb-6 text-sm text-slate-400">
-              Adım {step} / 4
-            </p>
+            <div className="mb-6 flex items-center gap-3">
+              <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">
+                {c.stepLabel} {step} / 4
+              </span>
+              <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/[0.08]">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-sky-500 to-violet-500 transition-all"
+                  style={{ width: `${(step / 4) * 100}%` }}
+                />
+              </div>
+            </div>
           )}
 
           {step === 1 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Ne geliştirmek istiyorsunuz?</h2>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {projectTypes.map((t) => (
+              <h2 className="font-display text-xl font-semibold text-white">{c.step1Title}</h2>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {projectTypes.map((item) => (
                   <button
-                    key={t.id}
+                    key={item.id}
                     type="button"
-                    onClick={() => setForm({ ...form, project_type: t.id })}
-                    className={`rounded-xl border px-4 py-3 text-left text-sm transition ${
-                      form.project_type === t.id
-                        ? 'border-cyan-400 bg-cyan-500/10 text-white'
-                        : 'border-white/10 text-slate-300 hover:border-white/25'
-                    }`}
+                    onClick={() => setForm({ ...form, project_type: item.id })}
+                    className={optionClass(form.project_type === item.id)}
                   >
-                    {t.label}
+                    {item.label}
                   </button>
                 ))}
               </div>
@@ -146,20 +140,16 @@ export function ProjemiAnlatPage() {
 
           {step === 2 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Bu proje kimin için?</h2>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {customerTypes.map((t) => (
+              <h2 className="font-display text-xl font-semibold text-white">{c.step2Title}</h2>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {customerTypes.map((item) => (
                   <button
-                    key={t.id}
+                    key={item.id}
                     type="button"
-                    onClick={() => setForm({ ...form, customer_type: t.id })}
-                    className={`rounded-xl border px-4 py-3 text-left text-sm transition ${
-                      form.customer_type === t.id
-                        ? 'border-cyan-400 bg-cyan-500/10 text-white'
-                        : 'border-white/10 text-slate-300 hover:border-white/25'
-                    }`}
+                    onClick={() => setForm({ ...form, customer_type: item.id })}
+                    className={optionClass(form.customer_type === item.id)}
                   >
-                    {t.label}
+                    {item.label}
                   </button>
                 ))}
               </div>
@@ -168,54 +158,55 @@ export function ProjemiAnlatPage() {
 
           {step === 3 && (
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Projenizi kısaca anlatın</h2>
+              <h2 className="font-display text-xl font-semibold text-white">{c.step3Title}</h2>
               <textarea
                 rows={6}
                 value={form.project_description}
                 onChange={(e) => setForm({ ...form, project_description: e.target.value })}
-                placeholder="Hedef kullanıcılar, temel özellikler, mevcut durum…"
-                className="w-full rounded-xl border border-white/15 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
+                placeholder={c.descriptionPlaceholder}
+                className="ltx-field resize-none"
               />
               <input
                 value={form.company}
                 onChange={(e) => setForm({ ...form, company: e.target.value })}
-                placeholder="Şirket / marka (opsiyonel)"
-                className="w-full rounded-xl border border-white/15 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
+                placeholder={c.companyPlaceholder}
+                className="ltx-field"
               />
             </div>
           )}
 
           {step === 4 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-white">Size nasıl ulaşalım?</h2>
-              <input
-                required
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Ad Soyad"
-                className="w-full rounded-xl border border-white/15 bg-slate-950 px-4 py-3 text-white"
-              />
-              <input
-                required
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="E-posta"
-                className="w-full rounded-xl border border-white/15 bg-slate-950 px-4 py-3 text-white"
-              />
-              <input
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                placeholder="Telefon (opsiyonel)"
-                className="w-full rounded-xl border border-white/15 bg-slate-950 px-4 py-3 text-white"
-              />
-              <input
-                value={form.whatsapp}
-                onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-                placeholder="WhatsApp (opsiyonel)"
-                className="w-full rounded-xl border border-white/15 bg-slate-950 px-4 py-3 text-white"
-              />
-              {/* honeypot */}
+            <div className="space-y-3">
+              <h2 className="font-display text-xl font-semibold text-white">{c.step4Title}</h2>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <input
+                  required
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder={c.namePlaceholder}
+                  className="ltx-field"
+                />
+                <input
+                  required
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder={c.emailPlaceholder}
+                  className="ltx-field"
+                />
+                <input
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  placeholder={c.phonePlaceholder}
+                  className="ltx-field"
+                />
+                <input
+                  value={form.whatsapp}
+                  onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
+                  placeholder={c.whatsappPlaceholder}
+                  className="ltx-field"
+                />
+              </div>
               <input
                 tabIndex={-1}
                 autoComplete="off"
@@ -229,26 +220,27 @@ export function ProjemiAnlatPage() {
 
           {step === 5 && (
             <div className="space-y-4 text-center">
-              <h2 className="text-2xl font-bold text-white">Talebinizi aldık.</h2>
-              <p className="text-slate-300">
-                Referans numarası:{' '}
-                <span className="font-mono font-semibold text-cyan-300">{refCode}</span>
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/10 ring-1 ring-emerald-400/30">
+                <Check className="h-6 w-6 text-emerald-300" strokeWidth={3} />
+              </span>
+              <h2 className="font-display text-2xl font-semibold text-white">{c.successTitle}</h2>
+              <p className="text-[14px] text-slate-300">
+                {c.successRef}{' '}
+                <span className="font-mono font-semibold text-sky-300">{refCode}</span>
               </p>
-              <p className="text-slate-400">
-                LITXTECH ekibimiz projenizi inceleyerek sizinle iletişime geçecek.
-              </p>
+              <p className="text-[13px] text-slate-400">{c.successBody}</p>
               <div className="flex flex-wrap justify-center gap-3 pt-2">
-                <Link to="/" className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950">
-                  Ana sayfa
+                <Link to="/" className="ltx-btn-primary">
+                  {c.home}
                 </Link>
                 <a
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent('whatsapp_click', '/projemi-anlat')}
-                  className="rounded-xl border border-white/20 px-5 py-3 text-sm font-semibold text-white"
+                  className="ltx-btn-secondary"
                 >
-                  WhatsApp&apos;tan yaz
+                  {c.whatsapp}
                 </a>
               </div>
             </div>
@@ -262,26 +254,24 @@ export function ProjemiAnlatPage() {
                 type="button"
                 disabled={step === 1}
                 onClick={() => setStep((s) => Math.max(1, s - 1))}
-                className="rounded-xl border border-white/15 px-4 py-2 text-sm text-slate-200 disabled:opacity-40"
+                className="ltx-btn-secondary ltx-btn-sm disabled:opacity-40"
               >
-                Geri
+                <ArrowLeft className="h-4 w-4" />
+                {c.back}
               </button>
               {step < 4 ? (
-                <button
-                  type="button"
-                  onClick={next}
-                  className="rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-semibold text-slate-950"
-                >
-                  Devam
+                <button type="button" onClick={next} className="ltx-btn-primary ltx-btn-sm">
+                  {c.next}
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               ) : (
                 <button
                   type="button"
                   disabled={busy}
                   onClick={submit}
-                  className="rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-semibold text-slate-950 disabled:opacity-60"
+                  className="ltx-btn-primary ltx-btn-sm disabled:opacity-60"
                 >
-                  {busy ? 'Gönderiliyor…' : 'Talebi gönder'}
+                  {busy ? c.submitting : c.submit}
                 </button>
               )}
             </div>

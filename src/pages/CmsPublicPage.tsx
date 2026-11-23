@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { NotFoundPage } from '@/pages/platform/CatalogPages'
 
 type CmsPage = {
@@ -32,6 +33,7 @@ function textBlocks(content: unknown) {
 
 export function CmsPublicPage() {
   const { slug } = useParams()
+  const { language, t } = useLanguage()
   const [page, setPage] = useState<CmsPage | null>(null)
   const [missing, setMissing] = useState(false)
 
@@ -55,7 +57,9 @@ export function CmsPublicPage() {
   if (!page) {
     return (
       <MarketingChrome>
-        <p className="px-4 py-24 text-center text-slate-400">Yükleniyor…</p>
+        <p className="px-4 py-24 text-center text-slate-400">
+          {language === 'tr' ? 'Yükleniyor…' : 'Loading…'}
+        </p>
       </MarketingChrome>
     )
   }
@@ -69,20 +73,24 @@ export function CmsPublicPage() {
         path={`/sayfa/${page.slug}`}
         robots={page.no_index ? 'noindex, follow' : 'index, follow'}
       />
-      <article className="mx-auto max-w-3xl px-4 py-16 md:px-6">
-        <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">LitxTech</p>
-        <h1 className="mt-3 text-4xl font-semibold text-white">{page.title}</h1>
-        {page.excerpt && <p className="mt-4 text-lg text-slate-300">{page.excerpt}</p>}
+      <article className="ltx-container ltx-section max-w-3xl">
+        <p className="ltx-eyebrow">LitxTech</p>
+        <h1 className="ltx-h1 mt-4 text-balance">{page.title}</h1>
+        {page.excerpt && <p className="ltx-lead mt-4">{page.excerpt}</p>}
         {page.featured_image && (
-          <img src={page.featured_image} alt="" className="mt-8 w-full rounded-2xl border border-white/10 object-cover" />
+          <img
+            src={page.featured_image}
+            alt=""
+            className="mt-8 w-full rounded-2xl border border-white/[0.08] object-cover"
+          />
         )}
-        <div className="mt-8 space-y-4 text-slate-300">
+        <div className="mt-8 space-y-4 text-[14.5px] leading-relaxed text-slate-300">
           {blocks.map((block) => (
             <p key={block}>{block}</p>
           ))}
         </div>
-        <Link to="/" className="mt-10 inline-block text-cyan-300">
-          Ana sayfa
+        <Link to="/" className="ltx-link mt-10 inline-block text-sm">
+          {t.nav.home}
         </Link>
       </article>
     </MarketingChrome>

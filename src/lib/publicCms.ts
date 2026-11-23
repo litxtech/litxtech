@@ -35,7 +35,7 @@ export function fallbackCompanySettings(): PublicCompanySettings {
     support_email: siteConfig.email,
     website: 'https://www.litxtech.com',
     calendly_url: siteConfig.calendlyUrl,
-    copyright: `© ${new Date().getFullYear()} LitxTech. Tüm hakları saklıdır.`,
+    copyright: `© ${new Date().getFullYear()} LitxTech. All rights reserved.`,
     social: {},
     whatsapp: {
       enabled: true,

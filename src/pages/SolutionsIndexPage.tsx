@@ -1,54 +1,47 @@
+import { Link } from 'react-router-dom'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { SolutionCard } from '@/components/marketing/SolutionCard'
 import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { solutionsData } from '@/data/solutionsData'
-import { Link } from 'react-router-dom'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export function SolutionsIndexPage() {
+  const { t } = useLanguage()
+  const s = t.solutions
+
   return (
     <MarketingChrome>
-      <SeoHead
-        title="Yazılım Geliştirme | LitxTech"
-        description="LitxTech yazılım geliştirme çözümleri: otel, restoran, mobil uygulama, sosyal platform ve kuruma özel yazılım. Kapsamı inceleyip teklif alın."
-        path="/cozumler"
-      />
-      <section className="border-b border-white/10 bg-gradient-to-b from-[#070a12] to-[#05070f]">
-        <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+      <SeoHead title={s.metaTitle} description={s.metaDescription} path="/cozumler" />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="pointer-events-none absolute inset-0 ltx-grid-lines opacity-60" />
+        <div className="ltx-container-wide relative py-16 sm:py-20 lg:py-24">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-blue-300/90">Çözümler</p>
-            <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-white md:text-5xl">
-              İşinize uygun yazılım çözüm alanları
-            </h1>
-            <p className="mt-4 text-lg text-slate-400">
-              Her kart bir ürün değil; operasyonunuzu güçlendiren bir çözüm yaklaşımını temsil eder. Detay sayfalarında
-              kapsamı ve süreci net şekilde görebilirsiniz.
-            </p>
+            <p className="ltx-eyebrow">{s.eyebrow}</p>
+            <h1 className="ltx-h1 mt-4 text-balance">{s.title}</h1>
+            <p className="ltx-lead mt-5 max-w-2xl">{s.lead}</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/contact"
-                className="rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/25"
-              >
-                Teklif Al
+              <Link to="/contact" className="ltx-btn-primary">
+                {s.ctaQuote}
               </Link>
-              <Link
-                to="/projeler"
-                className="rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:border-white/25"
-              >
-                Referans projeler
+              <Link to="/projeler" className="ltx-btn-secondary">
+                {s.ctaProjects}
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-16">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {solutionsData.map((s, i) => (
-            <SolutionCard key={s.slug} solution={s} index={i} />
+      <section className="ltx-container-wide ltx-section">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {solutionsData.map((item, i) => (
+            <SolutionCard key={item.slug} solution={item} index={i} />
           ))}
         </div>
       </section>
+
       <WhatsAppFloat />
     </MarketingChrome>
   )

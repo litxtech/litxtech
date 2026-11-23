@@ -1,113 +1,111 @@
 import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { breadcrumbJsonLd, seoConfig } from '@/data/seoConfig'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export function AboutPage() {
+  const { t } = useLanguage()
+  const a = t.about
+
   return (
     <MarketingChrome>
       <SeoHead
-        title="Hakkımızda | LitxTech"
-        description="LitxTech; modern web ve mobil uygulamalar, özel yazılım ve dijital ürünler geliştiren bir yazılım şirketidir. Hizmetler, ürünler ve iletişim burada."
+        title={a.metaTitle}
+        description={a.metaDescription}
         path="/about"
         jsonLd={breadcrumbJsonLd([
-          { name: 'Ana Sayfa', path: '/' },
-          { name: 'Hakkımızda', path: '/about' },
+          { name: t.nav.company, path: '/' },
+          { name: a.eyebrow, path: '/about' },
         ])}
       />
 
-      <section className="border-b border-white/10">
-        <div className="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-300/90">Hakkımızda</p>
-          <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-white md:text-5xl">
-            LitxTech — yazılımı işe dönüştüren ekip
-          </h1>
-          <p className="mt-6 text-lg leading-relaxed text-slate-300">
-            <strong className="font-semibold text-white">LitxTech</strong> (kısaca{' '}
-            <strong className="font-semibold text-white">Litx</strong>), işletmeler ve girişimler için
-            modern yazılım ürünleri geliştiren bir teknoloji şirketidir. Mobil uygulamalar, SaaS
-            platformları, otel ve restoran yönetim sistemleri ile kurumlara özel yazılımı fikir
-            aşamasından yayına kadar planlar, tasarlar ve destekleriz.
-          </p>
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="pointer-events-none absolute inset-0 ltx-grid-lines opacity-60" />
+        <div className="ltx-container relative py-16 sm:py-20 lg:py-24">
+          <p className="ltx-eyebrow">{a.eyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{a.title}</h1>
+          <p className="ltx-lead mt-6 max-w-2xl">{a.intro}</p>
+
+          <div className="mt-12 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+            {a.stats.map((stat) => (
+              <div key={stat.label} className="ltx-card p-4">
+                <div className="font-display text-2xl font-semibold text-white">{stat.value}</div>
+                <div className="mt-1 text-[11.5px] leading-snug text-slate-500">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl space-y-10 px-4 py-14 md:px-6">
-        <div>
-          <h2 className="font-display text-2xl font-bold text-white">Ne yapıyoruz?</h2>
-          <p className="mt-4 leading-relaxed text-slate-400">
-            LitxTech olarak ürün odaklı mühendislik sunuyoruz: kullanıcı arayüzü, backend, mobil
-            yayınlama, entegrasyonlar ve yayın sonrası bakım. Amacımız amatör bir site değil; ölçülebilir
-            iş değeri üreten yazılım teslim etmek.
-          </p>
-          <ul className="mt-6 space-y-3 text-slate-300">
-            <li>· Mobil uygulama geliştirme (iOS &amp; Android)</li>
-            <li>· SaaS ve web panelleri</li>
-            <li>· Otel ve restoran operasyon yazılımları</li>
-            <li>· Sosyal platform ve şehir uygulamaları</li>
-            <li>· Özel yazılım ve entegrasyonlar</li>
+      <section className="ltx-container space-y-14 py-14 lg:py-20">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="ltx-h3">{a.whatTitle}</h2>
+            <p className="mt-4 text-[14.5px] leading-relaxed text-slate-400">{a.whatBody}</p>
+          </div>
+          <ul className="space-y-2.5">
+            {a.whatItems.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3"
+              >
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-sky-400 to-violet-400" />
+                <span className="text-[13.5px] leading-relaxed text-slate-300">{item}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div>
-          <h2 className="font-display text-2xl font-bold text-white">Neden LitxTech?</h2>
-          <p className="mt-4 leading-relaxed text-slate-400">
-            Markamız <strong className="text-slate-200">LitxTech</strong> /{' '}
-            <strong className="text-slate-200">Litx</strong> olarak tanınır. Şeffaf süreç, hızlı iletişim
-            ve gerçek referans ürünlerle çalışırız. İster MVP ister ölçeklenebilir kurumsal sistem —
-            ihtiyaca göre mimari kurarız.
-          </p>
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="ltx-h3">{a.whyTitle}</h2>
+            <p className="mt-4 text-[14.5px] leading-relaxed text-slate-400">{a.whyBody}</p>
+          </div>
+          <div className="ltx-card p-6">
+            <h2 className="font-display text-base font-semibold text-white">{a.factsTitle}</h2>
+            <dl className="mt-5 space-y-3.5 text-[13px]">
+              <div className="flex gap-3">
+                <dt className="w-32 shrink-0 text-slate-500">{a.legalName}</dt>
+                <dd className="text-slate-200">{seoConfig.legalName}</dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-32 shrink-0 text-slate-500">{a.web}</dt>
+                <dd>
+                  <a className="ltx-link" href={seoConfig.origin}>
+                    www.litxtech.com
+                  </a>
+                </dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-32 shrink-0 text-slate-500">{a.email}</dt>
+                <dd>
+                  <a className="ltx-link" href={`mailto:${seoConfig.email}`}>
+                    {seoConfig.email}
+                  </a>
+                </dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-32 shrink-0 text-slate-500">{a.phone}</dt>
+                <dd className="text-slate-200">{seoConfig.phone}</dd>
+              </div>
+            </dl>
+          </div>
         </div>
 
-        <div>
-          <h2 className="font-display text-2xl font-bold text-white">Şirket bilgileri</h2>
-          <dl className="mt-4 space-y-2 text-sm text-slate-400">
-            <div className="flex gap-2">
-              <dt className="w-36 shrink-0 text-slate-500">Ticari unvan</dt>
-              <dd className="text-slate-200">{seoConfig.legalName}</dd>
-            </div>
-            <div className="flex gap-2">
-              <dt className="w-36 shrink-0 text-slate-500">Web</dt>
-              <dd>
-                <a className="text-blue-300 hover:text-blue-200" href={seoConfig.origin}>
-                  www.litxtech.com
-                </a>
-              </dd>
-            </div>
-            <div className="flex gap-2">
-              <dt className="w-36 shrink-0 text-slate-500">E-posta</dt>
-              <dd>
-                <a className="text-blue-300 hover:text-blue-200" href={`mailto:${seoConfig.email}`}>
-                  {seoConfig.email}
-                </a>
-              </dd>
-            </div>
-            <div className="flex gap-2">
-              <dt className="w-36 shrink-0 text-slate-500">Telefon</dt>
-              <dd className="text-slate-200">{seoConfig.phone}</dd>
-            </div>
-          </dl>
-        </div>
-
-        <div className="flex flex-col gap-3 border-t border-white/10 pt-10 sm:flex-row">
-          <Link
-            to="/projemi-anlat"
-            className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3.5 text-sm font-semibold text-white"
-          >
-            Projeni anlat
+        <div className="flex flex-col gap-3 border-t border-white/[0.07] pt-10 sm:flex-row">
+          <Link to="/projemi-anlat" className="ltx-btn-primary">
+            {a.ctaProject}
+            <ArrowRight className="h-4 w-4" />
           </Link>
-          <Link
-            to="/cozumler"
-            className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3.5 text-sm font-semibold text-white hover:border-white/25"
-          >
-            Çözümleri incele
+          <Link to="/cozumler" className="ltx-btn-secondary">
+            {a.ctaSolutions}
           </Link>
-          <Link
-            to="/contact"
-            className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3.5 text-sm font-semibold text-white hover:border-white/25"
-          >
-            İletişim
+          <Link to="/contact" className="ltx-btn-ghost">
+            {a.ctaContact}
           </Link>
         </div>
       </section>

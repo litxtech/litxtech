@@ -1,14 +1,15 @@
 # litxtech.com — Vercel → Cloudflare Pages Geçiş Runbook'u
 
-> **Durum (23 Kasım 2026):** Pages projesi `litxtechweb` oluşturuldu ve ilk deploy
-> yapıldı → <https://litxtechweb.pages.dev>. Özel alan adları eklendi ama DNS
-> doğrulaması bekliyor. Aşağıdaki **10. bölümdeki iki blokaj** çözülmeden alan adı
-> canlıya alınmamalı.
+> **Durum (23 Kasım 2026):** Pages projesi `litxtechweb` yayında →
+> <https://litxtechweb.pages.dev>. Site **gerçek Supabase projesine**
+> (`cobzwohfekgzbvxbwrll`) bağlı; CMS okuma, lead yazma ve admin guard çalışıyor.
+> **Kalan tek blokaj:** `litxtech.com` registrar'ında nameserver'lar hâlâ
+> Hostinger'da (`p3/p4.hosting.com.tr`) → zone `pending`, alan adı DNS'te çözmüyor.
+> Bkz. **10. bölüm**.
 >
-> **Düzeltme:** Kullanıcı mesajındaki `2b67be4a3dfbbd65f7314157a7f856e8` zone ID'si
-> ve `carmelo/olga` nameserver'ları **tamuso.com**'a aittir. `litxtech.com` zone'u:
-> `017fe8de62bc10cb93c81ea1ad233fa1`, hesap **vora videolar sunucu**, NS
-> **laylah.ns.cloudflare.com** + **will.ns.cloudflare.com** (status: pending).
+> `litxtech.com` zone ID: `017fe8de62bc10cb93c81ea1ad233fa1`, hesap
+> **vora videolar sunucu**, NS **laylah.ns.cloudflare.com** +
+> **will.ns.cloudflare.com** (status: pending).
 
 Bu proje **Vora (vinext/SSR)** ve **Tamuso (saf statik SPA)** ile aynı sınıfta değil.
 Vite SPA + ~40 Vercel fonksiyonu + Edge Middleware + Stripe + Supabase Auth var.
@@ -241,7 +242,7 @@ değişkeni + DNS (MX doğrulamasıyla).
 
 ---
 
-## 10. Canlıya alma durumu — 23 Kasım 2026
+## 10. Canlıya alma durumu — 23 Kasım 2026 (güncel)
 
 ### Tamamlananlar
 
@@ -252,32 +253,38 @@ değişkeni + DNS (MX doğrulamasıyla).
 | Build + deploy | ✅ `dist/` + 58 fonksiyon dosyası |
 | `nodejs_compat` | ✅ proje ayarında açık |
 | Sitemap | ✅ 200, `application/xml`, **83 URL** |
-| SEO enjeksiyonu | ✅ ana sayfa title + canonical + JSON-LD |
-| `/api/public/*` | ✅ 200 (DB yoksa statik yedek) |
-| `/api/admin/dashboard` | ✅ 401 (auth guard çalışıyor) |
-| Özel alan adları | `www.litxtech.com` + `litxtech.com` eklendi, **pending** |
-| Ortam değişkenleri | `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL`, `VITE_PUBLIC_SITE_URL`, `VITE_ADMIN_SITE_URL` |
-| MX / SPF / doğrulama TXT | ✅ pending zone'a aktarılmış (authoritative NS'ten doğrulandı) |
+| SEO enjeksiyonu | ✅ title + canonical + JSON-LD |
+| Supabase | ✅ **geldi** — `cobzwohfekgzbvxbwrll`, `ACTIVE_HEALTHY`, us-east-2 |
+| Boş proje temizliği | ✅ `vnxraswzpnubdfjvrlet` silindi, hesapta tek proje kaldı |
+| CMS okuma | ✅ services 6, projects 3, cases 2, faqs 7 — canlı DB'den |
+| Lead yazma | ✅ `POST /api/public/leads` → 201, kayıt DB'ye düştü (test kaydı silindi) |
+| Admin guard | ✅ `/api/admin/dashboard` → 401 |
+| Ortam değişkenleri | ✅ 13 değişken + `nodejs_compat` (`npm run cf:env`) |
+| Özel alan adları | `litxtech.com` + `www.litxtech.com` Pages'e bağlı, **pending** |
+| MX / SPF / doğrulama TXT | ✅ pending zone'da korunuyor |
 
-### Blokaj 1 — Supabase projesi silinmiş (kritik)
+### Uygulanan veritabanı migration'ları
 
-`xcvcplwimicylaxghiak.supabase.co` **NXDOMAIN**; Supabase Management API
-`{"message":"Resource has been removed"}` döndürüyor. Yani site şu an yalnızca
-statik kabuk + yedek verilerle çalışıyor; formlar, admin paneli, CMS ve dinamik
-sitemap kayıtları veritabanına yazamaz.
+`npm run db:apply <dosya>` ile Management API üzerinden çalıştırıldı:
 
-Yapılması gereken:
+| Dosya | Ne yaptı |
+|---|---|
+| `20261123_grant_public_read.sql` | `cms_*`, `feed_posts`, `seo_metadata`, `site_ctas` vb. tablolara `anon` SELECT + RLS politikası; service_role tam yetki |
+| `20261123_create_legacy_admin_tables.sql` | Kodun kullandığı ama projede olmayan `site_settings`, `blog_posts`, `package_management`, `customer_orders`, `system_logs` + `admin_dashboard_stats` görünümü |
+| `20261123_validate_admin_session.sql` | Canlı şemaya (`admin_id` / `token` / `revoked`) uygun RPC — yoktu, her admin isteği hataya düşüyordu |
+| `supabase-donation-badge-setup.sql` | `donations` + `user_badges` (Stripe bağış webhook'u için) |
 
-1. Supabase panelinde proje **geri yükleme** (silme sonrası saklama süresi içinde)
-   → aynı URL ve anahtarlar geri gelir.
-2. Mümkün değilse yeni proje + `supabase/migrations` aktarımı → yeni URL/anahtarlar.
-3. Ardından Pages → Settings → Variables and Secrets:
-   `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` güncelle.
-4. Vite istemcisi için `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` ile yeniden build.
+> Not: `cms_pages` üzerinde `include_in_sitemap` / `lastmod` yok; sitemap `updated_at`
+> ve `status` alanlarını kullanıyor, bu yüzden eksik kolon sorun değil.
+> `cms_projects` başlık alanı `title` değil **`name`**, `homepage_sections` ise
+> `is_enabled` değil **`active`** kullanıyor — kod bu şemaya uygun yazılmış.
 
-### Blokaj 2 — Nameserver değişmedi
+### Kalan tek blokaj — Nameserver değişmedi
 
-Alan adı hâlâ Hostinger'da: `p3.hosting.com.tr`, `p4.hosting.com.tr`.
+Zone `017fe8de62bc10cb93c81ea1ad233fa1` hâlâ **pending** ve `litxtech.com` DNS'te
+hiç çözülmüyor (SERVFAIL). Alan adı hâlâ Hostinger NS'lerini kullanıyor:
+`p3.hosting.com.tr`, `p4.hosting.com.tr`.
+
 Registrar panelinde NS olarak **yalnızca** şunlar girilmeli:
 
 ```
@@ -287,19 +294,8 @@ will.ns.cloudflare.com
 
 `carmelo/olga` **tamuso.com**'un NS'leridir; bu zone'a yazılırsa alan adı çözülemez.
 
-### Blokaj 3 — Zone'daki eski Vercel kayıtları
-
-Pending zone'da şu kayıtlar var:
-
-| Tür | Ad | Değer | Durum |
-|---|---|---|---|
-| A | `@` | `216.198.79.1` | ❌ Vercel (DEPLOYMENT_DISABLED) |
-| A | `www` | `216.198.79.1` | ❌ Vercel |
-| MX | `@` | `mx1.hostinger.com` (5), `mx2.hostinger.com` (10) | ✅ korunmalı |
-| TXT | `@` | `v=spf1 include:_spf.mail.hostinger.com ~all` | ✅ korunmalı |
-| TXT | `@` | `google-site-verification=...` | ✅ korunmalı |
-
-NS geçişinden sonra Cloudflare DNS'te `@` ve `www` A kayıtlarını silip yerine:
+NS değişip zone **active** olduğunda Pages özel alan adları otomatik
+tamamlanır; olmazsa Cloudflare DNS'te `@` ve `www` A kayıtlarını silip yerine:
 
 | Tür | Ad | İçerik | Proxy |
 |---|---|---|---|
@@ -310,18 +306,23 @@ NS geçişinden sonra Cloudflare DNS'te `@` ve `www` A kayıtlarını silip yeri
 > oluşturmayı teklif eder. Otomatik oluşmazsa yukarıdaki iki CNAME elle girilir.
 > **MX/SPF/TXT kayıtlarına dokunulmaz.**
 
-### Blokaj 4 — Eksik secret'lar
+### Bilinen eksik — Stripe ve e-posta secret'ları
 
-| Değişken | Nereden |
+| Değişken | Durum |
 |---|---|
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Project Settings → API (proje geri yüklendikten sonra) |
-| `STRIPE_SECRET_KEY` | Stripe Dashboard → Developers → API keys |
-| `STRIPE_WEBHOOK_SECRET` | Stripe → Webhooks → uç nokta imza secret'ı |
-| `RESEND_API_KEY` / `SMTP_*` | Form bildirimleri (opsiyonel) |
+| `SUPABASE_SERVICE_ROLE_KEY` | ✅ girildi (`sb_secret_…`) |
+| `ADMIN_SESSION_SECRET` | ✅ lokal + Pages aynı değer |
+| `STRIPE_SECRET_KEY` | ⚠️ Vercel'den taşındı, canlı ödeme testi yapılmadı |
+| `STRIPE_WEBHOOK_SECRET` | ❌ Stripe → Webhooks → uç nokta imza secret'ı |
+| `RESEND_API_KEY` / `SMTP_*` | ❌ form bildirimleri (opsiyonel, form yine DB'ye kaydediliyor) |
 
-Secret'lar dashboard'dan girildikten sonra yeniden deploy gerekir:
+Secret'lar değiştiğinde yeniden deploy gerekir:
 
 ```bash
 $env:CLOUDFLARE_ACCOUNT_ID="acf99dc4d05885166e2c3300aff7b2ef"
-npx wrangler@4 pages deploy dist --project-name litxtechweb --branch main
+npm run cf:env      # değişkenleri Pages'e yazar
+npm run cf:deploy   # yeni değerlerle yayınlar
 ```
+
+Alan adı canlıya alındıktan sonra `npm run cf:durum` ile zone/domain durumu
+tek komutla kontrol edilebilir.

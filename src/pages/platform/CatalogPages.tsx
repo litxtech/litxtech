@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
+import { ArrowUpRight, Smartphone } from 'lucide-react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { solutionsData } from '@/data/solutionsData'
+import { useLanguage } from '@/contexts/LanguageContext'
+import type { Lang } from '@/i18n/copy'
 import { trackEvent } from '@/lib/publicCms'
+
+type ProductText = { name: string; tagline: string; category: string }
 
 type Product = {
   slug: string
-  name: string
+  name?: string
   tagline?: string | null
   short_description?: string | null
   description?: string | null
@@ -20,62 +25,66 @@ type Product = {
   lifecycle?: string | null
   badges?: string[] | null
   internalPath?: string
+  text?: Record<Lang, ProductText>
 }
 
 const knownProducts: Product[] = [
   {
     slug: 'safdas',
-    name: 'SAFDAŞ',
-    tagline: 'Prayer times, Quran, qibla, and an Islamic social community.',
-    category: 'Faith',
-    platforms: ['iOS', 'Android'],
     internalPath: '/safdas',
+    text: {
+      en: { name: 'SAFDAŞ', tagline: 'Prayer times, Quran, qibla and an Islamic social community.', category: 'Faith' },
+      tr: { name: 'SAFDAŞ', tagline: 'Namaz vakitleri, Kur’an, kıble ve İslami sosyal topluluk.', category: 'İnanç' },
+    },
   },
   {
     slug: 'vora',
-    name: 'Vora',
-    tagline: 'City channels and community messaging for the Black Sea region.',
-    category: 'Community',
-    platforms: ['iOS', 'Android'],
     internalPath: '/vora',
+    text: {
+      en: { name: 'Vora', tagline: 'City channels and community messaging for the Black Sea region.', category: 'Community' },
+      tr: { name: 'Vora', tagline: 'Karadeniz bölgesi için şehir kanalları ve topluluk mesajlaşması.', category: 'Topluluk' },
+    },
   },
   {
     slug: 'tamuso',
-    name: 'Tamuso',
-    tagline: 'Live audio rooms with speaker and listener roles.',
-    category: 'Social',
-    platforms: ['iOS', 'Android'],
     internalPath: '/tamuso',
+    text: {
+      en: { name: 'Tamuso', tagline: 'Live audio rooms with speaker and listener roles.', category: 'Social' },
+      tr: { name: 'Tamuso', tagline: 'Konuşmacı ve dinleyici rollerine sahip canlı sesli odalar.', category: 'Sosyal' },
+    },
   },
   {
     slug: 'nocta',
-    name: 'Nocta',
-    tagline: 'A social discovery product with its own privacy and support pages.',
-    category: 'Social',
-    platforms: ['iOS', 'Android'],
     internalPath: '/nocta',
+    text: {
+      en: { name: 'Nocta', tagline: 'A social discovery product with its own privacy and support pages.', category: 'Social' },
+      tr: { name: 'Nocta', tagline: 'Kendi gizlilik ve destek sayfalarına sahip sosyal keşif ürünü.', category: 'Sosyal' },
+    },
   },
   {
     slug: 'mytrabzon',
-    name: 'MyTrabzon',
-    tagline: 'A city guide and community app for Trabzon.',
-    category: 'City',
     internalPath: '/mytrabzon',
+    text: {
+      en: { name: 'MyTrabzon', tagline: 'A city guide and community app for Trabzon.', category: 'City' },
+      tr: { name: 'MyTrabzon', tagline: 'Trabzon için şehir rehberi ve topluluk uygulaması.', category: 'Şehir' },
+    },
   },
   {
     slug: 'valoria',
-    name: 'Valoria',
-    tagline: 'A mobile guest experience for a hotel brand.',
-    category: 'Hospitality',
     internalPath: '/valoria-app',
+    text: {
+      en: { name: 'Valoria', tagline: 'A mobile guest experience for a hotel brand.', category: 'Hospitality' },
+      tr: { name: 'Valoria', tagline: 'Bir otel markası için mobil misafir deneyimi.', category: 'Konaklama' },
+    },
   },
   {
     slug: 'kbs-prime',
-    name: 'KBS Prime',
-    tagline: 'A live social product published by LitxTech.',
-    category: 'Social',
     website_url: 'https://kbsprime.com',
     internalPath: '/kbs-prime',
+    text: {
+      en: { name: 'KBS Prime', tagline: 'A live social product published by LitxTech.', category: 'Social' },
+      tr: { name: 'KBS Prime', tagline: 'LitxTech tarafından yayınlanan canlı sosyal ürün.', category: 'Sosyal' },
+    },
   },
 ]
 
@@ -85,15 +94,27 @@ function productHref(product: Product) {
   return `/products/${product.slug}`
 }
 
-function Frame({ name, lines }: { name: string; lines: string[] }) {
+function resolveProduct(product: Product, language: Lang): ProductText {
+  if (product.text) return product.text[language]
+  return {
+    name: product.name || product.slug,
+    tagline: product.tagline || product.short_description || '',
+    category: product.category || '',
+  }
+}
+
+function PhoneFrame({ name, lines }: { name: string; lines: string[] }) {
   return (
-    <div className="mx-auto w-[220px] rounded-[2rem] border border-white/15 bg-[#0c1220] p-3 shadow-2xl shadow-cyan-950/40">
-      <div className="mb-3 h-5 rounded-full bg-white/10" />
-      <div className="rounded-2xl border border-white/10 bg-[#101828] p-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">{name}</p>
+    <div className="mx-auto w-[240px] rounded-[2rem] border border-white/[0.12] bg-[#0a0f1a] p-3 shadow-2xl shadow-black/60">
+      <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-white/15" />
+      <div className="rounded-[1.35rem] border border-white/[0.08] bg-[#0d1421] p-4">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-sky-300">{name}</p>
         <div className="mt-4 space-y-2">
-          {lines.slice(0, 4).map((line) => (
-            <div key={line} className="rounded-lg bg-white/5 px-3 py-2 text-xs text-slate-300">
+          {lines.slice(0, 4).map((line, index) => (
+            <div
+              key={`${line}-${index}`}
+              className="rounded-lg border border-white/[0.06] bg-white/[0.04] px-3 py-2 text-[11px] leading-snug text-slate-300"
+            >
               {line}
             </div>
           ))}
@@ -104,43 +125,63 @@ function Frame({ name, lines }: { name: string; lines: string[] }) {
 }
 
 export function ProductsPage() {
-  const [products, setProducts] = useState<Product[]>(knownProducts)
+  const { language, t } = useLanguage()
+  const c = t.catalog
+  const [remote, setRemote] = useState<Product[]>([])
+
   useEffect(() => {
     void trackEvent('product_view', '/products')
     fetch('/api/public/products')
       .then((r) => r.json())
       .then((d) => {
-        if (Array.isArray(d.products) && d.products.length) setProducts(d.products)
+        if (Array.isArray(d.products)) setRemote(d.products)
       })
       .catch(() => {})
   }, [])
+
+  // CMS product rows are Turkish-authored; English uses the curated local set.
+  const products = language === 'tr' && remote.length ? remote : knownProducts
+
   return (
     <MarketingChrome>
-      <SeoHead
-        title="Dijital Ürünler ve Yazılım Platformları | LitxTech"
-        description="LitxTech dijital ürünleri ve yazılım platformları: Vora, Tamuso, Nocta, MyTrabzon, Valoria ve KBS Prime."
-        path="/products"
-      />
-      <section className="mx-auto max-w-6xl px-4 py-16 md:px-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">Products</p>
-        <h1 className="mt-3 max-w-2xl font-display text-4xl font-semibold text-white md:text-5xl">
-          Software we have actually shipped.
-        </h1>
-        <p className="mt-4 max-w-2xl text-slate-400">
-          These are LitxTech products. Descriptions stay tied to the product record, and empty fields stay empty until they are filled in admin.
-        </p>
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {products.map((product) => (
-            <Link
-              key={product.slug}
-              to={productHref(product)}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-cyan-400/40"
-            >
-              <p className="text-xs uppercase tracking-wide text-slate-500">{product.category || 'Product'}</p>
-              <h2 className="mt-2 text-2xl font-semibold text-white">{product.name}</h2>
-              <p className="mt-3 text-slate-400">{product.tagline || product.short_description}</p>
-            </Link>
-          ))}
+      <SeoHead title={c.productsMetaTitle} description={c.productsMetaDescription} path="/products" />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="pointer-events-none absolute inset-0 ltx-grid-lines opacity-60" />
+        <div className="ltx-container-wide relative py-16 sm:py-20 lg:py-24">
+          <p className="ltx-eyebrow">{c.productsEyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{c.productsTitle}</h1>
+          <p className="ltx-lead mt-5 max-w-2xl">{c.productsLead}</p>
+        </div>
+      </section>
+
+      <section className="ltx-container-wide ltx-section">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {products.map((product) => {
+            const text = resolveProduct(product, language)
+            return (
+              <Link
+                key={product.slug}
+                to={productHref(product)}
+                className="ltx-card-interactive group flex flex-col p-6"
+              >
+                <div className="flex items-start justify-between">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400/20 to-violet-500/10 text-sky-300 ring-1 ring-white/10">
+                    <Smartphone className="h-5 w-5" />
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-slate-600 transition group-hover:text-white" />
+                </div>
+                <p className="mt-5 text-[11px] uppercase tracking-[0.14em] text-slate-500">
+                  {text.category || c.productsEyebrow}
+                </p>
+                <h2 className="mt-1.5 font-display text-lg font-semibold tracking-tight text-white">
+                  {text.name}
+                </h2>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-slate-400">{text.tagline}</p>
+              </Link>
+            )
+          })}
         </div>
       </section>
     </MarketingChrome>
@@ -149,6 +190,8 @@ export function ProductsPage() {
 
 export function ProductPage() {
   const { slug } = useParams()
+  const { language, t } = useLanguage()
+  const c = t.catalog
   const fallback = knownProducts.find((item) => item.slug === slug)
   const [product, setProduct] = useState<Product | null>(fallback || null)
   const [missing, setMissing] = useState(false)
@@ -173,106 +216,137 @@ export function ProductPage() {
   if (missing || !product) {
     return (
       <MarketingChrome>
-        <SeoHead title="Product not found | LitxTech" path={`/products/${slug || ''}`} robots="noindex,follow" />
-        <div className="mx-auto max-w-3xl px-4 py-24 text-center">
-          <h1 className="text-3xl font-semibold text-white">This product is not published.</h1>
-          <Link to="/products" className="mt-6 inline-block text-cyan-300">
-            Back to products
+        <SeoHead title={`${c.notFoundTitle} | LitxTech`} path={`/products/${slug || ''}`} robots="noindex,follow" />
+        <div className="ltx-container py-24 text-center">
+          <h1 className="ltx-h2">{c.notFoundTitle}</h1>
+          <Link to="/products" className="ltx-btn-secondary mt-7">
+            {c.productsEyebrow}
           </Link>
         </div>
       </MarketingChrome>
     )
   }
 
+  const text = resolveProduct(product, language)
   const featureLines = Array.isArray(product.features)
-    ? product.features.map((feature) => (typeof feature === 'string' ? feature : feature.title || '')).filter(Boolean)
-    : [product.tagline || product.short_description || product.name]
+    ? product.features
+        .map((feature) => (typeof feature === 'string' ? feature : feature.title || ''))
+        .filter(Boolean)
+    : [text.tagline]
 
   return (
     <MarketingChrome>
       <SeoHead
-        title={`${product.name} | LitxTech`}
-        description={product.tagline || product.short_description || `${product.name} by LitxTech.`}
+        title={`${text.name} | LitxTech`}
+        description={text.tagline || `${text.name} by LitxTech.`}
         path={`/products/${product.slug}`}
       />
-      <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:grid-cols-2 md:px-6">
-        <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">{product.category || 'Product'}</p>
-          <h1 className="mt-3 text-5xl font-semibold text-white">{product.name}</h1>
-          <p className="mt-4 text-lg text-slate-300">{product.tagline || product.short_description}</p>
-          {product.description && <p className="mt-4 text-slate-400">{product.description}</p>}
-          <div className="mt-6 flex flex-wrap gap-2">
-            {(product.platforms || []).map((platform) => (
-              <span key={platform} className="rounded-full border border-white/15 px-3 py-1 text-xs text-slate-300">
-                {platform}
-              </span>
-            ))}
-            {product.lifecycle && (
-              <span className="rounded-full bg-cyan-400/15 px-3 py-1 text-xs text-cyan-200">{product.lifecycle}</span>
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container-wide relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-2">
+          <div>
+            <p className="ltx-eyebrow">{text.category || c.productsEyebrow}</p>
+            <h1 className="ltx-h1 mt-4">{text.name}</h1>
+            <p className="mt-4 text-lg font-medium text-slate-300">{text.tagline}</p>
+            {product.description && (
+              <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-slate-400">{product.description}</p>
             )}
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {product.internalPath && (
-              <Link to={product.internalPath} className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950">
-                Open product site
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {(product.platforms || []).map((platform) => (
+                <span key={platform} className="ltx-pill !py-1 !text-[11px]">
+                  {platform}
+                </span>
+              ))}
+              {product.lifecycle && (
+                <span className="ltx-pill !border-sky-400/25 !bg-sky-400/10 !py-1 !text-[11px] !text-sky-200">
+                  {product.lifecycle}
+                </span>
+              )}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {product.internalPath && (
+                <Link to={product.internalPath} className="ltx-btn-primary">
+                  {t.projects.openProduct}
+                </Link>
+              )}
+              {!product.internalPath && fallback?.internalPath && (
+                <Link to={fallback.internalPath} className="ltx-btn-primary">
+                  {t.projects.openProduct}
+                </Link>
+              )}
+              {product.ios_url && (
+                <a
+                  href={product.ios_url}
+                  className="ltx-btn-secondary"
+                  onClick={() => trackEvent('app_store_click', `/products/${product.slug}`)}
+                >
+                  App Store
+                </a>
+              )}
+              {product.android_url && (
+                <a
+                  href={product.android_url}
+                  className="ltx-btn-secondary"
+                  onClick={() => trackEvent('google_play_click', `/products/${product.slug}`)}
+                >
+                  Google Play
+                </a>
+              )}
+              <Link to="/contact" className="ltx-btn-ghost">
+                {t.nav.startProject}
               </Link>
-            )}
-            {!product.internalPath && knownProducts.find((item) => item.slug === product.slug)?.internalPath && (
-              <Link
-                to={knownProducts.find((item) => item.slug === product.slug)!.internalPath!}
-                className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950"
-              >
-                Open product site
-              </Link>
-            )}
-            {product.ios_url && (
-              <a href={product.ios_url} className="rounded-lg border border-white/15 px-4 py-2 text-sm" onClick={() => trackEvent('app_store_click', `/products/${product.slug}`)}>
-                App Store
-              </a>
-            )}
-            {product.android_url && (
-              <a href={product.android_url} className="rounded-lg border border-white/15 px-4 py-2 text-sm" onClick={() => trackEvent('google_play_click', `/products/${product.slug}`)}>
-                Google Play
-              </a>
-            )}
-            <Link to="/contact" className="rounded-lg border border-white/15 px-4 py-2 text-sm">
-              Start a project
-            </Link>
+            </div>
           </div>
+
+          <PhoneFrame name={text.name} lines={featureLines.length ? featureLines : [text.name]} />
         </div>
-        <Frame name={product.name} lines={featureLines.length ? featureLines : [product.name]} />
       </section>
     </MarketingChrome>
   )
 }
 
 export function ServicesPage() {
-  const [services, setServices] = useState(
-    solutionsData.map((item) => ({
-      slug: item.slug,
-      title: item.title,
-      short_description: item.cardDescription,
-    })),
+  const { language, t } = useLanguage()
+  const c = t.catalog
+  const services = useMemo(
+    () =>
+      solutionsData.map((item) => ({
+        slug: item.slug,
+        title: item.text[language].title,
+        description: item.text[language].cardDescription,
+      })),
+    [language],
   )
-  useEffect(() => {
-    fetch('/api/public/services')
-      .then((r) => r.json())
-      .then((d) => {
-        if (Array.isArray(d.services) && d.services.length) setServices(d.services)
-      })
-      .catch(() => {})
-  }, [])
+
   return (
     <MarketingChrome>
-      <SeoHead title="Services | LitxTech" description="What LitxTech builds: mobile products, web applications, and business software." path="/services" />
-      <section className="mx-auto max-w-6xl px-4 py-16 md:px-6">
-        <p className="text-xs uppercase tracking-[0.22em] text-cyan-300">Services</p>
-        <h1 className="mt-3 text-4xl font-semibold text-white">What we build</h1>
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
+      <SeoHead title={c.servicesMetaTitle} description={c.servicesMetaDescription} path="/services" />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="pointer-events-none absolute inset-0 ltx-grid-lines opacity-60" />
+        <div className="ltx-container-wide relative py-16 sm:py-20 lg:py-24">
+          <p className="ltx-eyebrow">{c.servicesEyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{c.servicesTitle}</h1>
+          <p className="ltx-lead mt-5 max-w-2xl">{c.servicesLead}</p>
+        </div>
+      </section>
+
+      <section className="ltx-container-wide ltx-section">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <Link key={service.slug} to={`/services/${service.slug}`} className="rounded-2xl border border-white/10 p-6 hover:border-cyan-400/40">
-              <h2 className="text-xl font-semibold text-white">{service.title}</h2>
-              <p className="mt-2 text-sm text-slate-400">{service.short_description}</p>
+            <Link key={service.slug} to={`/services/${service.slug}`} className="ltx-card-interactive group p-6">
+              <h2 className="font-display text-[17px] font-semibold tracking-tight text-white">
+                {service.title}
+              </h2>
+              <p className="mt-2.5 text-[13.5px] leading-relaxed text-slate-400">{service.description}</p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-sky-300">
+                {c.explore}
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
             </Link>
           ))}
         </div>
@@ -283,87 +357,131 @@ export function ServicesPage() {
 
 export function ServicePage() {
   const { slug } = useParams()
+  const { language, t } = useLanguage()
+  const c = t.catalog
   const local = solutionsData.find((item) => item.slug === slug)
-  const [service, setService] = useState<any>(
-    local
-      ? {
-          title: local.title,
-          short_description: local.cardDescription,
-          detailed_description: local.problem,
-          benefits: local.features,
-          slug: local.slug,
-        }
-      : null,
-  )
-  useEffect(() => {
-    if (!slug) return
-    void trackEvent('service_view', `/services/${slug}`)
-    fetch(`/api/public/services/${slug}`)
-      .then(async (r) => {
-        const data = await r.json()
-        if (data.service) setService(data.service)
-      })
-      .catch(() => {})
-  }, [slug])
-  if (!service) {
-    return (
-      <MarketingChrome>
-        <div className="px-4 py-24 text-center text-white">Service not found.</div>
-      </MarketingChrome>
-    )
-  }
-  const benefits = Array.isArray(service.benefits) ? service.benefits : []
+  const localText = local ? local.text[language] : null
+
   return (
     <MarketingChrome>
-      <SeoHead title={`${service.title} | LitxTech`} description={service.short_description || service.title} path={`/services/${slug}`} />
-      <article className="mx-auto max-w-3xl px-4 py-16 md:px-6">
-        <h1 className="text-4xl font-semibold text-white">{service.title}</h1>
-        <p className="mt-4 text-lg text-slate-300">{service.short_description}</p>
-        {service.detailed_description && <p className="mt-6 text-slate-400">{service.detailed_description}</p>}
-        {!!benefits.length && (
-          <ul className="mt-8 space-y-2 text-slate-300">
-            {benefits.map((item: string) => (
-              <li key={item} className="border-b border-white/10 py-2">{item}</li>
-            ))}
-          </ul>
-        )}
-        <Link to="/contact" className="mt-10 inline-flex rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950">
-          Start a project
-        </Link>
-      </article>
+      {localText && local ? (
+        <>
+          <SeoHead
+            title={localText.metaTitle}
+            description={localText.metaDescription}
+            path={`/services/${local.slug}`}
+          />
+          <section className="relative overflow-hidden border-b border-white/[0.07]">
+            <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+            <div className="ltx-container relative py-16 sm:py-20">
+              <p className="ltx-eyebrow">{c.servicesEyebrow}</p>
+              <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{localText.title}</h1>
+              <p className="ltx-lead mt-5 max-w-2xl">{localText.cardDescription}</p>
+            </div>
+          </section>
+
+          <article className="ltx-container ltx-section">
+            <p className="max-w-3xl text-[14.5px] leading-relaxed text-slate-400">{localText.problem}</p>
+            <div className="mt-8 grid gap-2.5 sm:grid-cols-2">
+              {localText.features.map((item) => (
+                <div
+                  key={item}
+                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3 text-[13.5px] text-slate-300"
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link to="/contact" className="ltx-btn-primary">
+                {t.nav.startProject}
+              </Link>
+              <Link to={`/cozumler/${local.slug}`} className="ltx-btn-secondary">
+                {t.solutions.cardCta}
+              </Link>
+            </div>
+          </article>
+        </>
+      ) : (
+        <>
+          <SeoHead title={`${c.servicesMetaTitle}`} description={c.servicesMetaDescription} path={`/services/${slug}`} />
+          <div className="ltx-container py-24 text-center">
+            <h1 className="ltx-h2">{c.notFoundTitle}</h1>
+            <Link to="/services" className="ltx-btn-secondary mt-7">
+              {c.servicesEyebrow}
+            </Link>
+          </div>
+        </>
+      )}
     </MarketingChrome>
   )
 }
 
+const TECH_GROUPS = [
+  {
+    category: { en: 'Frontend', tr: 'Arayüz' },
+    items: [
+      { name: 'React', desc: { en: 'Component-based interfaces', tr: 'Bileşen tabanlı arayüzler' } },
+      { name: 'TypeScript', desc: { en: 'Type-safe application code', tr: 'Tip güvenli uygulama kodu' } },
+      { name: 'Tailwind CSS', desc: { en: 'Consistent design system', tr: 'Tutarlı tasarım sistemi' } },
+      { name: 'Vite', desc: { en: 'Fast builds and dev server', tr: 'Hızlı derleme ve geliştirme sunucusu' } },
+    ],
+  },
+  {
+    category: { en: 'Backend & data', tr: 'Backend ve veri' },
+    items: [
+      { name: 'Node.js', desc: { en: 'API and edge functions', tr: 'API ve edge fonksiyonları' } },
+      { name: 'PostgreSQL', desc: { en: 'Relational data model', tr: 'İlişkisel veri modeli' } },
+      { name: 'Supabase', desc: { en: 'Auth, storage and realtime', tr: 'Kimlik, depolama ve gerçek zamanlı' } },
+      { name: 'REST / Webhooks', desc: { en: 'System integrations', tr: 'Sistem entegrasyonları' } },
+    ],
+  },
+  {
+    category: { en: 'Mobile', tr: 'Mobil' },
+    items: [
+      { name: 'React Native', desc: { en: 'Cross-platform app delivery', tr: 'Platformlar arası uygulama' } },
+      { name: 'iOS & Android', desc: { en: 'Store-ready releases', tr: 'Mağazaya hazır sürümler' } },
+    ],
+  },
+  {
+    category: { en: 'Infrastructure', tr: 'Altyapı' },
+    items: [
+      { name: 'Cloudflare', desc: { en: 'Global edge delivery', tr: 'Küresel edge dağıtımı' } },
+      { name: 'Observability', desc: { en: 'Monitoring and alerting', tr: 'İzleme ve uyarı' } },
+    ],
+  },
+]
+
 export function TechnologyPage() {
-  const [items, setItems] = useState<{ name: string; category: string; description?: string }[]>([])
-  useEffect(() => {
-    fetch('/api/public/studio/technology')
-      .then((r) => r.json())
-      .then((d) => setItems(d.technologies || []))
-      .catch(() => {})
-  }, [])
-  const groups = items.reduce<Record<string, typeof items>>((acc, item) => {
-    acc[item.category] = acc[item.category] || []
-    acc[item.category].push(item)
-    return acc
-  }, {})
+  const { language, t } = useLanguage()
+  const c = t.catalog
+
   return (
     <MarketingChrome>
-      <SeoHead title="Technology | LitxTech" description="The technologies LitxTech uses to build and run its products." path="/technology" />
-      <section className="mx-auto max-w-5xl px-4 py-16 md:px-6">
-        <h1 className="text-4xl font-semibold text-white">Technology</h1>
-        <p className="mt-3 text-slate-400">Only tools this platform and our products actually use. Add more from admin when they are real.</p>
-        {!items.length && <p className="mt-8 text-slate-500">Technology records are not published yet.</p>}
-        <div className="mt-10 space-y-8">
-          {Object.entries(groups).map(([category, rows]) => (
-            <div key={category}>
-              <h2 className="text-sm uppercase tracking-[0.18em] text-cyan-300">{category}</h2>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                {rows.map((row) => (
-                  <div key={row.name} className="rounded-xl border border-white/10 p-4">
-                    <p className="font-medium text-white">{row.name}</p>
-                    {row.description && <p className="mt-1 text-sm text-slate-400">{row.description}</p>}
+      <SeoHead title={c.technologyMetaTitle} description={c.technologyMetaDescription} path="/technology" />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="pointer-events-none absolute inset-0 ltx-grid-lines opacity-60" />
+        <div className="ltx-container-wide relative py-16 sm:py-20 lg:py-24">
+          <p className="ltx-eyebrow">{c.technologyEyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{c.technologyTitle}</h1>
+          <p className="ltx-lead mt-5 max-w-2xl">{c.technologyLead}</p>
+        </div>
+      </section>
+
+      <section className="ltx-container-wide ltx-section">
+        <div className="grid gap-8 md:grid-cols-2">
+          {TECH_GROUPS.map((group) => (
+            <div key={group.category.en}>
+              <h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sky-300/80">
+                {group.category[language]}
+              </h2>
+              <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                {group.items.map((item) => (
+                  <div key={item.name} className="ltx-card p-4">
+                    <p className="text-[14px] font-semibold text-white">{item.name}</p>
+                    <p className="mt-1 text-[12.5px] leading-relaxed text-slate-500">{item.desc[language]}</p>
                   </div>
                 ))}
               </div>
@@ -376,55 +494,81 @@ export function TechnologyPage() {
 }
 
 export function ProcessPage() {
-  const [steps, setSteps] = useState<{ step_number: number; title: string; description: string }[]>([])
-  useEffect(() => {
-    fetch('/api/public/studio/process')
-      .then((r) => r.json())
-      .then((d) => setSteps(d.steps || []))
-      .catch(() => {})
-  }, [])
+  const { t } = useLanguage()
+  const c = t.catalog
+  const steps = t.homeLists.process
+
   return (
     <MarketingChrome>
-      <SeoHead title="Process | LitxTech" description="How LitxTech takes a product from discovery to scale." path="/process" />
-      <section className="mx-auto max-w-3xl px-4 py-16 md:px-6">
-        <h1 className="text-4xl font-semibold text-white">How we work</h1>
-        {!steps.length && <p className="mt-6 text-slate-500">Process steps are edited in admin.</p>}
-        <ol className="mt-10 space-y-6">
-          {steps.map((step) => (
-            <li key={step.step_number} className="grid grid-cols-[3rem_1fr] gap-4">
-              <span className="text-cyan-300">{String(step.step_number).padStart(2, '0')}</span>
+      <SeoHead title={c.processMetaTitle} description={c.processMetaDescription} path="/process" />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container relative py-16 sm:py-20">
+          <p className="ltx-eyebrow">{c.processEyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{c.processTitle}</h1>
+          <p className="ltx-lead mt-5 max-w-2xl">{c.processLead}</p>
+        </div>
+      </section>
+
+      <section className="ltx-container ltx-section">
+        <ol className="space-y-3">
+          {steps.map((step, index) => (
+            <li key={step.title} className="flex gap-5 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6">
+              <span className="font-display text-sm font-semibold text-sky-300/80">
+                {String(index + 1).padStart(2, '0')}
+              </span>
               <div>
-                <h2 className="text-xl text-white">{step.title}</h2>
-                <p className="mt-1 text-slate-400">{step.description}</p>
+                <h2 className="font-display text-lg font-semibold text-white">{step.title}</h2>
+                <p className="mt-1.5 text-[13.5px] leading-relaxed text-slate-400">{step.desc}</p>
               </div>
             </li>
           ))}
         </ol>
+        <Link to="/contact" className="ltx-btn-primary mt-9">
+          {c.talkCta}
+        </Link>
       </section>
     </MarketingChrome>
   )
 }
 
 export function CaseStudiesPage() {
+  const { t } = useLanguage()
+  const c = t.catalog
   const [items, setItems] = useState<any[]>([])
+
   useEffect(() => {
     fetch('/api/public/cases')
       .then((r) => r.json())
       .then((d) => setItems(d.cases || []))
       .catch(() => {})
   }, [])
+
   return (
     <MarketingChrome>
-      <SeoHead title="Case studies | LitxTech" description="Product stories from software LitxTech has shipped." path="/case-studies" />
-      <section className="mx-auto max-w-5xl px-4 py-16 md:px-6">
-        <h1 className="text-4xl font-semibold text-white">Case studies</h1>
-        <p className="mt-3 max-w-2xl text-slate-400">These are LitxTech products, not unnamed client logos. Metrics appear only when they are stored.</p>
-        {!items.length && <p className="mt-8 text-slate-500">No published case studies yet.</p>}
-        <div className="mt-8 grid gap-4">
+      <SeoHead title={c.casesMetaTitle} description={c.casesMetaDescription} path="/case-studies" />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container relative py-16 sm:py-20">
+          <p className="ltx-eyebrow">{c.casesEyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{c.casesTitle}</h1>
+          <p className="ltx-lead mt-5 max-w-2xl">{c.casesLead}</p>
+        </div>
+      </section>
+
+      <section className="ltx-container ltx-section">
+        {!items.length && <p className="text-sm text-slate-500">{c.emptyState}</p>}
+        <div className="grid gap-3">
           {items.map((item) => (
-            <Link key={item.slug} to={`/case-studies/${item.slug}`} className="rounded-2xl border border-white/10 p-6">
-              <h2 className="text-2xl text-white">{item.title}</h2>
-              <p className="mt-2 text-slate-400">{item.summary}</p>
+            <Link key={item.slug} to={`/case-studies/${item.slug}`} className="ltx-card-interactive p-6">
+              <h2 className="font-display text-lg font-semibold text-white">{item.title}</h2>
+              <p className="mt-2 text-[13.5px] leading-relaxed text-slate-400">{item.summary}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-sky-300">
+                {c.readCase}
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
             </Link>
           ))}
         </div>
@@ -435,8 +579,11 @@ export function CaseStudiesPage() {
 
 export function CaseStudyPage() {
   const { slug } = useParams()
+  const { language, t } = useLanguage()
+  const c = t.catalog
   const [item, setItem] = useState<any>(null)
   const [missing, setMissing] = useState(false)
+
   useEffect(() => {
     if (!slug) return
     void trackEvent('case_study_view', `/case-studies/${slug}`)
@@ -448,29 +595,64 @@ export function CaseStudyPage() {
       })
       .catch(() => setMissing(true))
   }, [slug])
+
   if (missing) {
     return (
       <MarketingChrome>
-        <div className="px-4 py-24 text-center text-white">Case study not published.</div>
+        <div className="ltx-container py-24 text-center">
+          <h1 className="ltx-h2">{c.notFoundTitle}</h1>
+          <Link to="/case-studies" className="ltx-btn-secondary mt-7">
+            {c.casesEyebrow}
+          </Link>
+        </div>
       </MarketingChrome>
     )
   }
-  if (!item) return <MarketingChrome><div className="px-4 py-24 text-slate-400">Loading…</div></MarketingChrome>
+
+  if (!item) {
+    return (
+      <MarketingChrome>
+        <div className="ltx-container py-24 text-center text-sm text-slate-400">{t.common.loading}</div>
+      </MarketingChrome>
+    )
+  }
+
+  const sections = [
+    { label: language === 'tr' ? 'Zorluk' : 'Challenge', text: item.challenge },
+    { label: language === 'tr' ? 'Yaklaşım' : 'Approach', text: item.approach },
+    { label: language === 'tr' ? 'Çözüm' : 'Solution', text: item.solution },
+    { label: language === 'tr' ? 'Sonuç' : 'Result', text: item.result },
+  ].filter((row) => row.text)
+
   return (
     <MarketingChrome>
-      <SeoHead title={`${item.title} | LitxTech`} description={item.summary || item.title} path={`/case-studies/${slug}`} />
-      <article className="mx-auto max-w-3xl space-y-6 px-4 py-16 md:px-6">
-        <h1 className="text-4xl font-semibold text-white">{item.title}</h1>
-        <p className="text-slate-300">{item.summary}</p>
-        {[['Challenge', item.challenge], ['Approach', item.approach], ['Solution', item.solution], ['Result', item.result]].map(([label, text]) =>
-          text ? (
-            <section key={label}>
-              <h2 className="text-sm uppercase tracking-[0.16em] text-cyan-300">{label}</h2>
-              <p className="mt-2 text-slate-300">{text}</p>
-            </section>
-          ) : null,
-        )}
-        <Link to="/contact" className="inline-flex rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950">Start a project</Link>
+      <SeoHead
+        title={`${item.title} | LitxTech`}
+        description={item.summary || item.title}
+        path={`/case-studies/${slug}`}
+      />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container relative py-16 sm:py-20">
+          <p className="ltx-eyebrow">{c.casesEyebrow}</p>
+          <h1 className="ltx-h1 mt-4 max-w-3xl text-balance">{item.title}</h1>
+          <p className="ltx-lead mt-5 max-w-2xl">{item.summary}</p>
+        </div>
+      </section>
+
+      <article className="ltx-container ltx-section space-y-9">
+        {sections.map((row) => (
+          <section key={row.label}>
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sky-300/80">
+              {row.label}
+            </h2>
+            <p className="mt-2.5 text-[14.5px] leading-relaxed text-slate-300">{row.text}</p>
+          </section>
+        ))}
+        <Link to="/contact" className="ltx-btn-primary">
+          {c.talkCta}
+        </Link>
       </article>
     </MarketingChrome>
   )
@@ -479,8 +661,10 @@ export function CaseStudyPage() {
 export function FeedPostPage() {
   const { slug } = useParams()
   const location = useLocation()
+  const { t } = useLanguage()
   const [post, setPost] = useState<any>(null)
   const [missing, setMissing] = useState(false)
+
   useEffect(() => {
     if (!slug) return
     void trackEvent('feed_view', `/blog/${slug}`)
@@ -492,66 +676,130 @@ export function FeedPostPage() {
       })
       .catch(() => setMissing(true))
   }, [slug])
+
   if (location.pathname.startsWith('/feed/')) {
     return <Navigate to={`/blog/${slug || ''}`} replace />
   }
-  if (missing) return <MarketingChrome><div className="px-4 py-24 text-center text-white">Post not published.</div></MarketingChrome>
-  if (!post) return <MarketingChrome><div className="px-4 py-24 text-slate-400">Loading…</div></MarketingChrome>
+
+  if (missing) {
+    return (
+      <MarketingChrome>
+        <div className="ltx-container py-24 text-center">
+          <h1 className="ltx-h2">{t.catalog.notFoundTitle}</h1>
+          <Link to="/blog" className="ltx-btn-secondary mt-7">
+            {t.nav.blog}
+          </Link>
+        </div>
+      </MarketingChrome>
+    )
+  }
+
+  if (!post) {
+    return (
+      <MarketingChrome>
+        <div className="ltx-container py-24 text-center text-sm text-slate-400">{t.common.loading}</div>
+      </MarketingChrome>
+    )
+  }
+
   return (
     <MarketingChrome>
-      <SeoHead title={`${post.title} | LitxTech`} description={post.excerpt || post.title} path={`/blog/${slug}`} type="article" />
-      <article className="mx-auto max-w-3xl px-4 py-16 md:px-6">
-        <p className="text-xs uppercase tracking-[0.18em] text-cyan-300">{post.category}</p>
-        <h1 className="mt-3 text-4xl font-semibold text-white">{post.title}</h1>
-        <p className="mt-3 text-sm text-slate-500">{post.author} · {post.published_at ? new Date(post.published_at).toLocaleDateString() : ''}</p>
-        <div className="mt-8 whitespace-pre-wrap text-slate-300">{post.body}</div>
-        <Link to="/blog" className="mt-10 inline-block text-cyan-300">Blog</Link>
+      <SeoHead
+        title={`${post.title} | LitxTech`}
+        description={post.excerpt || post.title}
+        path={`/blog/${slug}`}
+        type="article"
+      />
+      <article className="ltx-container py-16">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sky-300/80">{post.category}</p>
+        <h1 className="ltx-h1 mt-3 max-w-3xl text-balance">{post.title}</h1>
+        <p className="mt-3 text-[12.5px] text-slate-500">
+          {post.author} · {post.published_at ? new Date(post.published_at).toLocaleDateString() : ''}
+        </p>
+        <div className="mt-9 max-w-3xl whitespace-pre-wrap text-[14.5px] leading-relaxed text-slate-300">
+          {post.body}
+        </div>
+        <Link to="/blog" className="ltx-link mt-10 inline-block text-sm">
+          {t.nav.blog}
+        </Link>
       </article>
     </MarketingChrome>
   )
 }
 
 export function CookiesPage() {
+  const { language, t } = useLanguage()
+  const body =
+    language === 'tr'
+      ? [
+          'Zorunlu çerezler oturum açma ve yönetici oturumlarının çalışmasını sağlar. Analitik olaylar yalnızca çerez bildirimini kabul ettikten sonra saklanır.',
+          'Kişisel verileri satmıyoruz. Bu sitedeki şirket iletişim bilgileri şirket ayarları kaydından gelir.',
+        ]
+      : [
+          'Essential cookies keep sign-in and admin sessions working. Analytics events are stored only after you accept the cookie notice.',
+          'We do not sell personal data. Company contact details on this site come from the company settings record.',
+        ]
+
   return (
     <MarketingChrome>
-      <SeoHead title="Cookies | LitxTech" description="How LitxTech uses cookies on this website." path="/cookies" />
-      <article className="mx-auto max-w-3xl space-y-4 px-4 py-16 text-slate-300 md:px-6">
-        <h1 className="text-4xl font-semibold text-white">Cookies</h1>
-        <p>Essential cookies keep sign-in and admin sessions working. Analytics events are stored only after you accept the cookie notice.</p>
-        <p>We do not sell personal data. Company contact details on this site come from the company settings record.</p>
-        <Link to="/privacy-policy" className="text-cyan-300">Privacy policy</Link>
+      <SeoHead
+        title={`${language === 'tr' ? 'Çerezler' : 'Cookies'} | LitxTech`}
+        description={
+          language === 'tr'
+            ? 'LitxTech bu web sitesinde çerezleri nasıl kullanıyor?'
+            : 'How LitxTech uses cookies on this website.'
+        }
+        path="/cookies"
+      />
+      <article className="ltx-container ltx-section max-w-3xl space-y-4">
+        <h1 className="ltx-h1">{language === 'tr' ? 'Çerezler' : 'Cookies'}</h1>
+        {body.map((paragraph) => (
+          <p key={paragraph} className="text-[14.5px] leading-relaxed text-slate-300">
+            {paragraph}
+          </p>
+        ))}
+        <Link to="/privacy-policy" className="ltx-link inline-block text-sm">
+          {t.footer.privacy}
+        </Link>
       </article>
     </MarketingChrome>
   )
 }
 
-const NOT_FOUND_LINKS = [
-  { href: '/', label: 'Ana Sayfa' },
-  { href: '/cozumler', label: 'Yazılım geliştirme' },
-  { href: '/products', label: 'Dijital ürünler' },
-  { href: '/projeler', label: 'Projeler' },
-  { href: '/about', label: 'Hakkımızda' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/destek', label: 'Destek' },
-  { href: '/contact', label: 'İletişim' },
-]
-
 export function NotFoundPage() {
   const location = useLocation()
+  const { t } = useLanguage()
   const [query, setQuery] = useState('')
-  const matches = NOT_FOUND_LINKS.filter((item) => item.label.toLocaleLowerCase('tr').includes(query.toLocaleLowerCase('tr')))
+
+  const links = [
+    { href: '/', label: t.nav.home },
+    { href: '/cozumler', label: t.footer.solutions },
+    { href: '/products', label: t.nav.products },
+    { href: '/projeler', label: t.footer.projects },
+    { href: '/about', label: t.footer.about },
+    { href: '/blog', label: t.footer.blog },
+    { href: '/destek', label: t.footer.support },
+    { href: '/contact', label: t.footer.contact },
+  ]
+
+  const needle = query.trim().toLocaleLowerCase()
+  const matches = needle
+    ? links.filter((item) => item.label.toLocaleLowerCase().includes(needle))
+    : links
+
   return (
     <MarketingChrome>
       <SeoHead
-        title="Sayfa bulunamadı | LitxTech"
-        description="Aradığınız sayfa yayında değil. Ana sayfa, çözümler, ürünler veya iletişim üzerinden devam edebilirsiniz."
+        title={`${t.catalog.notFoundTitle} | LitxTech`}
+        description={t.catalog.notFoundLead}
         path={location.pathname}
         robots="noindex, follow"
       />
-      <div className="mx-auto max-w-xl px-4 py-24">
-        <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">404</p>
-        <h1 className="mt-3 text-4xl font-semibold text-white">Bu sayfa bulunamadı</h1>
-        <p className="mt-3 text-slate-400">Bağlantı değişmiş olabilir. Aşağıdan aradığınız bölüme geçebilirsiniz.</p>
+      <div className="ltx-container max-w-xl py-24">
+        <p className="font-display text-sm font-semibold tracking-[0.2em] text-sky-300">404</p>
+        <h1 className="ltx-h2 mt-3">{t.catalog.notFoundTitle}</h1>
+        <p className="mt-3 text-[14px] text-slate-400">{t.catalog.notFoundLead}</p>
+
         <form
           className="mt-8"
           onSubmit={(event) => {
@@ -559,29 +807,31 @@ export function NotFoundPage() {
             if (query.trim().length > 1) void trackEvent('search', location.pathname, { q: query.trim() })
           }}
         >
-          <label className="mb-2 block text-sm text-slate-300" htmlFor="not-found-search">
-            Sayfalarda ara
+          <label className="ltx-label" htmlFor="not-found-search">
+            {t.nav.search}
           </label>
           <input
             id="not-found-search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            className="w-full rounded-lg border border-white/15 bg-transparent px-3 py-2 text-white"
-            placeholder="Örneğin destek"
+            className="ltx-field"
+            placeholder={t.common.searchPlaceholder}
           />
         </form>
+
         <ul className="mt-6 space-y-2">
           {matches.map((item) => (
             <li key={item.href}>
-              <Link className="text-cyan-300 hover:text-cyan-200" to={item.href}>
+              <Link className="ltx-link text-sm" to={item.href}>
                 {item.label}
               </Link>
             </li>
           ))}
-          {!matches.length && <li className="text-slate-500">Eşleşen sayfa yok.</li>}
+          {!matches.length && <li className="text-sm text-slate-500">{t.common.noResults}</li>}
         </ul>
-        <Link to="/" className="mt-8 inline-block rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950">
-          Ana sayfaya dön
+
+        <Link to="/" className="ltx-btn-primary mt-8">
+          {t.catalog.notFoundCta}
         </Link>
       </div>
     </MarketingChrome>
@@ -589,12 +839,16 @@ export function NotFoundPage() {
 }
 
 export function ServerErrorPage() {
+  const { t } = useLanguage()
   return (
     <MarketingChrome>
-      <SeoHead title="Something went wrong | LitxTech" path="/500" robots="noindex,follow" />
-      <div className="mx-auto max-w-xl px-4 py-28 text-center">
-        <h1 className="text-4xl font-semibold text-white">This page could not be loaded.</h1>
-        <Link to="/" className="mt-8 inline-block rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950">Back home</Link>
+      <SeoHead title={`${t.catalog.serverErrorTitle} | LitxTech`} path="/500" robots="noindex,follow" />
+      <div className="ltx-container max-w-xl py-28 text-center">
+        <h1 className="ltx-h2">{t.catalog.serverErrorTitle}</h1>
+        <p className="mt-3 text-[14px] text-slate-400">{t.catalog.serverErrorLead}</p>
+        <Link to="/" className="ltx-btn-primary mt-8">
+          {t.catalog.notFoundCta}
+        </Link>
       </div>
     </MarketingChrome>
   )

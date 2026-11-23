@@ -1,27 +1,34 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ChevronDown, Menu, Phone, Search, X, Zap } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowUpRight, ChevronDown, Menu, Phone, Search, X, Zap } from 'lucide-react'
+import { clsx } from 'clsx'
 import { solutionsData } from '@/data/solutionsData'
 import { siteConfig } from '@/data/siteConfig'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
 import { useUserAuth } from '@/contexts/UserAuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
-import { clsx } from 'clsx'
 import { LiveChatWidget } from '@/components/marketing/LiveChatWidget'
 import { CookieConsent } from '@/components/marketing/CookieConsent'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
-const navLink = 'text-sm font-medium text-slate-200/90 transition hover:text-white'
+const navLink =
+  'relative text-[13.5px] font-medium text-slate-300 transition hover:text-white'
 
 export function MarketingChrome({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const [solutionsOpen, setSolutionsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
   const company = useCompanySettings()
   const { user, loading: authLoading, signOut } = useUserAuth()
+  const { language, t } = useLanguage()
+
   const waLink = company.whatsapp?.enabled === false ? '' : getWhatsAppUrl(company)
   const displayName =
-    (user?.user_metadata?.full_name as string | undefined) || user?.email?.split('@')[0] || 'Hesap'
+    (user?.user_metadata?.full_name as string | undefined) || user?.email?.split('@')[0] || t.nav.account
+  const solutions = solutionsData.map((s) => ({ slug: s.slug, title: s.text[language].title }))
 
   useEffect(() => {
     void trackEvent('page_view', location.pathname, {
@@ -29,29 +36,66 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
     })
   }, [location.pathname])
 
+  useEffect(() => {
+    setOpen(false)
+    setSolutionsOpen(false)
+  }, [location.pathname])
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const isActive = (path: string) =>
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
 
+  const primaryNav = [
+    { to: '/products', label: t.nav.products },
+    { to: '/services', label: t.nav.services },
+    { to: '/technology', label: t.nav.technology },
+    { to: '/about', label: t.nav.company },
+    { to: '/feed', label: t.nav.insights },
+    { to: '/blog', label: t.nav.blog },
+    { to: '/destek', label: t.nav.support },
+  ]
+
   return (
-    <div className="min-h-screen bg-[#070a12] text-slate-100">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070a12]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4 md:px-6">
-          <Link to="/" className="flex shrink-0 items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 shadow-lg shadow-blue-900/30">
-              <Zap className="h-6 w-6 text-white" />
+    <div className="min-h-screen bg-[#06080f] text-slate-100">
+      <header
+        className={clsx(
+          'sticky top-0 z-50 transition-all duration-300',
+          scrolled
+            ? 'border-b border-white/[0.08] bg-[#06080f]/85 backdrop-blur-xl supports-[backdrop-filter]:bg-[#06080f]/70'
+            : 'border-b border-transparent bg-transparent',
+        )}
+      >
+        <div className="ltx-container-wide flex h-[68px] items-center gap-5">
+          <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="LitxTech">
+            <span className="relative flex h-9 w-9 items-center justify-center rounded-[11px] bg-gradient-to-br from-sky-400 via-blue-500 to-violet-500 shadow-[0_8px_24px_-8px_rgba(59,130,246,0.9)]">
+              <Zap className="h-[18px] w-[18px] text-white" strokeWidth={2.6} />
             </span>
-            <span className="font-display text-xl font-bold tracking-tight text-white">
+            <span className="font-display text-[17px] font-semibold tracking-tight text-white">
               LitxTech
             </span>
           </Link>
 
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 lg:flex">
-            <Link className={clsx(navLink, isActive('/products') && 'text-white')} to="/products">
-              Products
-            </Link>
-            <Link className={clsx(navLink, isActive('/services') && 'text-white')} to="/services">
-              Services
-            </Link>
+          <nav className="mx-auto hidden items-center gap-1 lg:flex">
+            {primaryNav.slice(0, 2).map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={clsx(
+                  navLink,
+                  'rounded-lg px-3 py-2 hover:bg-white/[0.05]',
+                  isActive(item.to) && 'text-white',
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+
             <div
               className="relative"
               onMouseEnter={() => setSolutionsOpen(true)}
@@ -59,218 +103,206 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
             >
               <button
                 type="button"
+                onClick={() => setSolutionsOpen((v) => !v)}
+                aria-expanded={solutionsOpen}
                 className={clsx(
-                  'flex items-center gap-1 text-sm font-medium text-slate-200/90 transition hover:text-white',
+                  navLink,
+                  'flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-white/[0.05]',
                   isActive('/cozumler') && 'text-white',
                 )}
-                aria-expanded={solutionsOpen ? 'true' : 'false'}
               >
-                Solutions
-                <ChevronDown className="h-4 w-4 opacity-70" />
+                {t.nav.solutions}
+                <ChevronDown
+                  className={clsx('h-3.5 w-3.5 opacity-60 transition', solutionsOpen && 'rotate-180')}
+                />
               </button>
-              {solutionsOpen && (
-                <div className="absolute left-0 top-full z-50 w-[min(100vw-2rem,22rem)] pt-3">
-                  <div className="overflow-hidden rounded-xl border border-white/10 bg-slate-950/95 py-2 shadow-2xl backdrop-blur-xl">
-                    {solutionsData.map((s) => (
+
+              <AnimatePresence>
+                {solutionsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6, scale: 0.985 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.99 }}
+                    transition={{ duration: 0.16, ease: 'easeOut' }}
+                    className="absolute left-1/2 top-full w-[26rem] -translate-x-1/2 pt-3"
+                  >
+                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0a0f1a]/95 p-2 shadow-2xl shadow-black/60 backdrop-blur-2xl">
+                      {solutions.map((s) => (
+                        <Link
+                          key={s.slug}
+                          to={`/cozumler/${s.slug}`}
+                          className="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-[13.5px] text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+                        >
+                          <span>{s.title}</span>
+                          <ArrowUpRight className="h-3.5 w-3.5 shrink-0 opacity-0 transition group-hover:opacity-100" />
+                        </Link>
+                      ))}
                       <Link
-                        key={s.slug}
-                        to={`/cozumler/${s.slug}`}
-                        className="block px-4 py-2.5 text-sm text-slate-200 hover:bg-white/5 hover:text-white"
+                        to="/cozumler"
+                        className="mt-1 flex items-center justify-between gap-2 rounded-xl border-t border-white/[0.07] px-3 py-2.5 text-[13px] font-semibold text-sky-300 transition hover:bg-white/[0.05] hover:text-sky-200"
                       >
-                        {s.title}
+                        {t.nav.allSolutions}
+                        <ArrowUpRight className="h-3.5 w-3.5" />
                       </Link>
-                    ))}
-                    <Link
-                      to="/cozumler"
-                      className="block border-t border-white/10 px-4 py-2.5 text-sm font-medium text-blue-300 hover:bg-white/5"
-                    >
-                      Tüm çözümler
-                    </Link>
-                  </div>
-                </div>
-              )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            <Link className={clsx(navLink, isActive('/technology') && 'text-white')} to="/technology">
-              Technology
-            </Link>
-            <Link className={clsx(navLink, isActive('/about') && 'text-white')} to="/about">
-              Company
-            </Link>
-            <Link className={clsx(navLink, isActive('/feed') && 'text-white')} to="/feed">
-              Insights
-            </Link>
-            <Link className={clsx(navLink, isActive('/blog') && 'text-white')} to="/blog">
-              Blog
-            </Link>
-            <Link className={clsx(navLink, isActive('/destek') && 'text-white')} to="/destek">
-              Destek
-            </Link>
+            {primaryNav.slice(2).map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={clsx(
+                  navLink,
+                  'rounded-lg px-3 py-2 hover:bg-white/[0.05]',
+                  isActive(item.to) && 'text-white',
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="ml-auto hidden items-center gap-2 lg:flex">
             <Link
               to="/search"
-              aria-label="Sitede ara"
-              className="inline-flex items-center justify-center rounded-lg border border-white/10 p-2 text-slate-200 hover:border-white/20 hover:text-white"
+              aria-label={t.nav.searchSite}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.08] text-slate-300 transition hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
             >
               <Search className="h-4 w-4" />
             </Link>
+
+            <LanguageSwitcher />
+
             {authLoading ? (
-              <span className="h-9 w-24 animate-pulse rounded-lg bg-white/10" />
+              <span className="h-9 w-20 animate-pulse rounded-xl bg-white/10" />
             ) : user ? (
-              <>
+              <div className="flex items-center gap-1.5">
                 <Link
                   to="/profile"
-                  className="inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-white"
+                  className="inline-flex max-w-[9rem] items-center truncate rounded-xl px-3 py-2 text-[13px] font-medium text-white hover:bg-white/[0.05]"
                 >
                   {displayName}
                 </Link>
                 <button
                   type="button"
                   onClick={() => void signOut()}
-                  className="inline-flex items-center rounded-lg border border-white/15 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-white/30 hover:bg-white/5"
+                  className="ltx-btn-secondary ltx-btn-sm"
                 >
-                  Çıkış
+                  {t.nav.signOut}
                 </button>
-              </>
+              </div>
             ) : (
               <Link
                 to="/giris"
-                className={clsx(
-                  'inline-flex items-center rounded-lg border border-white/15 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-white/30 hover:bg-white/5',
-                  isActive('/auth') && 'border-white/40 text-white',
-                )}
+                className="inline-flex items-center rounded-xl px-3 py-2 text-[13.5px] font-medium text-slate-200 transition hover:bg-white/[0.05] hover:text-white"
               >
-                Giriş
+                {t.nav.signIn}
               </Link>
             )}
-            <a
-              href={`tel:${company.phone_tel || siteConfig.phoneTel}`}
-              onClick={() => trackEvent('phone_click', location.pathname)}
-              className="hidden items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-slate-200 hover:border-white/20 hover:text-white xl:inline-flex"
-            >
-              <Phone className="h-4 w-4" />
-              {company.phone || siteConfig.phone}
-            </a>
+
             <Link
               to="/contact"
               onClick={() => trackEvent('cta_click', location.pathname)}
-              className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+              className="ltx-btn-primary ltx-btn-sm ml-1 !px-4 !py-2.5"
             >
-              Start a Project
+              {t.nav.startProject}
             </Link>
           </div>
 
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-lg border border-white/10 p-2 text-white lg:hidden"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Menüyü kapat' : 'Menüyü aç'}
-          >
-            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="ml-auto flex items-center gap-2 lg:hidden">
+            <LanguageSwitcher compact />
+            <button
+              type="button"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.08] text-white"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
 
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="border-t border-white/10 bg-[#070a12] px-4 py-4 lg:hidden"
-          >
-            <div className="mx-auto flex max-w-7xl flex-col gap-3">
-              <Link to="/products" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Products
-              </Link>
-              <Link to="/services" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Services
-              </Link>
-              <Link to="/technology" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Technology
-              </Link>
-              <Link to="/about" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Company
-              </Link>
-              <Link to="/feed" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Insights
-              </Link>
-              <Link to="/blog" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Blog
-              </Link>
-              <Link to="/destek" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Destek
-              </Link>
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Solutions</p>
-              {solutionsData.map((s) => (
-                <Link
-                  key={s.slug}
-                  to={`/cozumler/${s.slug}`}
-                  className="py-1.5 text-slate-200"
-                  onClick={() => setOpen(false)}
-                >
-                  {s.title}
-                </Link>
-              ))}
-              <Link to="/cozumler" className="py-2 text-blue-300" onClick={() => setOpen(false)}>
-                All solutions
-              </Link>
-              <Link to="/contact" className="py-2 font-semibold text-white" onClick={() => setOpen(false)}>
-                Start a Project
-              </Link>
-              <Link to="/search" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                Site arama
-              </Link>
-              {user ? (
-                <>
-                  <Link to="/profile" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                    {displayName}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="overflow-hidden border-t border-white/[0.08] bg-[#06080f]/98 backdrop-blur-xl lg:hidden"
+            >
+              <div className="ltx-container-wide flex max-h-[calc(100vh-68px)] flex-col gap-1 overflow-y-auto py-5">
+                {primaryNav.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="rounded-xl px-3 py-2.5 text-[15px] text-slate-200 transition hover:bg-white/[0.05]"
+                  >
+                    {item.label}
                   </Link>
-                  <button
-                    type="button"
-                    className="py-2 text-left text-slate-200"
-                    onClick={() => {
-                      setOpen(false)
-                      void signOut()
-                    }}
+                ))}
+
+                <p className="mt-3 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                  {t.nav.solutions}
+                </p>
+                {solutions.map((s) => (
+                  <Link
+                    key={s.slug}
+                    to={`/cozumler/${s.slug}`}
+                    className="rounded-xl px-3 py-2 text-[14px] text-slate-300 transition hover:bg-white/[0.05]"
                   >
-                    Çıkış
-                  </button>
-                </>
-              ) : (
-                <Link to="/giris" className="py-2 text-slate-200" onClick={() => setOpen(false)}>
-                  Giriş
+                    {s.title}
+                  </Link>
+                ))}
+                <Link to="/cozumler" className="px-3 py-2 text-[13px] font-semibold text-sky-300">
+                  {t.nav.allSolutions}
                 </Link>
-              )}
-              <Link
-                to="/sifremi-unuttum"
-                className="py-2 text-slate-400"
-                onClick={() => setOpen(false)}
-              >
-                Şifremi unuttum
-              </Link>
-              <div className="mt-2 flex flex-col gap-2 border-t border-white/10 pt-4">
-                {company.whatsapp?.enabled !== false && (
-                  <a
-                    href={waLink}
-                    className="rounded-lg bg-[#25D366] py-3 text-center text-sm font-semibold text-white"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent('whatsapp_click', location.pathname)}
-                  >
-                    {company.whatsapp?.buttonText || 'WhatsApp'}
-                  </a>
-                )}
-                <Link
-                  to="/projemi-anlat"
-                  className="rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 py-3 text-center text-sm font-semibold text-white"
-                  onClick={() => setOpen(false)}
-                >
-                  Projenizi Anlatın
-                </Link>
+
+                <div className="mt-4 space-y-2 border-t border-white/[0.08] pt-4">
+                  <Link to="/search" className="ltx-btn-secondary w-full">
+                    <Search className="h-4 w-4" />
+                    {t.nav.searchSite}
+                  </Link>
+                  {user ? (
+                    <>
+                      <Link to="/profile" className="ltx-btn-secondary w-full">
+                        {t.nav.myAccount}
+                      </Link>
+                      <button
+                        type="button"
+                        className="ltx-btn-secondary w-full"
+                        onClick={() => void signOut()}
+                      >
+                        {t.nav.signOut}
+                      </button>
+                    </>
+                  ) : (
+                    <Link to="/giris" className="ltx-btn-secondary w-full">
+                      {t.nav.signIn}
+                    </Link>
+                  )}
+                  {waLink && (
+                    <a
+                      href={waLink}
+                      className="ltx-btn-secondary w-full"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackEvent('whatsapp_click', location.pathname)}
+                    >
+                      {company.whatsapp?.buttonText || 'WhatsApp'}
+                    </a>
+                  )}
+                  <Link to="/contact" className="ltx-btn-primary w-full">
+                    {t.nav.startProject}
+                  </Link>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       <main>{children}</main>
@@ -278,92 +310,102 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
       <LiveChatWidget />
       <CookieConsent />
 
-      <footer className="border-t border-white/10 bg-[#05070f]">
-        <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
-          <div className="grid gap-10 md:grid-cols-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 font-display text-lg font-bold text-white">
-                <Zap className="h-5 w-5 text-blue-400" />
-                LitxTech
-              </div>
-              <p className="text-sm leading-relaxed text-slate-400">
-                {company.description || siteConfig.tagline}
+      <footer className="relative border-t border-white/[0.08] bg-[#04060c]">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent" />
+        <div className="ltx-container-wide py-14 lg:py-16">
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5 lg:gap-8">
+            <div className="lg:col-span-2">
+              <Link to="/" className="inline-flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-[11px] bg-gradient-to-br from-sky-400 via-blue-500 to-violet-500">
+                  <Zap className="h-[18px] w-[18px] text-white" strokeWidth={2.6} />
+                </span>
+                <span className="font-display text-[17px] font-semibold tracking-tight text-white">
+                  LitxTech
+                </span>
+              </Link>
+              <p className="mt-4 max-w-xs text-[13.5px] leading-relaxed text-slate-500">
+                {company.description || t.footer.tagline}
               </p>
+              <a
+                href={`mailto:${company.email || siteConfig.email}`}
+                className="mt-5 inline-flex items-center gap-2 text-[13px] font-medium text-slate-300 transition hover:text-white"
+              >
+                {company.email || siteConfig.email}
+              </a>
             </div>
+
             <div>
-              <p className="mb-3 text-sm font-semibold text-white">Çözümler</p>
-              <ul className="space-y-2 text-sm text-slate-400">
-                {solutionsData.slice(0, 6).map((s) => (
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                {t.footer.solutions}
+              </p>
+              <ul className="space-y-2.5 text-[13.5px]">
+                {solutions.slice(0, 6).map((s) => (
                   <li key={s.slug}>
-                    <Link className="hover:text-white" to={`/cozumler/${s.slug}`}>
+                    <Link className="text-slate-400 transition hover:text-white" to={`/cozumler/${s.slug}`}>
                       {s.title}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
+
             <div>
-              <p className="mb-3 text-sm font-semibold text-white">Kurumsal</p>
-              <ul className="space-y-2 text-sm text-slate-400">
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                {t.footer.company}
+              </p>
+              <ul className="space-y-2.5 text-[13.5px]">
                 <li>
-                  <Link className="hover:text-white" to="/projeler">
-                    Projeler
+                  <Link className="text-slate-400 transition hover:text-white" to="/projeler">
+                    {t.footer.projects}
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/about">
-                    Hakkımızda
+                  <Link className="text-slate-400 transition hover:text-white" to="/about">
+                    {t.footer.about}
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/destek">
-                    Destek
+                  <Link className="text-slate-400 transition hover:text-white" to="/destek">
+                    {t.footer.support}
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/sss">
-                    SSS
+                  <Link className="text-slate-400 transition hover:text-white" to="/sss">
+                    {t.footer.faq}
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/projemi-anlat">
-                    Proje talebi
+                  <Link className="text-slate-400 transition hover:text-white" to="/projemi-anlat">
+                    {t.footer.projectRequest}
                   </Link>
                 </li>
                 <li>
-                  <Link className="hover:text-white" to="/blog">
-                    Blog
+                  <Link className="text-slate-400 transition hover:text-white" to="/blog">
+                    {t.footer.blog}
                   </Link>
                 </li>
                 <li>
                   {user ? (
-                    <Link className="hover:text-white" to="/profile">
-                      Hesabım
+                    <Link className="text-slate-400 transition hover:text-white" to="/profile">
+                      {t.footer.myAccount}
                     </Link>
                   ) : (
-                    <Link className="hover:text-white" to="/giris">
-                      Giriş
+                    <Link className="text-slate-400 transition hover:text-white" to="/giris">
+                      {t.footer.signIn}
                     </Link>
                   )}
                 </li>
-                <li>
-                  <Link className="hover:text-white" to="/sifremi-unuttum">
-                    Şifremi unuttum
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-white" to="/donation">
-                    Destek (MyTrabzon)
-                  </Link>
-                </li>
               </ul>
             </div>
+
             <div>
-              <p className="mb-3 text-sm font-semibold text-white">İletişim</p>
-              <ul className="space-y-2 text-sm text-slate-400">
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                {t.footer.contact}
+              </p>
+              <ul className="space-y-2.5 text-[13.5px]">
                 <li>
                   <a
-                    className="hover:text-white"
+                    className="text-slate-400 transition hover:text-white"
                     href={`mailto:${company.email || siteConfig.email}`}
                     onClick={() => trackEvent('email_click', location.pathname)}
                   >
@@ -372,17 +414,18 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                 </li>
                 <li>
                   <a
-                    className="hover:text-white"
+                    className="inline-flex items-center gap-1.5 text-slate-400 transition hover:text-white"
                     href={`tel:${company.phone_tel || siteConfig.phoneTel}`}
                     onClick={() => trackEvent('phone_click', location.pathname)}
                   >
+                    <Phone className="h-3.5 w-3.5" />
                     {company.phone || siteConfig.phone}
                   </a>
                 </li>
                 {waLink && (
                   <li>
                     <a
-                      className="hover:text-white"
+                      className="text-slate-400 transition hover:text-white"
                       href={waLink}
                       onClick={() => trackEvent('whatsapp_click', location.pathname)}
                       target="_blank"
@@ -396,7 +439,12 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
                   .filter(([, url]) => typeof url === 'string' && url.startsWith('http'))
                   .map(([name, url]) => (
                     <li key={name}>
-                      <a className="capitalize hover:text-white" href={url} target="_blank" rel="noopener noreferrer">
+                      <a
+                        className="capitalize text-slate-400 transition hover:text-white"
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {name}
                       </a>
                     </li>
@@ -404,23 +452,21 @@ export function MarketingChrome({ children }: { children: React.ReactNode }) {
               </ul>
             </div>
           </div>
-          <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-              <p>
-              {company.copyright ||
-                `© ${new Date().getFullYear()} ${company.company_name || 'LitxTech'}. Tüm hakları saklıdır.`}
-            </p>
-            <div className="flex flex-wrap gap-x-4 gap-y-2">
-              <Link className="hover:text-slate-300" to="/privacy-policy">
-                Gizlilik
+
+          <div className="mt-12 flex flex-col gap-4 border-t border-white/[0.07] pt-7 text-[12px] text-slate-500 md:flex-row md:items-center md:justify-between">
+            <p>© {new Date().getFullYear()} LitxTech. {t.footer.rights}</p>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              <Link className="transition hover:text-slate-300" to="/privacy-policy">
+                {t.footer.privacy}
               </Link>
-              <Link className="hover:text-slate-300" to="/terms-of-service">
-                Şartlar
+              <Link className="transition hover:text-slate-300" to="/terms-of-service">
+                {t.footer.terms}
               </Link>
-              <Link className="hover:text-slate-300" to="/commercial-agreement">
-                Ticari sözleşme
+              <Link className="transition hover:text-slate-300" to="/commercial-agreement">
+                {t.footer.commercial}
               </Link>
-              <a className="hover:text-slate-300" href="/sitemap.xml">
-                Sitemap
+              <a className="transition hover:text-slate-300" href="/sitemap.xml">
+                {t.footer.sitemap}
               </a>
             </div>
           </div>

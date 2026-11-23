@@ -145,12 +145,12 @@ export function AdminServicesPage() {
       body: JSON.stringify({
         items: solutionsData.map((s, i) => ({
           slug: s.slug,
-          title: s.title,
-          short_description: s.cardDescription,
-          detailed_description: s.problem,
+          title: s.text.tr.title,
+          short_description: s.text.tr.cardDescription,
+          detailed_description: s.text.tr.problem,
           status: 'published',
           sort_order: i,
-          benefits: s.features,
+          benefits: s.text.tr.features,
           cta_label: 'Teklif al',
           cta_url: '/contact',
         })),

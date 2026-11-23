@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { trackEvent } from '@/lib/publicCms'
 import { useUserAuth } from '@/contexts/UserAuthContext'
 
@@ -15,6 +16,8 @@ type Post = {
 }
 
 export function FeedPage() {
+  const { t } = useLanguage()
+  const e = t.editorial
   const { user, session } = useUserAuth()
   const [posts, setPosts] = useState<Post[]>([])
   const [warning, setWarning] = useState('')
@@ -28,30 +31,41 @@ export function FeedPage() {
         setPosts(d.posts || [])
         if (d.warning) setWarning(d.warning)
       })
-      .catch(() => setWarning('Feed yüklenemedi.'))
-  }, [])
+      .catch(() => setWarning(e.feedError))
+  }, [e.feedError])
 
   return (
     <MarketingChrome>
-      <SeoHead title="Feed | LitxTech" description="Ürün, mühendislik ve şirket güncellemeleri." path="/feed" />
-      <section className="mx-auto max-w-3xl px-4 py-16 md:px-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Editorial</p>
-        <h1 className="mt-3 font-display text-4xl font-semibold text-white">LitxTech Feed</h1>
-        <p className="mt-3 text-slate-400">Yayınlanan ürün notları, mühendislik yazıları ve şirket güncellemeleri.</p>
-        {warning && <p className="mt-4 text-sm text-amber-200">{warning}</p>}
-        {!posts.length && !warning && <p className="mt-10 text-slate-500">Henüz yayınlanmış gönderi yok.</p>}
-        <div className="mt-10 space-y-6">
+      <SeoHead title={`${e.feedTitle} | LitxTech`} description={e.feedLead} path="/feed" />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container relative py-16 sm:py-20">
+          <p className="ltx-eyebrow">{t.nav.insights}</p>
+          <h1 className="ltx-h1 mt-4">{e.feedTitle}</h1>
+          <p className="ltx-lead mt-4 max-w-2xl">{e.feedLead}</p>
+        </div>
+      </section>
+
+      <section className="ltx-container py-14">
+        {warning && <p className="text-sm text-amber-200">{warning}</p>}
+        {!posts.length && !warning && <p className="text-sm text-slate-500">{e.feedEmpty}</p>}
+
+        <div className="space-y-5">
           {posts.map((post) => (
-            <article key={post.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs uppercase tracking-wide text-slate-400">{post.category}</p>
-              <h2 className="mt-2 text-2xl font-semibold text-white">{post.title}</h2>
-              <p className="mt-3 whitespace-pre-wrap text-slate-300">{post.body}</p>
-              <p className="mt-4 text-xs text-slate-500">{post.published_at ? new Date(post.published_at).toLocaleString() : ''}</p>
+            <article key={post.id} className="ltx-card p-6">
+              <p className="text-[11px] uppercase tracking-[0.14em] text-sky-300/80">{post.category}</p>
+              <h2 className="mt-2 font-display text-xl font-semibold text-white">{post.title}</h2>
+              <p className="mt-3 whitespace-pre-wrap text-[14px] leading-relaxed text-slate-300">{post.body}</p>
+              <p className="mt-4 text-[11.5px] text-slate-500">
+                {post.published_at ? new Date(post.published_at).toLocaleString() : ''}
+              </p>
+
               {user ? (
                 <form
                   className="mt-4 flex gap-2"
-                  onSubmit={(e) => {
-                    e.preventDefault()
+                  onSubmit={(ev) => {
+                    ev.preventDefault()
                     fetch('/api/public/feed', {
                       method: 'POST',
                       headers: {
@@ -69,16 +83,16 @@ export function FeedPage() {
                 >
                   <input
                     value={comment[post.id] || ''}
-                    onChange={(e) => setComment({ ...comment, [post.id]: e.target.value })}
-                    placeholder="Yorum"
-                    className="flex-1 rounded-lg border border-white/10 bg-transparent px-3 py-2 text-sm"
+                    onChange={(ev) => setComment({ ...comment, [post.id]: ev.target.value })}
+                    placeholder={e.comment}
+                    className="ltx-field flex-1 !py-2"
                   />
-                  <button className="rounded-lg bg-white px-3 py-2 text-sm font-semibold text-slate-950" type="submit">
-                    Gönder
+                  <button className="ltx-btn-primary ltx-btn-sm" type="submit">
+                    {e.commentSend}
                   </button>
                 </form>
               ) : (
-                <p className="mt-4 text-xs text-slate-500">Yorum için giriş yapın.</p>
+                <p className="mt-4 text-[12px] text-slate-500">{e.commentSignIn}</p>
               )}
             </article>
           ))}

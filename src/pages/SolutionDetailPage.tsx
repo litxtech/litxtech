@@ -1,18 +1,20 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Check, MessageCircle, MonitorPlay, Phone } from 'lucide-react'
+import { ArrowLeft, Check, MessageCircle, MonitorPlay, Phone } from 'lucide-react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { DashboardMockup } from '@/components/marketing/DashboardMockup'
 import { SeoHead } from '@/components/marketing/SeoHead'
 import { WhatsAppFloat } from '@/components/marketing/WhatsAppFloat'
 import { getSolutionBySlug } from '@/data/solutionsData'
 import { useCompanySettings } from '@/contexts/CompanySettingsContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { getWhatsAppUrl, trackEvent } from '@/lib/publicCms'
 import { solutionAccentClasses } from '@/lib/solutionStyles'
 
 export function SolutionDetailPage() {
   const { slug } = useParams()
   const company = useCompanySettings()
+  const { language, t } = useLanguage()
   const wa = getWhatsAppUrl(company)
   const solution = getSolutionBySlug(slug)
 
@@ -20,37 +22,39 @@ export function SolutionDetailPage() {
     return <Navigate to="/cozumler" replace />
   }
 
+  const text = solution.text[language]
+  const s = t.solutions
   const Icon = solution.icon
   const a = solutionAccentClasses(solution.accent)
 
   return (
     <MarketingChrome>
-      <SeoHead title={solution.metaTitle} description={solution.metaDescription} path={`/cozumler/${solution.slug}`} />
-      <section className="border-b border-white/10 bg-gradient-to-b from-[#070a12] via-[#070a12] to-[#05070f]">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 md:px-6 md:py-20 lg:grid-cols-2">
+      <SeoHead title={text.metaTitle} description={text.metaDescription} path={`/cozumler/${solution.slug}`} />
+
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container-wide relative grid items-center gap-12 py-14 sm:py-16 lg:grid-cols-2 lg:gap-16 lg:py-20">
           <div>
-            <div className={`mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300`}>
-              <span className={`inline-flex h-8 w-8 items-center justify-center rounded-lg ${a.iconBg}`}>
-                <Icon className="h-4 w-4" />
+            <div className="ltx-pill">
+              <span className={`inline-flex h-7 w-7 items-center justify-center rounded-lg ${a.iconBg}`}>
+                <Icon className="h-3.5 w-3.5" />
               </span>
-              Çözüm detayı
+              {s.detailBadge}
             </div>
-            <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl">{solution.title}</h1>
-            <p className="mt-4 text-xl text-slate-300">{solution.tagline}</p>
-            <p className="mt-6 text-base leading-relaxed text-slate-400">{solution.problem}</p>
+            <h1 className="ltx-h1 mt-5 text-balance">{text.title}</h1>
+            <p className="mt-4 text-lg font-medium text-slate-300">{text.tagline}</p>
+            <p className="mt-5 max-w-xl text-[14.5px] leading-relaxed text-slate-400">{text.problem}</p>
+
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/contact"
-                className="rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/25"
-              >
-                Teklif Al
+              <Link to="/contact" className="ltx-btn-primary">
+                {s.detailCta}
               </Link>
               <a
                 href={wa}
                 onClick={() => trackEvent('whatsapp_click', `/cozumler/${solution.slug}`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:border-white/25"
+                className="ltx-btn-secondary"
               >
                 <MessageCircle className="h-4 w-4 text-emerald-400" />
                 WhatsApp
@@ -59,10 +63,10 @@ export function SolutionDetailPage() {
                 href={company.calendly_url || company.website || '/contact'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:border-white/25"
+                className="ltx-btn-ghost"
               >
-                <MonitorPlay className="h-4 w-4 text-blue-300" />
-                Demo
+                <MonitorPlay className="h-4 w-4 text-sky-300" />
+                {s.demo}
               </a>
             </div>
           </div>
@@ -70,80 +74,80 @@ export function SolutionDetailPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-16">
+      <section className="ltx-container-wide ltx-section">
         <div className="grid gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="font-display text-2xl font-bold text-white">Temel özellikler</h2>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {solution.features.map((f) => (
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-white">
+              {s.featuresTitle}
+            </h2>
+            <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
+              {text.features.map((feature) => (
                 <div
-                  key={f}
-                  className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-200"
+                  key={feature}
+                  className="flex items-start gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3 text-[13.5px] text-slate-300"
                 >
-                  <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" />
-                  <span>{f}</span>
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                  <span className="leading-relaxed">{feature}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-            <h3 className="font-display text-lg font-semibold text-white">Kimler için?</h3>
-            <ul className="mt-4 space-y-3 text-sm text-slate-300">
-              {solution.audience.map((row) => (
-                <li key={row} className="leading-relaxed">
-                  · {row}
+
+          <div className="ltx-card h-fit p-6">
+            <h3 className="font-display text-lg font-semibold text-white">{s.audienceTitle}</h3>
+            <ul className="mt-4 space-y-3 text-[13.5px] text-slate-300">
+              {text.audience.map((row) => (
+                <li key={row} className="flex items-start gap-2.5 leading-relaxed">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-sky-400 to-violet-400" />
+                  {row}
                 </li>
               ))}
             </ul>
-            <div className="mt-6 rounded-xl border border-white/10 bg-black/30 p-4 text-sm text-slate-400">
-              Daha net bir teklif için kısa bir keşif görüşmesi planlayalım.
+            <div className="mt-6 rounded-xl border border-white/[0.07] bg-black/25 p-4 text-[13px] leading-relaxed text-slate-400">
+              {s.audienceNote}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/10 bg-[#05070f]">
-        <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-16">
-          <h2 className="font-display text-2xl font-bold text-white">Sık sorulan sorular</h2>
-          <div className="mt-8 space-y-3">
-            {solution.faq.map((item) => (
+      <section className="border-t border-white/[0.07] bg-[#050810]">
+        <div className="ltx-container-wide ltx-section-tight">
+          <h2 className="font-display text-2xl font-semibold tracking-tight text-white">{s.faqTitle}</h2>
+          <div className="mt-7 max-w-3xl space-y-2.5">
+            {text.faq.map((item) => (
               <details
                 key={item.question}
-                className="group rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 open:bg-white/[0.05]"
+                className="group rounded-xl border border-white/[0.07] bg-white/[0.02] px-5 py-4 transition open:border-white/15 open:bg-white/[0.04]"
               >
-                <summary className="cursor-pointer list-none font-medium text-white [&::-webkit-details-marker]:hidden">
-                  <span className="flex items-center justify-between gap-3">
-                    {item.question}
-                    <span className="text-slate-500 transition group-open:rotate-45">+</span>
-                  </span>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-white [&::-webkit-details-marker]:hidden">
+                  {item.question}
+                  <span className="text-lg leading-none text-slate-500 transition group-open:rotate-45">+</span>
                 </summary>
-                <p className="mt-3 text-sm leading-relaxed text-slate-400">{item.answer}</p>
+                <p className="mt-3 text-[13.5px] leading-relaxed text-slate-400">{item.answer}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/10 bg-gradient-to-r from-blue-600/15 via-violet-600/10 to-fuchsia-600/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-12 md:flex-row md:items-center md:px-6">
+      <section className="relative overflow-hidden border-t border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_50%_120%,rgba(59,130,246,0.18),transparent_70%)]" />
+        <div className="ltx-container-wide relative flex flex-col items-start justify-between gap-6 py-14 md:flex-row md:items-center">
           <div>
-            <h2 className="font-display text-2xl font-bold text-white">Bu çözümü birlikte netleştirelim</h2>
-            <p className="mt-2 text-slate-300">Kısa bir görüşmede kapsam, süre ve bütçe aralığını konuşalım.</p>
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-white">{s.closingTitle}</h2>
+            <p className="mt-2 max-w-xl text-[14px] text-slate-400">{s.closingLead}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900"
-            >
+            <Link to="/contact" className="ltx-btn-primary">
               <Phone className="h-4 w-4" />
-              Teklif Al
+              {s.detailCta}
             </Link>
             <a
               href={wa}
-                onClick={() => trackEvent('whatsapp_click', `/cozumler/${solution.slug}`)}
+              onClick={() => trackEvent('whatsapp_click', `/cozumler/${solution.slug}`)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-5 py-3 text-sm font-semibold text-white hover:bg-white/5"
+              className="ltx-btn-secondary"
             >
               WhatsApp
             </a>
@@ -155,10 +159,11 @@ export function SolutionDetailPage() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="mx-auto max-w-7xl px-4 pb-16 pt-6 md:px-6"
+        className="ltx-container-wide pb-16 pt-8"
       >
-        <Link to="/cozumler" className="text-sm font-medium text-blue-300 hover:text-blue-200">
-          ← Tüm çözümler
+        <Link to="/cozumler" className="inline-flex items-center gap-2 text-sm font-medium text-sky-300 hover:text-sky-200">
+          <ArrowLeft className="h-4 w-4" />
+          {s.backToAll}
         </Link>
       </motion.div>
 

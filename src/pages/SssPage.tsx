@@ -1,51 +1,67 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Plus } from 'lucide-react'
 import { MarketingChrome } from '@/components/marketing/MarketingChrome'
 import { SeoHead } from '@/components/marketing/SeoHead'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 type Faq = { id: string; category: string; question: string; answer: string }
 
 export function SssPage() {
-  const [faqs, setFaqs] = useState<Faq[]>([])
-  const categories = useMemo(
-    () => Array.from(new Set(faqs.map((f) => f.category))),
-    [faqs],
+  const { language, t } = useLanguage()
+  const [remoteFaqs, setRemoteFaqs] = useState<Faq[]>([])
+  const categoriesFromFaqs = useMemo(
+    () => (list: Faq[]) => Array.from(new Set(list.map((f) => f.category))),
+    [],
   )
 
   useEffect(() => {
     fetch('/api/public/faqs')
       .then((r) => r.json())
-      .then((d) => setFaqs(Array.isArray(d.faqs) ? d.faqs : []))
-      .catch(() => setFaqs([]))
+      .then((d) => setRemoteFaqs(Array.isArray(d.faqs) ? d.faqs : []))
+      .catch(() => setRemoteFaqs([]))
   }, [])
+
+  // CMS FAQ rows are authored in Turkish; English uses the curated local set.
+  const faqs: Faq[] =
+    language === 'tr' && remoteFaqs.length
+      ? remoteFaqs
+      : t.faq.fallback.map((item, index) => ({ id: `local-${index}`, ...item }))
+
+  const categories = categoriesFromFaqs(faqs)
 
   return (
     <MarketingChrome>
-      <SeoHead
-        title="Sıkça Sorulan Sorular | LitxTech"
-        description="LitxTech SSS: mobil uygulama, sosyal platform, özel yazılım ve destek."
-        path="/sss"
-      />
-      <section className="mx-auto max-w-4xl px-4 py-16 md:px-6">
-        <h1 className="text-4xl font-bold text-white">Sıkça sorulan sorular</h1>
-        <p className="mt-3 text-slate-300">İçerik admin panelinden yönetilir.</p>
+      <SeoHead title={t.faq.metaTitle} description={t.faq.metaDescription} path="/sss" />
 
-        {!faqs.length && (
-          <p className="mt-10 text-slate-500">
-            Henüz yayınlanmış SSS yok. Admin → FAQ üzerinden ekleyebilirsiniz.
-          </p>
-        )}
+      <section className="relative overflow-hidden border-b border-white/[0.07]">
+        <div className="pointer-events-none absolute inset-0 ltx-aurora" />
+        <div className="ltx-container relative py-16 sm:py-20">
+          <p className="ltx-eyebrow">{t.nav.support}</p>
+          <h1 className="ltx-h1 mt-4 text-balance">{t.faq.title}</h1>
+          <p className="ltx-lead mt-4">{t.faq.lead}</p>
+        </div>
+      </section>
 
-        <div className="mt-10 space-y-10">
-          {categories.map((cat) => (
-            <div key={cat}>
-              <h2 className="mb-4 text-xl font-semibold text-cyan-300">{cat}</h2>
-              <div className="space-y-3">
+      <section className="ltx-container py-14">
+        <div className="max-w-3xl space-y-10">
+          {categories.map((category) => (
+            <div key={category}>
+              <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-sky-300/80">
+                {category}
+              </h2>
+              <div className="space-y-2.5">
                 {faqs
-                  .filter((f) => f.category === cat)
+                  .filter((f) => f.category === category)
                   .map((f) => (
-                    <details key={f.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                      <summary className="cursor-pointer font-medium text-white">{f.question}</summary>
-                      <p className="mt-2 text-sm text-slate-300">{f.answer}</p>
+                    <details
+                      key={f.id}
+                      className="group rounded-xl border border-white/[0.07] bg-white/[0.02] px-5 py-4 transition open:border-white/15 open:bg-white/[0.04]"
+                    >
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[14px] font-medium text-white [&::-webkit-details-marker]:hidden">
+                        {f.question}
+                        <Plus className="h-4 w-4 shrink-0 text-slate-500 transition group-open:rotate-45" />
+                      </summary>
+                      <p className="mt-3 text-[13.5px] leading-relaxed text-slate-400">{f.answer}</p>
                     </details>
                   ))}
               </div>

@@ -18,15 +18,24 @@ export default {
     },
     extend: {
       fontFamily: {
+        sans: ["'Inter'", "ui-sans-serif", "system-ui", "sans-serif"],
         display: ["'Sora'", "ui-sans-serif", "system-ui", "sans-serif"],
+      },
+      fontSize: {
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }],
+      },
+      letterSpacing: {
+        tightest: '-0.035em',
       },
       colors: {
         litx: {
-          primary: "var(--litx-primary)",
-          accent: "var(--litx-accent)",
-          secondary: "var(--litx-secondary)",
-          "primary-dark": "var(--litx-primary-dark)",
-          "accent-dark": "var(--litx-accent-dark)",
+          primary: "var(--litx-primary, #5b9dff)",
+          accent: "var(--litx-accent, #a78bfa)",
+          secondary: "var(--litx-secondary, #22d3ee)",
+          "primary-dark": "var(--litx-primary-dark, #2563eb)",
+          "accent-dark": "var(--litx-accent-dark, #7c3aed)",
+          ink: "#06080f",
+          surface: "#0a0e18",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -66,6 +75,16 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        '4xl': '2rem',
+      },
+      boxShadow: {
+        premium: '0 24px 60px -32px rgba(0,0,0,0.9)',
+        'premium-lg': '0 40px 90px -40px rgba(0,0,0,0.95)',
+        glow: '0 18px 40px -18px rgba(99,102,241,0.8)',
+      },
+      backgroundImage: {
+        'ltx-aurora':
+          'radial-gradient(ellipse 60% 45% at 50% -10%, rgba(59,130,246,0.2), transparent 70%), radial-gradient(ellipse 45% 40% at 85% 8%, rgba(139,92,246,0.14), transparent 72%)',
       },
       keyframes: {
         "accordion-down": {
